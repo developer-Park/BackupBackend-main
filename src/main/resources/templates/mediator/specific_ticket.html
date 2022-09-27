@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        class="loading" lang="en" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
+    <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
+    <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="PIXINVENT">
+    <title>Dashboard analytics - Vuexy - Bootstrap HTML admin template</title>
+    <link rel="apple-touch-icon" href="/../../app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/../../app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="/../../app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="/../../app-assets/vendors/css/charts/apexcharts.css">
+    <link rel="stylesheet" type="text/css" href="/../../app-assets/vendors/css/extensions/toastr.min.css">
+    <link rel="stylesheet" type="text/css" href="/../../app-assets/vendors/css/tables/datatable/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" type="text/css" href="/../../app-assets/vendors/css/tables/datatable/responsive.bootstrap5.min.css">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="/../../app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/../../app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="/../../app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="/../../app-assets/css/components.css">
+    <link rel="stylesheet" type="text/css" href="/../../app-assets/css/themes/dark-layout.css">
+    <link rel="stylesheet" type="text/css" href="/../../app-assets/css/themes/bordered-layout.css">
+    <link rel="stylesheet" type="text/css" href="/../../app-assets/css/themes/semi-dark-layout.css">
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="/../../app-assets/css/core/menu/menu-types/vertical-menu.css">
+    <link rel="stylesheet" type="text/css" href="/../../app-assets/css/plugins/charts/chart-apex.css">
+    <link rel="stylesheet" type="text/css" href="/../../app-assets/css/plugins/extensions/ext-component-toastr.css">
+    <link rel="stylesheet" type="text/css" href="/../../app-assets/css/pages/app-invoice-list.css">
+    <link rel="stylesheet" type="text/css" href="/../../app-assets/css/pages/app-email.min.css">
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
+    <!-- END: Custom CSS-->
+
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+
+<body class="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-view="click" data-menu="vertical-menu-modern" data-col="">
+
+    <!-- BEGIN: Header-->
+    <div th:replace="fragment/top-nav-bar.html
+                :: notification(sessionContainer = ${sessionContainer}, userNotifications = ${userNotifications})">
+    </div>
+
+    <ul class="main-search-list-defaultlist-other-list d-none">
+        <li class="auto-suggestion justify-content-between"><a
+                class="d-flex align-items-center justify-content-between w-100 py-50">
+            <div class="d-flex justify-content-start"><span class="me-75"
+                                                            data-feather="alert-circle"></span><span>No results found.</span></div>
+        </a></li>
+    </ul>
+    <!-- END: Header-->
+
+
+    <!-- BEGIN: Main Menu-->
+    <div th:replace="fragment/mediator-left-nav.html
+                :: leftNav(sessionContainer = ${sessionContainer})">
+    </div>
+    <!-- END: Main Menu-->
+
+<!-- BEGIN: Content-->
+    <div class="app-content content ">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper container-xxl p-0">
+     
+            <!-- BEGIN: Content Header (Navigation Breadcrumb) -->
+            <div class="content-header row">
+                <div class="content-header-left col-md-9 col-12 mb-2">
+                    <div class="row breadcrumbs-top">
+                        <div class="col-12">
+                            <h2 class="content-header-title float-start mb-0">Ticket Action</h2>
+                            <div class="breadcrumb-wrapper">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="/mediator/dashboard/">Mediator</a>
+                                    </li>
+                                    <li class="breadcrumb-item active"><a href="/mediator/ticket/">Tickets</a>
+                                    </li>
+                                    <li th:text="${ticket.getId()}" class="breadcrumb-item active">Ticket #45221
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BEGIN: Top right quick navigation -->
+
+                <div class="content-header-right text-md-end col-md-3 col-12 d-md-block d-none">
+                    <div class="mb-1 breadcrumb-right">
+                        <div class="dropdown">
+                            <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle waves-effect waves-float waves-light" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></button>
+                            <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2 me-1"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg><span class="align-middle">Analytics</span></a><a class="dropdown-item" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder me-1"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg><span class="align-middle">Projects</span></a><a class="dropdown-item" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-pull-request me-1"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M13 6h3a2 2 0 0 1 2 2v7"></path><line x1="6" y1="9" x2="6" y2="21"></line></svg><span class="align-middle">Requests</span></a></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- END: Top right quick navigation -->
+
+            </div>
+            <!-- END: Content Header (Navigation Breadcrumb) -->
+
+
+            <div class="content-body" >
+                
+                <div class="alert alert-primary p-1"><p><span class="fw-bolder">Note: </span>Please remember to treat all users with respect, system admins are on stand-by if help is needed.</p></div>
+                
+                
+                <!-- BEGIN: Communication row (primary row) -->
+                <div class="row">
+
+                    <!-- BEGIN: Complainant profile info -->
+                    <div id="info-column" class="col-lg-4 col-md-6 col-sm-12">
+
+                        <div class="card">
+                            <div class="card-body">
+                              <div class="user-avatar-section">
+                                <div class="d-flex align-items-center flex-column">
+                                  <img class="img-fluid rounded mt-3 mb-2" src="/../../app-assets/images/portrait/small/avatar-s-1.jpg" height="110" width="110" alt="User avatar">
+                                  <div class="user-info text-center">
+                                    <h4 th:text="${ticket.getComplainant().getName()}">Justin Timer</h4>
+                                    <span class="badge bg-light-secondary">Project Manager</span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="d-flex justify-content-around my-2 pt-75">
+                                <div class="d-flex align-items-start me-2">
+                                  <span class="badge bg-light-primary p-75 rounded">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check font-medium-2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                  </span>
+                                  <div class="ms-75">
+                                    <h4 th:text="${userTickets.size()}" class="mb-0">89</h4>
+                                    <small>Support Tickets</small>
+                                  </div>
+                                </div>
+                                <div class="d-flex align-items-start">
+                                  <span class="badge bg-light-primary p-75 rounded">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-briefcase font-medium-2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                                  </span>
+                                  <div class="ms-75">
+                                    <h4 th:text="${ticket.getComplainant().getProjects().size()}" class="mb-0">4</h4>
+                                    <small>Projects Owned</small>
+                                  </div>
+                                </div>
+                              </div>
+                              <h4 class="fw-bolder border-bottom pb-50 mb-1">Details</h4>
+                              <div class="info-container">
+                                <ul class="list-unstyled">
+                                  <li class="mb-75">
+                                    <span class="fw-bolder me-25">Email:</span>
+                                    <span th:text="${ticket.getComplainant().getEmail()}">vafgot@vultukir.org</span>
+                                  </li>
+                                  <li class="mb-75">
+                                    <span class="fw-bolder me-25">Ticket Status:</span>
+
+                                      <th th:if="${ticket.getStatus().toString() == 'OPEN'}">
+                                          <span class="badge rounded-pill badge-light-primary me-1">Active</span>
+                                      </th>
+                                      <th th:if="${ticket.getStatus().toString() == 'PENDING'}">
+                                          <span class="badge rounded-pill badge-light-warning me-1">Pending</span>
+                                      </th>
+                                      <th th:if="${ticket.getStatus().toString() == 'CLOSED'}">
+                                          <span class="badge rounded-pill badge-light-danger me-1">Closed</span>
+                                      </th>
+
+                                  </li>
+                                  <li class="mb-75">
+                                    <span class="fw-bolder me-25">Role:</span>
+                                    <span>Project Owner</span>
+                                  </li>
+                                  <li class="mb-75">
+                                    <span class="fw-bolder me-25">Contact:</span>
+                                    <span th:text="${ticket.getComplainant().getPhone()}">+1 (609) 933-44-22</span>
+                                  </li>
+                                  <li class="mb-75">
+                                    <span class="fw-bolder me-25">First Joined:</span>
+                                    <span th:text="${ticket.getComplainant().getCreationDate()}">2022-07-15 22:16:30</span>
+                                  </li>
+                                </ul>
+                                <div class="d-flex justify-content-center pt-2">
+
+                                    <th th:if="${ticket.getStatus().toString() == 'OPEN'}">
+                                        <button onclick="changeStatus('pending')" class="btn btn-primary me-1 waves-effect waves-float waves-light">
+                                            Mark as Stale
+                                        </button>
+                                    </th>
+
+                                    <th th:if="${ticket.getStatus().toString() != 'OPEN'}">
+                                        <button type="button" href="javascript:;" class="btn btn-primary me-1 waves-effect waves-float waves-light" data-bs-target="#editUser" data-bs-toggle="modal" aria-disabled="true" disabled>
+                                            Mark as Stale
+                                        </button>
+                                    </th>
+
+                                    <th th:if="${ticket.getStatus().toString() == 'CLOSED'}">
+                                        <button class="btn btn-outline-success waves-effect" disabled>Resolve Ticket</button>
+                                    </th>
+
+                                    <th th:if="${ticket.getStatus().toString() != 'CLOSED'}">
+                                        <button onclick="changeStatus('closed')" type="button" href="javascript:;" class="btn btn-outline-success waves-effect">Resolve Ticket</button>
+                                    </th>
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                    </div>
+                    <!-- END: Complainant profile info -->
+
+                    <!-- BEGIN: Chat logic -->
+                    <div class="col-lg-8 col-md-6 col-sm-12">
+
+                        <div class="row" style="overflow: auto; overflow-x:hidden;">
+                            <div id="message-container" style="height: 60vh;">
+
+                                <!-- BEGIN: Single message -->
+                                <div th:each="message : ${ticket.getChat()}" class="row">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-header email-detail-head">
+                                                <div class="user-details d-flex justify-content-between align-items-center flex-wrap">
+                                                    <div class="avatar me-75 bg-light-primary">
+                                                        <div th:text="${message.getFrom().getName().substring(0,1)}" style="width: 48px; height: 48px;" class="avatar-content">
+                                                            AL
+                                                        </div>
+                                                    </div>
+                                                    <div class="mail-items">
+                                                        <h5 th:text="${message.getFrom().getName()}" class="mb-0">Carlos Williamson</h5>
+                                                        <div class="email-info-dropup dropdown">
+                                                      <span th:text="${message.getFrom().getEmail()}" role="button" class="dropdown-toggle font-small-3 text-muted" id="card_top01" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        carlos@gmail.com
+                                                      </span>
+                                                            <div class="dropdown-menu" aria-labelledby="card_top01">
+                                                                <table class="table table-sm table-borderless">
+                                                                    <tbody>
+                                                                    <tr>
+                                                                        <td class="text-end">From:</td>
+                                                                        <td th:text="${message.getFrom().getName()}">carlos@gmail.com</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-end">Date:</td>
+                                                                        <td th:text="${message.getCreationDate()}">14:58, 29 Aug 2020</td>
+                                                                    </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="mail-meta-item d-flex align-items-center">
+                                                    <small th:text="${message.getCreationDate()}" class="mail-date-time text-muted">29 Aug, 2020, 14:58</small>
+
+                                                </div>
+                                            </div>
+                                            <div class="card-body mail-message-wrapper pt-2">
+                                                <div class="mail-message">
+                                                    <p th:text="${message.getMessage()}" class="card-text">
+                                                        bah kivu decrete epanorthotic unnotched Argyroneta nonius veratrine preimaginary saunders demidolmen
+                                                        Chaldaic allusiveness lorriker unworshipping ribaldish tableman hendiadys outwrest unendeavored
+                                                        fulfillment scientifical Pianokoto Chelonia
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- END: Single message -->
+
+                            </div>
+                        </div>
+
+                        <!-- BEGIN: Send message -->
+                        <div class="row">
+                          
+                          <form style="padding-left: 0px; padding-right: 0px; margin-top: 1em;" class="chat-app-form" action="javascript:void(0);" onsubmit="enterChat();">
+                            <div class="input-group input-group-merge  form-send-message">
+                              <input id="sendMessageInput" style="height: 3.5em;" type="text" class="form-control message" placeholder="Type your message">
+                              <span class="input-group-text">
+                                <label for="attach-doc" class="attachment-icon form-label mb-0">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-image cursor-pointer text-secondary"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                                  <input type="file" id="attach-doc" hidden=""> </label></span>
+                                <button type="button" class="btn btn-primary send waves-effect waves-float waves-light" onclick="sendMessage();">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-send d-lg-none"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                                  <span class="d-none d-lg-block">Send</span>
+                                </button>
+                            </div>
+                            
+                          </form>
+
+                        </div>
+                        <!-- END: Send message -->
+
+                    </div>
+                    <!-- END: Chat logic -->
+
+                </div>
+                <!-- END: Communication row (primary row) -->
+
+
+                <div class="row">
+                    <div class="col-12">
+
+
+
+                          
+                    </div>
+                </div>
+
+                <!--/ List DataTable -->
+
+            </div>
+        </div>
+    </div>
+    <!-- END: Content-->
+
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+    <!-- BEGIN: Footer-->
+    <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
+    <!-- END: Footer-->
+
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="/../../app-assets/vendors/js/vendors.min.js"></script>
+    <!-- BEGIN Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="/../../app-assets/vendors/js/charts/apexcharts.min.js"></script>
+    <script src="/../../app-assets/vendors/js/extensions/toastr.min.js"></script>
+    <script src="/../../app-assets/vendors/js/extensions/moment.min.js"></script>
+    <script src="/custom-scripts/axios.min.js"></script>
+    <script src="/../../app-assets/vendors/js/tables/datatable/jquery.dataTables.min.js"></script>
+    <script src="/../../app-assets/vendors/js/tables/datatable/datatables.buttons.min.js"></script>
+    <script src="/../../app-assets/vendors/js/tables/datatable/dataTables.bootstrap5.min.js"></script>
+    <script src="/../../app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js"></script>
+    <script src="/../../app-assets/vendors/js/tables/datatable/responsive.bootstrap5.js"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="/../../app-assets/js/core/app-menu.js"></script>
+    <script src="/../../app-assets/js/core/app.js"></script>
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="/../../app-assets/js/scripts/pages/dashboard-analytics.js"></script>
+    
+    <!-- <script src="/../../app-assets/js/scripts/pages/app-invoice-list.js"></script> -->
+    <!-- END: Page JS-->
+
+    <script>
+        $(window).on('load', function() {
+            if (feather) {
+                feather.replace({
+                    width: 14,
+                    height: 14
+                });
+            }
+        })
+
+        function addMessages() {
+
+            let messageContainerElem = document.querySelector('#message-container');
+            let messageTemplateElem = document.querySelector('#message-template');
+
+            for (let i = 0; i < 5; i++) {
+                console.log("Adding message", i);
+                let copyMessage = messageTemplateElem.cloneNode(true);
+                messageContainerElem.prepend(copyMessage);
+                console.log(copyMessage.style);
+                copyMessage.style.display = 'block';
+            }
+
+        }
+
+        async function refreshPage() {
+            document.location = '';
+        }
+
+        async function GetCurrentTicketId() {
+            let ticketId = window.document.URL.split('/mediator/ticket/')[1].split('/')[0];
+            return ticketId;
+        }
+
+        async function changeStatus(status) {
+            let ticketId = await this.GetCurrentTicketId();
+            let res = await axios.post(`/api/v1/pri/mediator/ticket/status`, {
+                ticketId,
+                newStatus: status
+            });
+            refreshPage();
+        }
+
+        async function sendMessage() {
+
+            let ticketId = await this.GetCurrentTicketId();
+
+            let textInputElem = document.querySelector('#sendMessageInput');
+
+            if (textInputElem.value.length < 3) return;
+
+            let res = await axios.post(`/api/v1/pri/mediator/ticket/createMessage`, {
+                supportTicketId: ticketId,
+                message: textInputElem.value
+            });
+
+            refreshPage();
+
+        }
+
+
+        //addMessages();
+
+    </script>
+</body>
+<!-- END: Body-->
+
+</html>

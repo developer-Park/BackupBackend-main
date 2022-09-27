@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<!-- BEGIN: Head-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
+    <meta name="description"
+          content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
+    <meta name="keywords"
+          content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="PIXINVENT">
+    <title>Dashboard analytics - Vuexy - Bootstrap HTML admin template</title>
+    <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600"
+          rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/apexcharts.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/toastr.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="../../../app-assets/vendors/css/tables/datatable/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="../../../app-assets/vendors/css/tables/datatable/responsive.bootstrap5.min.css">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/dark-layout.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/bordered-layout.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/semi-dark-layout.css">
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-menu.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/plugins/charts/chart-apex.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/plugins/extensions/ext-component-toastr.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/pages/app-invoice-list.css">
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../../assets/css/style.css">
+    <!-- END: Custom CSS-->
+
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+
+<body class="vertical-layout vertical-menu-modern navbar-floating footer-static" data-view="click"
+      data-menu="vertical-menu-modern" data-col="">
+
+<!-- BEGIN: Header-->
+<div th:replace="fragment/top-nav-bar.html
+            :: notification(sessionContainer = ${sessionContainer}, userNotifications = ${userNotifications})">
+</div>
+
+<ul class="main-search-list-defaultlist-other-list d-none">
+    <li class="auto-suggestion justify-content-between"><a
+            class="d-flex align-items-center justify-content-between w-100 py-50">
+        <div class="d-flex justify-content-start"><span class="me-75"
+                                                        data-feather="alert-circle"></span><span>No results found.</span></div>
+    </a></li>
+</ul>
+<!-- END: Header-->
+
+
+<!-- BEGIN: Main Menu-->
+
+<div th:replace="fragment/user-left-nav.html
+            :: leftNav(sessionContainer = ${sessionContainer})">
+</div>
+
+<!-- END: Main Menu-->
+
+<!-- BEGIN: Content-->
+<div class="app-content content ">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper container-xxl p-0">
+
+        <!-- BEGIN: Content Header (Navigation Breadcrumb) -->
+        <div class="content-header row">
+            <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h2 class="content-header-title float-start mb-0">Support Center</h2>
+                        <div class="breadcrumb-wrapper">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/user/dashboard/">User</a>
+                                </li>
+                                <li class="breadcrumb-item active">Support
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BEGIN: Top right quick navigation -->
+
+            <div class="content-header-right text-md-end col-md-3 col-12 d-md-block d-none">
+                <div class="mb-1 breadcrumb-right">
+                    <div class="dropdown">
+                        <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle waves-effect waves-float waves-light" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></button>
+                        <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2 me-1"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg><span class="align-middle">Analytics</span></a><a class="dropdown-item" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder me-1"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg><span class="align-middle">Projects</span></a><a class="dropdown-item" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-pull-request me-1"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M13 6h3a2 2 0 0 1 2 2v7"></path><line x1="6" y1="9" x2="6" y2="21"></line></svg><span class="align-middle">Requests</span></a></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- END: Top right quick navigation -->
+
+        </div>
+        <!-- END: Content Header (Navigation Breadcrumb) -->
+
+        <div class="content-body">
+
+            <!-- Dashboard Analytics Start -->
+
+            <div class="row">
+                <!-- Medal Card -->
+                <div id="side-section" class="col-lg-4 col-md-12 col-sm-12">
+
+                    <div class="card card-congratulations">
+                        <div class="card-body text-center">
+                            <div class="avatar avatar-xl bg-primary shadow">
+                                <div class="avatar-content">
+                                    <i data-feather='life-buoy'></i>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <h1 class="mb-1 text-white">We're here to help,</h1>
+                                <p class="card-text m-auto w-75">
+                                    We take pride in providing <strong>mediation</strong> to all users. Please create a new support ticket and we'll get back to you as soon as we can.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header d-flex flex-column align-items-start text-start">
+                            <h4 class="card-title">Support Ticket</h4>
+                            <p>Encountered an issue? Let us know!</p>
+                        </div>
+                        <div class="card-body">
+                            <form class="form form-vertical">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="mb-1">
+                                            <label class="form-label" for="support-ticket-title">Subject</label>
+                                            <input
+                                                id="support-ticket-title"
+                                                class="form-control"
+                                                name="contact"
+                                                placeholder="Subject"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="d-block form-label" for="support-ticket-desc">Description</label>
+                                        <textarea class="form-control" id="support-ticket-desc" name="validationBiojq" rows="3"></textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="button" onclick="createTicket()" class="btn btn-primary me-1">Submit</button>
+                                        <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+                <!--/ Medal Card -->
+
+                <!-- Statistics Card -->
+                <div class="col-xl-8 col-md-6 col-12" style="overflow: auto; overflow-x:hidden;">
+                    <div class="card invoice-list-wrapper" style="height: 68vh;">
+                        <div class="card-datatable table-responsive">
+                            <table class="invoice-list-table table">
+                                <thead>
+                                <tr>
+                                    <th>Ticket #</th>
+                                    <th>Client</th>
+                                    <th class="text-truncate">Issued Date</th>
+                                    <th class="text-truncate">Status</th>
+                                    <th class="cell-fit">Actions</th>
+                                </tr>
+                                </thead>
+
+                                <div th:each="ticket: ${tickets}">
+
+                                    <tr>
+
+                                        <th th:text="${ticket.getId()}">#</th>
+                                        <th th:text="${ticket.getComplainant().getName()}">Clientus Missus</th>
+                                        <th th:text="${ticket.getCreationDate().toString()}">09/11/2011</th>
+
+                                        <th th:if="${ticket.getStatus().toString() == 'OPEN'}">
+                                            <span class="badge rounded-pill badge-light-primary me-1">Active</span>
+                                        </th>
+                                        <th th:if="${ticket.getStatus().toString() == 'PENDING'}">
+                                            <span class="badge rounded-pill badge-light-warning me-1">Pending</span>
+                                        </th>
+                                        <th th:if="${ticket.getStatus().toString() == 'CLOSED'}">
+                                            <span class="badge rounded-pill badge-light-danger me-1">Closed</span>
+                                        </th>
+
+                                        <th>
+                                            <button type="button" th:onclick="'window.location.href=\'/user/support/ticket/' + ${ticket.getId()} + '/\' '"
+                                                    class="btn btn-info waves-effect waves-float waves-light">Open</button>
+                                        </th>
+
+                                    </tr>
+
+                                </div>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!--/ Statistics Card -->
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<!-- END: Content-->
+
+<div class="sidenav-overlay"></div>
+<div class="drag-target"></div>
+
+<!-- BEGIN: Footer-->
+<footer class="footer footer-static footer-light">
+
+</footer>
+<button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
+<!-- END: Footer-->
+
+
+<!-- BEGIN: Vendor JS-->
+<script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+<!-- BEGIN Vendor JS-->
+
+<!-- BEGIN: Page Vendor JS-->
+<script src="/custom-scripts/axios.min.js"></script>
+<script src="../../../app-assets/vendors/js/charts/apexcharts.min.js"></script>
+<script src="../../../app-assets/vendors/js/extensions/toastr.min.js"></script>
+<script src="../../../app-assets/vendors/js/extensions/moment.min.js"></script>
+<script src="../../../app-assets/vendors/js/tables/datatable/jquery.dataTables.min.js"></script>
+<script src="../../../app-assets/vendors/js/tables/datatable/datatables.buttons.min.js"></script>
+<script src="../../../app-assets/vendors/js/tables/datatable/dataTables.bootstrap5.min.js"></script>
+<script src="../../../app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js"></script>
+<script src="../../../app-assets/vendors/js/tables/datatable/responsive.bootstrap5.js"></script>
+<!-- END: Page Vendor JS-->
+
+<!-- BEGIN: Theme JS-->
+<script src="../../../app-assets/js/core/app-menu.js"></script>
+<script src="../../../app-assets/js/core/app.js"></script>
+<!-- END: Theme JS-->
+
+<!-- BEGIN: Page JS-->
+<script src="../../../app-assets/js/scripts/pages/dashboard-analytics.js"></script>
+<!-- <script src="../../../app-assets/js/scripts/pages/app-invoice-list.js"></script> -->
+<!-- END: Page JS-->
+
+<script>
+        $(window).on('load', function () {
+            if (feather) {
+                feather.replace({
+                    width: 14,
+                    height: 14
+                });
+            }
+        })
+
+        async function refreshPage() {
+            document.location = '';
+        }
+
+        async function createTicket() {
+
+            let supportTitle = document.querySelector("#support-ticket-title").value;
+            let supportDescription = document.querySelector("#support-ticket-desc").value;
+
+            if (supportTitle.length < 5 || supportDescription.length < 5) return;
+
+            let res = await axios.post(`/api/v1/pri/user/ticket/create`, {
+                title: supportTitle,
+                description: supportDescription
+            });
+
+            refreshPage();
+        }
+
+    </script>
+</body>
+<!-- END: Body-->
+
+</html>

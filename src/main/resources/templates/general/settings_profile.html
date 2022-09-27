@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+  <!-- BEGIN: Head-->
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
+    <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
+    <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="PIXINVENT">
+    <title>Settings - Profile</title>
+    <link rel="apple-touch-icon" href="../../../../../app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../../../../../app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/forms/select/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/plugins/extensions/ext-component-sweet-alerts.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/sweetalert2.min.css">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap-extended.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/dark-layout.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/bordered-layout.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/semi-dark-layout.min.css">
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-menu.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/plugins/extensions/ext-component-sweet-alerts.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/plugins/forms/form-validation.css">
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
+    <!-- END: Custom CSS-->
+
+  </head>
+  <!-- END: Head-->
+
+  <!-- BEGIN: Body-->
+  <body class="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="">
+    <!-- BEGIN: Header-->
+    <div th:replace="fragment/top-nav-bar.html
+            :: notification(sessionContainer = ${sessionContainer}, userNotifications = ${userNotifications})">
+    </div>
+  <!-- END: Header-->
+
+
+    <!-- BEGIN: Main Menu-->
+
+    <div th:if="${sessionContainer.getUserRole().toString().equals('USER')}">
+      <div th:replace="fragment/user-left-nav.html
+            :: leftNav(sessionContainer = ${sessionContainer})">
+      </div>
+    </div>
+
+    <div th:if="${sessionContainer.getUserRole().toString().equals('MEDIATOR')}">
+      <div th:replace="fragment/mediator-left-nav.html
+            :: leftNav(sessionContainer = ${sessionContainer})">
+      </div>
+    </div>
+
+    <div th:if="${sessionContainer.getUserRole().toString().equals('ADMIN')}">
+      <div th:replace="fragment/admin-left-nav.html
+            :: leftNav(sessionContainer = ${sessionContainer})">
+      </div>
+    </div>
+
+    <!-- END: Main Menu-->
+
+    <!-- BEGIN: Content-->
+    <div class="app-content content ">
+      <div class="content-overlay"></div>
+      <div class="header-navbar-shadow"></div>
+      <div class="content-wrapper container-xxl p-0">
+        <div class="content-header row">
+          <div class="content-header-left col-md-9 col-12 mb-2">
+            <div class="row breadcrumbs-top">
+              <div class="col-12">
+                <h2 class="content-header-title float-start mb-0">Profile</h2>
+                <div class="breadcrumb-wrapper">
+                  <ol class="breadcrumb">
+
+                    <li th:if="${sessionContainer.getUserRole().toString().equals('MEDIATOR')}" class="breadcrumb-item">
+                      <a href="/mediator/dashboard/">Home</a>
+                    </li>
+
+                    <li th:if="${sessionContainer.getUserRole().toString().equals('USER')}" class="breadcrumb-item">
+                      <a href="/user/dashboard/">Home</a>
+                    </li>
+
+                    <li th:if="${sessionContainer.getUserRole().toString().equals('ADMIN')}" class="breadcrumb-item">
+                      <a href="/admin/">Home</a>
+                    </li>
+
+                    <li class="breadcrumb-item"><a href="#">Settings </a>
+                    </li>
+                    <li class="breadcrumb-item active"> Profile
+                    </li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="content-header-right text-md-end col-md-3 col-12 d-md-block d-none">
+            <div class="mb-1 breadcrumb-right">
+              <div class="dropdown">
+            </div>
+          </div>
+        </div>
+        <div class="content-body"><div class="row">
+  <div class="col-12">
+    <ul class="nav nav-pills mb-2">
+      <!-- profile -->
+      <li class="nav-item">
+        <a class="nav-link active" href="home">
+          <i data-feather="user" class="font-medium-3 me-50"></i>
+          <span class="fw-bold">Profile</span>
+        </a>
+      </li>
+      <!-- security -->
+      <li class="nav-item">
+        <a class="nav-link" href="security">
+          <i data-feather="lock" class="font-medium-3 me-50"></i>
+          <span class="fw-bold">Security</span>
+        </a>
+      </li>
+      <!--account delete-->
+      <li class="nav-item">
+        <a class="nav-link" href="delete">
+          <i data-feather="user-x" class="font-medium-3 me-50"></i>
+          <span class="fw-bold">Delete Account</span>
+        </a>
+      </li>
+    </ul>
+
+    <!-- profile -->
+    <div class="card">
+      <div class="card-header border-bottom">
+        <h4 class="card-title">Profile Details</h4>
+      </div>
+      <div class="card-body py-2 my-25">
+
+        <!-- form -->
+        <form class="validate-form mt-2 pt-50">
+          <div class="row">
+            <div class="col-12 col-sm-6 mb-1">
+              <label class="form-label" for="accountFirstName">First Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="accountFirstName"
+                name="firstName"
+                th:value="${firstName}"
+                data-msg="Please enter first name"
+              />
+            </div>
+            <div class="col-12 col-sm-6 mb-1">
+              <label class="form-label" for="accountLastName">Last Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="accountLastName"
+                name="lastName"
+                th:value="${lastName}"
+                data-msg="Please enter last name"
+              />
+            </div>
+            <div class="col-12 col-sm-6 mb-1">
+              <label class="form-label" for="accountEmail">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                id="accountEmail"
+                name="email"
+                placeholder="Email"
+                th:value="${sessionContainer.getEmail()}"
+                readonly
+              />
+            </div>
+
+            <div class="col-12 col-sm-6 mb-1">
+              <label class="form-label" for="accountOrganization">Company</label>
+              <input
+                type="text"
+                class="form-control"
+                id="accountOrganization"
+                name="organization"
+                placeholder="Company name"
+                th:value="${userObj.getCompany()}"
+              />
+            </div>
+
+            <div class="col-12 col-sm-6 mb-1">
+              <label class="form-label" for="accountPhoneNumber">Phone Number</label>
+              <input
+                type="text"
+                class="form-control account-number-mask"
+                id="accountPhoneNumber"
+                name="phoneNumber"
+                placeholder="Phone Number"
+                th:value="${userObj.getPhone()}"
+              />
+            </div>
+
+            <div class="col-12 col-sm-6 mb-1">
+              <label class="form-label" for="accountAddress">Address</label>
+              <input type="text" class="form-control" id="accountAddress" name="address" th:value="${userObj.getAddress()}" placeholder="Your Address" />
+            </div>
+
+
+            <div class="col-12 col-sm-6 mb-1">
+              <label class="form-label" for="country">Country</label>
+              <select id="country" th:value="${userObj.getCountry()}" class="select2 form-select">
+                <option value="">Select Country</option>
+                <option value="Australia">Australia</option>
+                <option value="Bangladesh">Bangladesh</option>
+                <option value="Belarus">Belarus</option>
+                <option value="Brazil">Brazil</option>
+                <option value="Canada">Canada</option>
+                <option value="China">China</option>
+                <option value="France">France</option>
+                <option value="Germany">Germany</option>
+                <option value="India">India</option>
+                <option value="Indonesia">Indonesia</option>
+                <option value="Israel">Israel</option>
+                <option value="Italy">Italy</option>
+                <option value="Japan">Japan</option>
+                <option value="Korea">Korea, Republic of</option>
+                <option value="Mexico">Mexico</option>
+                <option value="Philippines">Philippines</option>
+                <option value="Russia">Russian Federation</option>
+                <option value="South Africa">South Africa</option>
+                <option value="Thailand">Thailand</option>
+                <option value="Turkey">Turkey</option>
+                <option value="Ukraine">Ukraine</option>
+                <option value="United Arab Emirates">United Arab Emirates</option>
+                <option value="United Kingdom">United Kingdom</option>
+                <option value="United States">United States</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <button type="button" onclick="UpdateUserInfo()" class="btn btn-primary mt-1 me-1">Save changes</button>
+              <button type="reset" class="btn btn-outline-secondary mt-1">Cancel</button>
+            </div>
+          </div>
+        </form>
+        <!--/ form -->
+      </div>
+    </div>
+    <!--/ profile -->
+    <!-- END: Content-->
+
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+    <!-- BEGIN: Footer-->
+    <footer class="footer footer-static footer-light">
+
+    </footer>
+    <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
+    <!-- END: Footer-->
+
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+    <!-- BEGIN Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/forms/select/select2.full.min.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/sweetalert2.all.min.js"></script>
+    <script src="../../../app-assets/vendors/js/forms/validation/jquery.validate.min.js"></script>
+    <script src="../../../app-assets/vendors/js/forms/cleave/cleave.min.js"></script>
+    <script src="/custom-scripts/axios.min.js"></script>
+    <script src="../../../app-assets/vendors/js/forms/cleave/addons/cleave-phone.us.js"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="../../../app-assets/js/core/app-menu.min.js"></script>
+    <script src="../../../app-assets/js/core/app.min.js"></script>
+    <script src="../../../app-assets/js/scripts/customizer.min.js"></script>
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/pages/page-account-settings-account.min.js"></script>
+    <!-- END: Page JS-->
+
+    <script>
+
+      async function SendUserInfoUpdateAPI(jsn) {
+        console.log("Sending", jsn);
+        let res = await axios.post('/api/v1/pri/general/settings/details', jsn);
+      }
+
+      async function SendConfirmation(message) {
+        Swal.fire(
+          'Update Information',
+          message,
+          'success'
+        );
+      }
+
+      async function UpdateUserInfo() {
+
+        let firstNameElem = document.querySelector('#accountFirstName');
+        let lastNameElem = document.querySelector('#accountLastName');
+        let companyElem = document.querySelector('#accountOrganization');
+        let phoneElem = document.querySelector('#accountPhoneNumber')
+        let addressElem = document.querySelector('#accountAddress');
+        let countryElem = document.querySelector('#country');
+
+        let res = await SendUserInfoUpdateAPI({
+          name: firstNameElem.value + " " + lastNameElem.value,
+          company: companyElem.value,
+          phone: phoneElem.value,
+          address: addressElem.value,
+          country: countryElem.value
+        });
+
+        await SendConfirmation("Successfully changed user information, logout and log back in to see the changes made.");
+
+      }
+
+      $(window).on('load',  function(){
+        if (feather) {
+          feather.replace({ width: 14, height: 14 });
+        }
+      })
+    </script>
+  </body>
+  <!-- END: Body-->
+</html>

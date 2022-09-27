@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr"
+      xmlns:th="http://www.thymeleaf.org">
+<!-- BEGIN: Head-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
+    <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
+    <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="PIXINVENT">
+    <title>Project Request</title>
+    <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/apexcharts.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/toastr.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/responsive.bootstrap5.min.css">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/dark-layout.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/bordered-layout.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/semi-dark-layout.css">
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-menu.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/plugins/charts/chart-apex.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/plugins/extensions/ext-component-toastr.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/pages/app-invoice-list.css">
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../../assets/css/style.css">
+    <!-- END: Custom CSS-->
+
+</head>
+<!-- END: Head-->
+
+  <!-- BEGIN: Body-->
+  <body class="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="">
+    <!-- BEGIN: Header-->
+    <div th:replace="fragment/top-nav-bar.html
+            :: notification(sessionContainer = ${sessionContainer}, userNotifications = ${userNotifications})">
+    </div>
+  <!-- END: Header-->
+
+
+    <!-- BEGIN: Main Menu-->
+    <div th:replace="fragment/user-left-nav.html
+            :: leftNav(sessionContainer = ${sessionContainer})">
+    </div>
+    <!-- END: Main Menu-->
+
+    <!-- BEGIN: Content-->
+    <div class="app-content content ">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper container-xxl p-0">
+            <div class="content-header row">
+
+            </div>
+            <div class="content-body">
+                <!-- Request model start -->
+                <section id="Request_ticket">
+
+                    <div class="row match-height d-flex justify-content-center">
+                    </div>
+
+                    <!-- ongoing ticket -->
+                    <div class="row">
+                        <!-- <div class="d-flex justify-content-between"><h2 class="fw-bolder">Project 1</h2></div> -->
+                        <div class="content-header">
+                            <div class="content-header-left col-md-9 col-12 mb-2">
+                              <div class="row breadcrumbs-top">
+                                <div class="col-12">
+                                  <h2 class="content-header-title float-start mb-0">Request</h2>
+                                  <div class="breadcrumb-wrapper">
+                                    <ol class="breadcrumb">
+                                      <li class="breadcrumb-item"><a href="Project_Overview2.html">Home</a>
+                                      </li>
+                                      <li class="breadcrumb-item"><a href="">Project Name</a>
+                                      </li>
+                                      <li class="breadcrumb-item active"> Request
+                                      </li>
+                                    </ol>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="content-header-right text-md-end col-md-3 col-12 d-md-block d-none">
+                              <div class="mb-1 breadcrumb-right">
+                                <div class="dropdown">
+                              </div>
+                            </div>
+                          </div>
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header border-bottom">
+                                <h4 class="card-title">Request Ticket</h4>
+                                <span class="badge badge-glow bg-info">Ongoing</span>
+                                </div>
+                                    <div class="card-body" style="overflow: auto; height: 45vh;">
+                                        <div th:each="request: ${openRequests}" class="accordion accordion-margin" id="accordionMargin">
+
+                                            <div class="accordion-item">
+
+                                                <h2 class="accordion-header" id="headingMarginOne1">
+                                                <button
+                                                    class="accordion-button collapsed btn btn-info waves-effect waves-float waves-light"
+                                                    type="button"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#accordionMarginOne1"
+                                                    aria-expanded="false"
+                                                    aria-controls="accordionMarginOne1"
+                                                    th:text="${assetService.ui_getAssetRequestTitle(sessionContainer, request)}"
+                                                >
+                                                Request Ticket No.34
+                                                </button>
+                                                </h2>
+                                                <div
+                                                id="accordionMarginOne1"
+                                                class="accordion-collapse collapse"
+                                                aria-labelledby="headingMarginOne1"
+                                                data-bs-parent="#accordionMargin"
+                                                >
+                                                <div style="margin-top: 0.5em; font-size: 16px;" th:text="${request.getMessage()}" class="accordion-body">
+                                                    Hello, I want my money back.
+                                                </div>
+                                                <div th:id="${request.getId()}" class="d-flex align-items-center justify-content-between mt-2">
+                                                    <button class="btn btn-danger" onclick="sendAssetApproval(this, false)">Deny</button>
+                                                    <button class="btn btn-success" onclick="sendAssetApproval(this, true)">Approve</button>
+                                                </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/ ongoing ticket-->
+                </section>
+                <!--history start-->
+                <section id="alert-colors">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="card">
+                          <div class="card-header">
+                            <h4 class="card-title">History</h4>
+                            <span class="badge badge-glow bg-secondary">Closed</span>
+                          </div>
+                            <div class="card-body" style="overflow: auto; height: 45vh;">
+                                    <div class="accordion accordion-margin" id="accordionMargin">
+                                    <div th:each="request: ${closedRequests}"  class="accordion-item">
+                                        <h2 class="accordion-header" id="headingMarginOne">
+                                        <button
+                                            class="accordion-button collapsed btn btn-gradient-secondary waves-effect waves-float waves-light"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#accordionMarginOne"
+                                            aria-expanded="false"
+                                            aria-controls="accordionMarginOne"
+                                            th:text="${assetService.ui_getAssetRequestTitle(sessionContainer, request)}"
+                                        >
+                                        Request Ticket No.23
+                                        </button>
+                                        </h2>
+                                        <div
+                                        id="accordionMarginOne"
+                                        class="accordion-collapse collapse"
+                                        aria-labelledby="headingMarginOne"
+                                        data-bs-parent="#accordionMargin"
+                                        >
+                                        <div th:text="${request.getMessage()}" class="accordion-body">
+                                            Pastry pudding cookie toffee bonbon jujubes jujubes powder topping. Jelly beans gummi bears sweet roll
+                                            bonbon muffin liquorice. Wafer lollipop sesame snaps. Brownie macaroon cookie muffin cupcake candy
+                                            caramels tiramisu. Oat cake chocolate cake sweet jelly-o brownie biscuit marzipan. Jujubes donut
+                                            marzipan chocolate bar. Jujubes sugar plum jelly beans tiramisu icing cheesecake.
+                                        </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                  <!--/ history-->
+
+                  <!--page icon-->
+                  <div class="d-flex justify-content-between mx-2 row mb-1">
+                      <div class="col-sm-12 col-md-6">
+                          <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite"></div>
+                      </div>
+                            <div class="col-sm-12 col-md-6">
+                                <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                                    <ul class="pagination">
+                                        <li class="paginate_button page-item previous disabled" id="DataTables_Table_0_previous">
+                                            <a href="#" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" class="page-link">&nbsp;</a></li>
+                                            <li class="paginate_button page-item active"><a href="#" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
+                                            <li class="paginate_button page-item next disabled" id="DataTables_Table_0_next"><a href="#" aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0" class="page-link">&nbsp;</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                 </div>
+                 <!--/page icon-->
+            </div>
+        </div>
+
+
+
+    </div>
+    <!-- END: Content-->
+
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+    <!-- BEGIN: Footer-->
+    <footer class="footer footer-static footer-light">
+
+    </footer>
+    <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
+    <!-- END: Footer-->
+
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+    <!-- BEGIN Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/charts/apexcharts.min.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/toastr.min.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/moment.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/jquery.dataTables.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/datatables.buttons.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/dataTables.bootstrap5.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/responsive.bootstrap5.js"></script>
+    <script src="/custom-scripts/axios.min.js"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="../../../app-assets/js/core/app-menu.js"></script>
+    <script src="../../../app-assets/js/core/app.js"></script>
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/pages/app-user-list.min.js"></script>
+    <script src="../../../app-assets/js/scripts/components/components-accordion.js"></script>
+  >
+    <!-- END: Page JS-->
+
+    <script>
+
+        async function GetCurrentProjectId() {
+            let projectId = window.document.URL.split('/user/project/')[1].split('/')[0];
+            return projectId;
+        }
+
+        async function SendRequestUpdateAPI(projectId, status) {
+            let res = await axios.post(`/api/v1/pri/user/project/assets/security/approve/${projectId}`, status);
+            return res;
+        }
+
+        async function sendAssetApproval(context, approved) {
+            let projectId = await GetCurrentProjectId();
+            let requestId = context.parentNode.id;
+
+            await SendRequestUpdateAPI(projectId,{
+                requestId: requestId,
+                allowed: approved
+            });
+
+            document.location = '';
+        }
+
+        $(window).on('load', function() {
+            if (feather) {
+                feather.replace({
+                    width: 14,
+                    height: 14
+                });
+            }
+        })
+
+
+    </script>
+</body>
+<!-- END: Body-->
+
+</html>

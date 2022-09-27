@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="/app-assets/vendors/css/vendors.min.css">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Apex Charts-->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/plugins/charts/chart-apex.css">
+    <!-- END: Apex Charts-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/components.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/themes/dark-layout.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/themes/bordered-layout.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/themes/semi-dark-layout.css">
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/core/menu/menu-types/vertical-menu.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/themes/bordered-layout.css">
+    <!-- END: Page CSS-->
+
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="/app-assetsassets/css/style.css">
+    <!-- END: Custom CSS-->
+</head>
+<body>
+
+<div th:fragment="projectCard (project)">
+
+    <div class="card card-developer-meetup">
+
+        <div class="meetup-img-wrapper rounded-top text-center">
+            <img th:src="${project.getBannerLocation()}" src="/images/project.svg" alt="Meeting Pic" height="170">
+        </div>
+
+        <div class="card-body">
+
+            <!-- Will contain the date of the project -->
+            <div class="meetup-header d-flex align-items-center">
+
+                <div class="meetup-day">
+                    <h6 class="mb-0">CATEGORIES</h6>
+                    <h4 th:text="${project.categories.size()}" class="mb-0">24</h4>
+                </div>
+
+                <div class="my-auto">
+                    <h4 th:text="${project.getName()}" style="text-overflow: ellipsis;" class="card-title mb-25">Checkered Cabs</h4>
+                    <p th:text="${project.getDescription()}" style="text-overflow: ellipsis;" class="card-text mb-0">Calgary's #1 Taxi Service</p>
+                </div>
+
+            </div>
+
+            <!-- Contains important info on the project (client and agency)-->
+            <div class="mt-0">
+                <div class="avatar float-start bg-light-primary rounded me-1">
+                    <div class="avatar-content">
+                        <i data-feather="user" class="avatar-icon"></i>
+                    </div>
+                </div>
+                <div class="more-info">
+                    <h6 th:text="${project.getUser().getName()}" class="mb-0">Luckymarc Gumboc</h6>
+                    <small>Project Owner</small>
+                </div>
+            </div>
+
+            <!-- Contains list of members connected to the project-->
+            <div class="design-group pt-25 mt-1">
+                <h6 class="section-label">Members</h6>
+
+                <div class="avatar-group mt-0">
+
+                    <div th:each="member: ${project.getMembers()}">
+                        <div  data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="bottom" title class="avatar pull-up" th:data-bs-original-title="${member.getUser().getName()}">
+                            <div th:text="${member.getUser().getName().substring(0,1)}" class="avatar-content">IL</div>
+                        </div>
+                    </div>
+
+                    <h6 class="align-self-center cursor-pointer ms-50 mb-0">+4</h6>
+
+                </div>
+
+
+                <!-- Button to navigate to the project -->
+                <button type="button" th:onclick="'window.location.href=\'/user/project/' + ${project.getId()} + '/\' '"
+                        class="btn btn-primary w-100 waves-effect waves-float waves-light mt-1">Select Project</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        async function refreshPage() {
+            document.location = '';
+        }
+
+        async function ClearNotifications() {
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", '/api/v1/pri/general/notification/clear', true);
+
+            xhr.onreadystatechange = function() { // Call a function when the state changes.
+                refreshPage();
+            }
+
+            xhr.send("");
+        }
+
+    </script>
+
+</div>
+
+
+
+</body>
+</html>

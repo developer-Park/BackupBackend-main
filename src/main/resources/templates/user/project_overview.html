@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html
+xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org"
+class="loading bordered-layout" lang="en" data-layout="bordered-layout" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
+    <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
+    <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="PIXINVENT">
+    <title>Layout collapsed menu - Vuexy - Bootstrap HTML admin template</title>
+    <link rel="apple-touch-icon" href="/app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="/app-assets/vendors/css/vendors.min.css">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Apex Charts-->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/plugins/charts/chart-apex.css">
+    <!-- END: Apex Charts-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/components.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/themes/dark-layout.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/themes/bordered-layout.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/themes/semi-dark-layout.css">
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/core/menu/menu-types/vertical-menu.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/themes/bordered-layout.css">
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Form/Modal CSS -->
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/pages/modal-create-app.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/plugins/forms/form-wizard.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/plugins/forms/form-validation.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/vendors/css/forms/wizard/bs-stepper.min.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/vendors/css/forms/select/select2.min.css">
+    <!-- END: Form/Modal CSS -->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+    <!-- END: Custom CSS-->
+
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+
+<body class="vertical-layout vertical-menu-modern  navbar-floating footer-static   menu-collapsed" data-open="click" data-menu="vertical-menu-modern" data-col="">
+
+<!-- BEGIN: Header-->
+<div th:replace="fragment/top-nav-bar.html
+            :: notification(sessionContainer = ${sessionContainer}, userNotifications = ${userNotifications})">
+</div>
+<!-- END: Header-->
+
+
+<!-- BEGIN: Main Menu-->
+<div th:replace="fragment/user-left-nav.html
+            :: leftNav(sessionContainer = ${sessionContainer})">
+</div>
+<!-- END: Main Menu-->
+
+<!-- BEGIN: Content-->
+<div class="app-content content ">
+
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+
+    <div class="content-wrapper container-xxl p-0">
+
+        <!-- Content HEADER (inside the container) -->
+        <div class="content-header row">
+            <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h2 class="content-header-title float-start mb-0">Project Overview</h2>
+                        <div class="breadcrumb-wrapper">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/user/dashboard">User</a>
+                                </li>
+                                <li class="breadcrumb-item active">Projects
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-header-right text-md-end col-md-3 col-12 d-md-block d-none">
+                <div class="mb-1 breadcrumb-right">
+                    <div class="dropdown">
+                        <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="grid"></i></button>
+                        <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#"><i class="me-1" data-feather="check-square"></i><span class="align-middle">Todo</span></a><a class="dropdown-item" href="#"><i class="me-1" data-feather="message-square"></i><span class="align-middle">Chat</span></a><a class="dropdown-item" href="#"><i class="me-1" data-feather="mail"></i><span class="align-middle">Email</span></a><a class="dropdown-item" href="#"><i class="me-1" data-feather="calendar"></i><span class="align-middle">Calendar</span></a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content BODY -->
+        <div class="content-body">
+
+            <!-- Individual row -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="alert alert-primary" role="alert">
+                        <div class="alert-body">
+                            <strong>Info:</strong> Using this page, users will be able to view all projects they are in, as well as the ability to create a new project.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Row for divider (Sort By, New Project) -->
+            <div class="row">
+
+                <div class="col-lg-6 col-md-6 col-6">
+
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-gradient-primary dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Sort By
+                        </button>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Most Assets</a>
+                            <a class="dropdown-item" href="#">Recent Activity</a>
+                            <a class="dropdown-item" href="#">Project Manager</a>
+                            <a class="dropdown-item" href="#">Project Client</a>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-6">
+
+                    <div class="justify-content-end">
+                        <button type="button" class="btn btn-flat-info float-end" id="addNewProjectButton" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <i data-feather="plus" class="avatar-icon"></i>
+                            <span class="align-middle">New Project</span>
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- BEGIN: Check no projects -->
+
+            <th th:if="${projectGrid.size() == 0}">
+
+                <div class="row">
+
+                    <div class="col-lg-12 col-md-12 col-12">
+
+                        <div  style="margin-top: 1em;" class="card text-center shadow-none bg-transparent border-info col-12">
+
+                            <div class="card-body">
+                                <h4 class="card-title" style="margin-bottom: 0.5em;">Create a new Project</h4>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus" style="width: 50px; height: 50px; margin-bottom: 1em;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+                                <p class="card-text">You're not a member of any projects, either create one or wait for a project invitation.</p>
+                                <button type="button" onclick="PopCreateNewProjectModal()" class="btn btn-gradient-success waves-effect">New Project</button>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </th>
+
+            <!-- END: Check no projects -->
+
+            <!-- BEGIN: Project Insertion (Rows) -->
+
+            <!-- For each row in the project grid -->
+            <div th:each="projectRow : ${projectGrid}" class="row mt-1">
+                
+                <!-- For each item in the row -->
+                <div th:each="project : ${projectRow}" class="col-lg-4 col-md-6 col-12">
+
+                    <div th:replace="fragment/project-card.html
+                        :: projectCard(project = ${project})">
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- END: Project Insertion (Rows) -->
+
+
+            <div class="row">
+
+                <div class="modal fade" id="exampleModal" style="display: none;" aria-hidden="true" aria-labelledby="exampleModalLabel">
+
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+
+                        <div class="modal-content">
+
+                            <div class="modal-header bg-transparent">
+                                <!-- <h4 class="modal-title">Modal Title</h4> -->
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body pb-3 px-sm-3">
+
+                                <h1 class="text-center mb-1" id="createAppTitle">Create Project</h1>
+                                <p class="text-center mb-2">Please complete this form to create a new project!</p>
+
+                                <div class="bs-stepper vertical wizard-modern create-app-wizard">
+
+                                    <div class="bs-stepper-header" role="tablist">
+
+                                        <!-- Side-bar steps -->
+
+                                        <div class="step active" data-target="#create-app-details" role="tab" id="create-app-details-trigger">
+                                            <button type="button" class="step-trigger py-75" aria-selected="true">
+                                                    <span class="bs-stepper-box">
+                                                        <i data-feather="info"></i>
+                                                    </span>
+                                                <span class="bs-stepper-label">
+                                                        <span class="bs-stepper-title">Details</span>
+                                                        <span class="bs-stepper-subtitle">Fill Project Info</span>
+                                                    </span>
+                                            </button>
+                                        </div>
+
+                                        <div class="step" data-target="#create-app-people" role="tab" id="create-app-people-trigger">
+                                            <button type="button" class="step-trigger py-75" aria-selected="false">
+                                                    <span class="bs-stepper-box">
+                                                        <i data-feather="user-plus"></i>
+                                                    </span>
+                                                <span class="bs-stepper-label">
+                                                        <span class="bs-stepper-title">People</span>
+                                                        <span class="bs-stepper-subtitle">Invite Members</span>
+                                                    </span>
+                                            </button>
+                                        </div>
+
+                                    </div>
+
+                                    <!-- Content -->
+
+                                    <div class="bs-stepper-content shadow-none">
+
+                                        <!-- Project Details Tab -->
+                                        <div id="create-app-details" class="content dstepper-block active" role="tabpanel" aria-labelledby="create-app-details-trigger">
+
+                                            <h5>Project Name</h5>
+                                            <input id="projectName" class="form-control" type="text" placeholder="MyProject1">
+
+                                            <h5 style="margin-top: 1em;">Project Description</h5>
+                                            <input id="projectDescription" class="form-control" type="text" placeholder="Data Management and Logistics Portal for MyProject1">
+
+                                            <h5 class="mt-2 pt-1">Project Banner URL</h5>
+
+                                            <!-- Here is a list group which belongs to each item in the form -->
+                                            <ul class="list-group list-group-flush">
+
+                                                <!-- Here is an individual item inside of the page -->
+                                                <li class="list-group-item border-0 px-0">
+
+                                                    <label for="createAppCrm" class="d-flex cursor-pointer">
+
+                                                        <span class="avatar avatar-tag bg-light-info me-1">
+                                                            <i data-feather='link'></i>
+                                                        </span>
+
+                                                        <span class="d-flex align-items-center justify-content-between flex-grow-1">
+                                                            <input id="projectBannerUrl" class="form-control" type="text" placeholder="https://www.imgur.com/banner.png">
+                                                        </span>
+
+                                                    </label>
+
+                                                </li>
+
+                                            </ul>
+
+                                        </div>
+
+                                        <!-- Project Member Invitations Tab -->
+                                        <div id="create-app-people" class="content dstepper-block" role="tabpanel" aria-labelledby="create-app-people-trigger">
+
+                                            <h5>Search for User</h5>
+
+                                            <div class="d-flex justify-content-between mt-2">
+
+                                                <input class="form-control" id="inviteUserEmail" type="text" placeholder="user@sait.edu.ca">
+                                                <button id="inviteUserBtn" onclick="addMemberToProject()" class="btn btn-outline-warning btn-prev waves-effect" style="margin-left: 0.5em;">
+                                                    <i data-feather="send"></i>
+                                                    <a>Add</a>
+                                                </button>
+
+                                            </div>
+
+                                            <h5 class="mt-2 pt-1">Current Invitation List</h5>
+
+                                            <!-- Here is a list group which holds each user in the invitation list -->
+                                            <ul id="memberInvitationList" class="list-group list-group-flush mb-2" style="height: 10vh; overflow: auto;">
+
+                                            </ul>
+
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="modal-footer">
+
+                                <div class="d-flex justify-content-between mt-2">
+
+                                    <button id="newProjectModalPrevBtn" class="btn btn-outline-secondary btn-prev waves-effect" disabled>
+                                        <i data-feather="arrow-left"></i>
+                                        <a>Previous</a>
+                                    </button>
+
+                                    <button id="newProjectModalNextBtn" class="btn btn-outline-info btn-prev waves-effect" style="margin-left: 1em;">
+                                        <i data-feather="arrow-right"></i>
+                                        <a>Next</a>
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <div id="memberInvitationListItemTemplate" style="display: none;">
+                <li  class="list-group-item d-flex align-items-start border-0 px-0">
+
+                    <div class="avatar me-75">
+                        <div class="avatar-content">AY</div>
+                    </div>
+
+                    <div class="d-flex align-items-center justify-content justify-content-between w-100">
+
+                        <div class="me-1">
+                            <h5 id="templateName" class="mb-25">Alexander Yee</h5>
+                            <span id="templateEmail">alexander.yee@sait.edu.ca</span>
+                        </div>
+
+                        <div>
+                            <button onclick="removeMember(this)" class="btn btn-flat-secondary waves-effect" type="button" id="inviteMember1">
+                                Remove
+                            </button>
+                        </div>
+
+                    </div>
+
+                </li>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+<!-- END: Content-->
+
+<div class="sidenav-overlay"></div>
+<div class="drag-target"></div>
+
+<!-- BEGIN: Footer-->
+<footer class="footer footer-static footer-light">
+
+</footer>
+<button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
+<!-- END: Footer-->
+
+
+<!-- BEGIN: Vendor JS-->
+<script src="/app-assets/vendors/js/vendors.min.js"></script>
+<!-- BEGIN Vendor JS-->
+
+<!-- BEGIN: Page Vendor JS-->
+<script src="/app-assets/vendors/js/forms/wizard/bs-stepper.min.js"></script>
+<script src="/app-assets/vendors/js/forms/select/select2.full.min.js"></script>
+<script src="/custom-scripts/axios.min.js"></script>
+<!-- END: Page Vendor JS-->
+
+<!-- BEGIN: Theme JS-->
+<script src="/app-assets/js/core/app-menu.js"></script>
+<script src="/app-assets/js/core/app.js"></script>
+<!-- END: Theme JS-->
+
+<!-- BEGIN: Page JS-->
+
+<!-- END: Page JS-->
+
+<!-- BEGIN: Render Charts -->
+<script src="./chartController.js"></script>
+<!-- END: Render Charts -->
+
+<script>
+
+        $(window).on('load', function() {
+            if (feather) {
+                feather.replace({
+                    width: 14,
+                    height: 14
+                });
+            }
+        })
+
+        // Configure create new project modal handlers
+
+        let newProjectModalMemory = {
+            currentPage: 0,
+            sequence: ["#create-app-details", "#create-app-people"]
+        };
+
+        async function addMemberToProject() {
+
+            console.log("Member added to project");
+
+            let inviteUserInput = document.querySelector('#inviteUserEmail');
+            let userEmail = inviteUserInput.value;
+            inviteUserInput.value = "";
+
+            let userInvitationTemplate = document.querySelector('#memberInvitationListItemTemplate').cloneNode(true);
+
+            userInvitationTemplate.querySelector('#templateName').innerText = "New Member";
+            userInvitationTemplate.querySelector('#templateEmail').innerText = userEmail;
+
+            userInvitationTemplate.style.display = "block";
+
+            document.querySelector('#memberInvitationList').appendChild(
+                userInvitationTemplate
+            );
+
+            console.log(userInvitationTemplate);
+
+        }
+
+        async function removeMember(elem) {
+            console.log("Remove invite called for: ", elem);
+
+            let email = elem.parentElement.parentElement.parentElement.parentElement;
+
+            document.querySelector('#memberInvitationList').removeChild(
+                email
+            );
+
+        }
+
+        async function sendCreateNewProject() {
+
+            console.log("Send create new project triggered");
+
+            // Get project details
+            let projectBannerUrl = document.querySelector('#projectBannerUrl').value;
+            let projectDescription = document.querySelector('#projectDescription').value;
+            let projectName = document.querySelector('#projectName').value;
+
+            // Get invitation list
+            let invitationList = document.querySelector('#memberInvitationList');
+
+            let inviteListElem = invitationList.querySelectorAll('li');
+
+            let invites = [];
+            for (let invite of inviteListElem) {
+                invites.push(
+                    invite.querySelector('#templateEmail').innerText
+                );
+            }
+
+            let payload = {
+                bannerLocation: projectBannerUrl,
+                description: projectDescription,
+                name: projectName,
+                invitationList: invites
+            };
+
+            await axios.post('/api/v1/pri/user/project/create', payload);
+
+            document.location = '';
+
+        }
+
+        async function PopCreateNewProjectModal() {
+            let modalElem = document.querySelector('#exampleModal');
+            let modalInst = bootstrap.Modal.getOrCreateInstance(
+                modalElem
+            );
+            modalInst.show();
+        }
+
+        async function ConfigureCreateNewProjectModal() {
+
+            let prevBtn = document.querySelector('#newProjectModalPrevBtn');
+            let nextBtn = document.querySelector('#newProjectModalNextBtn');
+
+
+            // '#create-app-details').classList.remove('active')
+
+            nextBtn.onclick = _ => {
+
+                newProjectModalMemory.currentPage++;
+
+                // Check if we are already on the last page
+                if (newProjectModalMemory.currentPage + 1 > newProjectModalMemory.sequence.length) {
+                    sendCreateNewProject();
+                }
+
+                // Check if end of the sequence
+                if (newProjectModalMemory.currentPage + 1 == newProjectModalMemory.sequence.length) {
+                    console.log("Max nav hit");
+                    nextBtn.querySelector('a').text = 'Submit';
+                    nextBtn.classList.remove('btn-outline-info');
+                    nextBtn.classList.add('btn-success');
+                }
+
+                // Enable previous button
+                if (newProjectModalMemory.currentPage == 1) {
+                    console.log("Removing disabled");
+                    prevBtn.removeAttribute('disabled');
+                }
+
+                // Change the next active item (remove active from previous element)
+                let prevNavItem = document.querySelector(
+                    newProjectModalMemory.sequence[
+                        newProjectModalMemory.currentPage - 1
+                    ] + "-trigger"
+                ).classList.remove('active');
+
+                let prevContentItem = document.querySelector(
+                    newProjectModalMemory.sequence[
+                        newProjectModalMemory.currentPage - 1
+                    ]
+                ).classList.remove('active');
+
+                // Change the next active item (add active to the next item)
+                let NextNavItem = document.querySelector(
+                    newProjectModalMemory.sequence[
+                        newProjectModalMemory.currentPage
+                    ] + "-trigger"
+                ).classList.add('active');
+
+                let NextContentItem = document.querySelector(
+                    newProjectModalMemory.sequence[
+                        newProjectModalMemory.currentPage
+                    ]
+                ).classList.add('active');
+
+            };
+
+            prevBtn.onclick = _ => {
+
+                newProjectModalMemory.currentPage--;
+
+                console.log(newProjectModalMemory.currentPage);
+
+                if (newProjectModalMemory.currentPage == 0) {
+
+                    // Disable previous btn
+                    prevBtn.setAttribute('disabled', '');
+                }
+
+                nextBtn.querySelector('a').text = 'Next';
+                nextBtn.classList.remove('btn-success');
+                nextBtn.classList.add('btn-outline-info');
+
+                // Disable the last page
+                let prevNavItem = document.querySelector(
+                    newProjectModalMemory.sequence[
+                        newProjectModalMemory.currentPage + 1
+                    ] + "-trigger"
+                ).classList.remove('active');
+
+                let prevContentItem = document.querySelector(
+                    newProjectModalMemory.sequence[
+                        newProjectModalMemory.currentPage + 1
+                    ]
+                ).classList.remove('active');
+
+                // Enable the current page
+                let NextNavItem = document.querySelector(
+                    newProjectModalMemory.sequence[
+                        newProjectModalMemory.currentPage
+                    ] + "-trigger"
+                ).classList.add('active');
+
+                let NextContentItem = document.querySelector(
+                    newProjectModalMemory.sequence[
+                        newProjectModalMemory.currentPage
+                    ]
+                ).classList.add('active');
+
+            }
+
+        }
+
+
+        ConfigureCreateNewProjectModal();
+
+
+    </script>
+</body>
+<!-- END: Body-->
+
+</html>
+
+

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="/app-assets/vendors/css/vendors.min.css">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Apex Charts-->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/plugins/charts/chart-apex.css">
+    <!-- END: Apex Charts-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/components.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/themes/dark-layout.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/themes/bordered-layout.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/themes/semi-dark-layout.css">
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/core/menu/menu-types/vertical-menu.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/themes/bordered-layout.css">
+    <!-- END: Page CSS-->
+
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="/app-assetsassets/css/style.css">
+    <!-- END: Custom CSS-->
+</head>
+<body>
+
+<div th:fragment="notification (sessionContainer, userNotifications)">
+
+    <nav class="header-navbar navbar navbar-expand-lg align-items-center floating-nav navbar-light navbar-shadow container-xxl">
+
+        <div class="navbar-container d-flex content">
+        <div class="bookmark-wrapper d-flex align-items-center">
+            <ul class="nav navbar-nav d-xl-none">
+                <li class="nav-item"><a class="nav-link menu-toggle" href="#"><i class="ficon" data-feather="menu"></i></a></li>
+            </ul>
+            <ul class="nav navbar-nav">
+                <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-style"><i class="ficon" data-feather="moon"></i></a></li>
+            </ul>
+        </div>
+        <ul class="nav navbar-nav align-items-center ms-auto">
+
+            <li class="nav-item dropdown dropdown-notification me-25"><a class="nav-link" href="#" data-bs-toggle="dropdown" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell ficon"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg><span th:text="${userNotifications.size()}"  class="badge rounded-pill bg-info badge-up">5</span></a>
+                <ul class="dropdown-menu dropdown-menu-media dropdown-menu-end">
+                    <li class="dropdown-menu-header">
+                        <div class="dropdown-header d-flex">
+                            <h4 class="notification-title mb-0 me-auto">Notifications</h4>
+                            <div th:text="${userNotifications.size()} + ' Unread'" class="badge rounded-pill badge-light-primary">6 New</div>
+                        </div>
+                    </li>
+                    <li class="scrollable-container media-list ps ps--active-y">
+
+
+                        <!-- BEGIN: Individual notification -->
+                        <a th:each="notification : ${userNotifications}" class="d-flex" href="#">
+                            <div class="list-item d-flex align-items-start">
+
+                                <div class="me-1">
+
+                                    <!-- BEGIN: Selection of notification icon -->
+                                    <th th:if="${notification.type.toString() == 'SUPPORT_TICKET_STATUS_UPDATE'}">
+                                        <div class="avatar avatar-md bg-light-success">
+                                            <div class="avatar-content">
+                                                <i data-feather="life-buoy" class="avatar-icon"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+
+                                    <th th:if="${notification.type.toString() == 'SUPPORT_TICKET_MESSAGE'}">
+                                        <div class="avatar avatar-md bg-light-info">
+                                            <div class="avatar-content">
+                                                <i data-feather="message-circle" class="avatar-icon"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+
+                                    <th th:if="${notification.type.toString() == 'PROJECT_INVITATION'}">
+                                        <div class="avatar avatar-md bg-light-primary">
+                                            <div class="avatar-content">
+                                                <i data-feather="folder-plus" class="avatar-icon"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+
+                                    <th th:if="${notification.type.toString() == 'PROJECT_ASSET_REQUEST'}">
+                                        <div class="avatar avatar-md bg-light-primary">
+                                            <div class="avatar-content">
+                                                <i data-feather="activity" class="avatar-icon"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+
+                                    <th th:if="${notification.type.toString() == 'PROJECT_ASSET_APPROVED'}">
+                                        <div class="avatar avatar-md bg-light-success">
+                                            <div class="avatar-content">
+                                                <i data-feather="unlock" class="avatar-icon"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+
+                                    <th th:if="${notification.type.toString() == 'PROJECT_ASSET_DENIED'}">
+                                        <div class="avatar avatar-md bg-light-danger">
+                                            <div class="avatar-content">
+                                                <i data-feather="lock" class="avatar-icon"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+
+                                    <th th:if="${notification.type.toString() == 'SYSTEM_UPDATE'}">
+                                        <div class="avatar avatar-md bg-light-info">
+                                            <div class="avatar-content">
+                                                <i data-feather="server" class="avatar-icon"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+
+                                    <th th:if="${notification.type.toString() == 'SYSTEM_DOWNTIME'}">
+                                        <div class="avatar avatar-md bg-light-danger">
+                                            <div class="avatar-content">
+                                                <i data-feather="power" class="avatar-icon"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+
+                                </div>
+                                <!-- END: Selection of notification icon -->
+
+                                <!-- BEGIN: Notification body -->
+                                <div class="list-item-body flex-grow-1">
+
+                                    <p class="media-heading">
+
+                                    <th th:if="${notification.type.toString() == 'SUPPORT_TICKET_STATUS_UPDATE'}">
+                                        <span class="fw-bolder">Support Ticket Status Updated 👋</span>
+                                    </th>
+
+                                    <th th:if="${notification.type.toString() == 'SUPPORT_TICKET_MESSAGE'}">
+                                        <span class="fw-bolder">Support Ticket Message 👋</span>
+                                    </th>
+
+                                    <th th:if="${notification.type.toString() == 'PROJECT_INVITATION'}">
+                                        <span class="fw-bolder">Project Invitation 😎</span>
+                                    </th>
+
+                                    <th th:if="${notification.type.toString() == 'PROJECT_ASSET_REQUEST'}">
+                                        <span class="fw-bolder">Asset Requested 👋</span>
+                                    </th>
+
+                                    <th th:if="${notification.type.toString() == 'PROJECT_ASSET_APPROVED'}">
+                                        <span class="fw-bolder">Asset Request Approved! 🥳</span>
+                                    </th>
+
+                                    <th th:if="${notification.type.toString() == 'PROJECT_ASSET_DENIED'}">
+                                        <span class="fw-bolder">Asset Request Denied 😱</span>
+                                    </th>
+
+                                    <th th:if="${notification.type.toString() == 'SYSTEM_UPDATE'}">
+                                        <span class="fw-bolder">System Updated 💻 </span>
+                                    </th>
+
+                                    <th th:if="${notification.type.toString() == 'SYSTEM_DOWNTIME'}">
+                                        <span class="fw-bolder">System Maintenance Scheduled 🛠️</span>
+                                    </th>
+
+                                    </p>
+
+                                    <small th:text="${notification.body}" class="notification-text"> Won the monthly best seller badge.</small>
+
+                                </div>
+                                <!-- END: Notification body -->
+
+                            </div>
+                        </a>
+                        <!-- END: Individual notification -->
+
+                        <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; right: 0px; height: 350px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 282px;"></div></div></li>
+                    <li class="dropdown-menu-footer"><a class="btn btn-primary w-100 waves-effect waves-float waves-light" onclick="ClearNotifications()">Read all notifications</a></li>
+                </ul>
+            </li>
+
+
+            <li class="nav-item dropdown dropdown-user"><a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div class="user-nav d-sm-flex d-none"><span th:text="${sessionContainer.getName()}" class="user-name fw-bolder">Ibrahim Element</span><span th:text="${sessionContainer.getUserRole().toString()}" class="user-status">Project Manager</span></div><span class="avatar"><img class="round" src="/app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar" height="40" width="40"><span class="avatar-status-online"></span></span>
+            </a>
+                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user">
+                    <a class="dropdown-item" href="/general/settings/home"><i class="me-50" data-feather="settings"></i> Settings</a>
+                    <a class="dropdown-item" href="/general/logout"><i class="me-50" data-feather="power"></i> Logout</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    </nav>
+
+    <script>
+
+        async function refreshPage() {
+            document.location = '';
+        }
+
+        async function ClearNotifications() {
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", '/api/v1/pri/general/notification/clear', true);
+
+            xhr.onreadystatechange = function() { // Call a function when the state changes.
+                refreshPage();
+            }
+
+            xhr.send("");
+        }
+
+    </script>
+
+</div>
+
+
+
+</body>
+</html>

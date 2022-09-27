@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" class="loading" lang="en" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
+    <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
+    <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="PIXINVENT">
+    <title>File Manager - Vuexy - Bootstrap HTML admin template</title>
+    <link rel="apple-touch-icon" href="/app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet"> <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="/app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/fonts/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/vendors/css/extensions/jstree.min.css">
+    <link rel="stylesheet" type="text/css" href="/custom-assets/animations/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/plugins/extensions/ext-component-sweet-alerts.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/vendors/css/extensions/sweetalert2.min.css">
+    <!-- END: Vendor CSS-->
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/components.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/themes/dark-layout.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/themes/bordered-layout.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/themes/semi-dark-layout.css"> <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/core/menu/menu-types/vertical-menu.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/plugins/extensions/ext-component-tree.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/pages/app-file-manager.css"> <!-- END: Page CSS-->
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css"> <!-- END: Custom CSS-->
+</head> <!-- END: Head-->
+<!-- BEGIN: Body-->
+
+<body class="vertical-layout vertical-menu-modern content-left-sidebar navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="content-left-sidebar">
+<!-- BEGIN: Header-->
+<div th:replace="fragment/top-nav-bar.html
+            :: notification(sessionContainer = ${sessionContainer}, userNotifications = ${userNotifications})"></div>
+
+<ul class="main-search-list-defaultlist-other-list d-none">
+    <li class="auto-suggestion justify-content-between"> <a class="d-flex align-items-center justify-content-between w-100 py-50">
+        <div class="d-flex justify-content-start"> <span class="me-75" data-feather="alert-circle"></span> <span>No results found.</span> </div>
+    </a> </li>
+</ul> <!-- END: Header-->
+<!-- BEGIN: Main Menu-->
+
+<div th:replace="fragment/user-left-nav.html
+            :: leftNav(sessionContainer = ${sessionContainer})">
+</div>
+
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper container-xxl p-0">
+        <!-- Content HEADER (inside the container) - Breadcrumb -->
+        <div class="content-header row">
+            <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h2 class="content-header-title float-start mb-0">Asset Overview</h2>
+                        <div class="breadcrumb-wrapper">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"> <a href="../../dashboard">User</a> </li>
+                                <li class="breadcrumb-item"> <a href="../overview">Projects</a> </li>
+                                <li th:text="${project.getName()}" class="breadcrumb-item active">Taxi Company </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-header-right text-md-end col-md-3 col-12 d-md-block d-none">
+                <div class="mb-1 breadcrumb-right">
+                    <div class="dropdown"> <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i data-feather="grid"></i> </button>
+                        <div class="dropdown-menu dropdown-menu-end"> <a class="dropdown-item" href="#"> <i class="me-1" data-feather="check-square"></i> <span class="align-middle">Todo</span> </a> <a class="dropdown-item" href="#"> <i class="me-1" data-feather="message-square"></i> <span class="align-middle">Chat</span> </a> <a class="dropdown-item" href="#"> <i class="me-1" data-feather="mail"></i> <span class="align-middle">Email</span> </a> <a class="dropdown-item" href="#"> <i class="me-1" data-feather="calendar"></i> <span class="align-middle">Calendar</span> </a> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- two factor auth modal -->
+    <div class="modal fade" id="twoFactorAuthModal" tabindex="-1" aria-labelledby="twoFactorAuthTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg two-factor-auth">
+            <div class="modal-content">
+                <div class="modal-header bg-transparent"> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> </div>
+                <div class="modal-body pb-5 px-sm-5 mx-50">
+                    <h1 class="text-center mb-1" id="twoFactorAuthTitle">Select Data Locker</h1>
+                    <p class="text-center mb-3"> You need to select which type of data-locker to employ for protection, <br /> once configured, un-authenticated users will be unable to access this asset. </p>
+                    <div class="custom-options-checkable"> <input class="custom-option-item-check" type="radio" name="twoFactorAuthRadio" id="twoFactorAuthApps" value="apps-auth" checked /> <label for="twoFactorAuthApps" class="custom-option-item d-flex align-items-center flex-column flex-sm-row px-3 py-2 mb-2"> <span> <i data-feather="lock" class="font-large-2 me-sm-2 mb-2 mb-sm-0"></i> </span> <span> <span class="custom-option-item-title h3">Password Protected</span> <span class="d-block mt-75"> Members of your project will need to input the correct password to unlock assets protected with this locker. </span> </span> </label> <input class="custom-option-item-check" type="radio" name="twoFactorAuthRadio" value="sms-auth" id="twoFactorAuthSms" /> <label for="twoFactorAuthSms" class="custom-option-item d-flex align-items-center flex-column flex-sm-row px-3 py-2"> <span> <i data-feather="git-pull-request" class="font-large-2 me-sm-2 mb-2 mb-sm-0"></i> </span> <span> <span class="custom-option-item-title h3">Request Exclusive</span> <span class="d-block mt-75">Members of your project will need to request access for you to manually approve via the Requests page.</span> </span> </label> </div> <button id="nextStepAuth" onclick="window.FileExplorerInst.CreateAssetLocker()" data-bs-dismiss="modal" class="btn btn-primary float-end mt-3"> <span class="me-50">Continue</span> <i data-feather="chevron-right"></i> </button>
+                </div>
+            </div>
+        </div>
+    </div> <!-- / two factor auth modal -->
+    <!-- two factor auth modal -->
+    <div class="modal fade" id="createNewModal" tabindex="-1" aria-labelledby="CreateNewModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg two-factor-auth">
+            <div class="modal-content">
+                <div class="modal-header bg-transparent"> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> </div>
+                <div class="modal-body pb-5 px-sm-5 mx-50">
+                    <h1 class="text-center mb-1" id="createNewModalTitle">Select Asset Type</h1>
+                    <p class="text-center mb-3"> You need to select which type of asset to create, <br /> there are Categories, Folders, and Digital Profiles. </p>
+
+                    <div class="custom-options-checkable">
+                        <input class="custom-option-item-check" type="radio" name="twoFactorAuthRadio" id="createNewModalApps" value="apps-auth" checked />
+                        <label for="createNewModalApps" class="custom-option-item d-flex align-items-center flex-column flex-sm-row px-3 py-2 mb-2">
+                        <span>
+                          <i data-feather="folder-plus" class="font-large-2 me-sm-2 mb-2 mb-sm-0"></i>
+                        </span>
+                            <span>
+                          <span class="custom-option-item-title h3">New Folder</span>
+                          <span class="d-block mt-75"> Create a new folder to store additional assets inside, protection can be applied to this entire section! </span>
+                        </span>
+                        </label>
+                        <input class="custom-option-item-check" type="radio" name="twoFactorAuthRadio" value="sms-auth" id="CreateNewModalSms" />
+                        <label for="CreateNewModalSms" class="custom-option-item d-flex align-items-center flex-column flex-sm-row px-3 py-2">
+                        <span>
+                          <i data-feather="user-plus" class="font-large-2 me-sm-2 mb-2 mb-sm-0"></i>
+                        </span>
+                            <span>
+                          <span class="custom-option-item-title h3">New Asset</span>
+                          <span class="d-block mt-75">Create and store a digital profile (username, password, location), which can be protected.</span>
+                        </span>
+                        </label>
+
+                    </div>
+
+                    <button id="createNewModalNext" onclick="window.FileExplorerInst.NewItem(this)" data-bs-dismiss="modal" class="btn btn-primary float-end mt-3">
+                        <span class="me-50" >Continue</span>
+                        <i data-feather="chevron-right"></i>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div> <!-- / two factor auth modal -->
+    <div class="file-manager-application">
+        <div class="content-area-wrapper container-xxl p-0">
+            <!-- Start of the file explore side-bar -->
+            <div class="sidebar-left">
+                <div class="sidebar">
+                    <div class="sidebar-file-manager">
+                        <div class="sidebar-inner">
+                            <!-- sidebar menu links starts -->
+                            <!-- add file button -->
+                            <div class="dropdown dropdown-actions"> <button class="btn btn-primary add-file-btn text-center w-100" type="button" id="addNewFile" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <span class="align-middle">Add New</span> </button>
+                                <div class="dropdown-menu" aria-labelledby="addNewFile">
+                                    <div class="dropdown-item" data-bs-toggle="modal" data-bs-target="#new-category-modal">
+                                        <div class="mb-0"> <i data-feather='list' class="me-25"></i> <span class="align-middle">Category</span> </div>
+                                    </div>
+                                    <div class="dropdown-item" data-bs-toggle="modal" data-bs-target="#new-folder-modal">
+                                        <div class="mb-0" for="file-upload"> <i data-feather="folder-plus" class="me-25"></i> <span class="align-middle">Folder</span> </div>
+                                    </div>
+                                    <div class="dropdown-item">
+                                        <div for="folder-upload" class="mb-0" data-bs-toggle="modal" data-bs-target="#open-asset-modal"> <i data-feather="file-plus" class="me-25"></i> <span class="align-middle">Asset</span> </div>
+                                    </div>
+                                </div>
+                            </div> <!-- add file button ends -->
+                            <!-- sidebar list items starts  -->
+                            <div class="sidebar-list">
+                                <!-- links for file manager sidebar -->
+                                <div class="list-group-capstone">
+                                    <ul class="list-group">
+                                        <li href="#" class="list-group-item list-group-item-action active"> <i data-feather="star" class="me-50 font-medium-3"></i> <span class="align-middle">Overview</span> </li>
+                                        <li onclick="document.location='./requests'" class="list-group-item list-group-item-action"> <i data-feather="clock" class="me-50 font-medium-3"></i> <span class="align-middle">Requests</span> </li>
+                                    </ul>
+                                </div>
+                                <div class="list-group list-group-labels">
+                                    <h6 class="section-label px-2 mb-1">Categories</h6> <a th:each="categoryAssociation : ${categoryAssociationList}" href="#" class="list-group-item list-group-item-action"> <i data-feather="circle" class="me-25 font-medium-3"></i> <span th:text="${categoryAssociation.getCategory().getName()}" style="text-overflow: ellipsis; overflow: hidden;" class="align-middle">Documents</span> </a> <a onclick="window.FileExplorerInst.TriggerNewItem()" href="#" class="list-group-item list-group-item-action"> <i data-feather="plus" class="me-25 font-medium-3"></i> <span class="align-middle">Add New</span> </a>
+                                </div> <!-- links for file manager sidebar ends -->
+                            </div> <!-- side bar list items ends  -->
+                            <!-- sidebar menu links ends -->
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- Share project -->
+            <div class="modal fade" id="shareProject" tabindex="-1" aria-labelledby="shareProjectTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header bg-transparent"> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> </div>
+                        <div class="modal-body px-sm-5 mx-50 pb-4">
+                            <h1 class="text-center mb-1" id="shareProjectTitle">Share Project</h1>
+                            <p class="text-center">Share project with a team members</p> <label class="form-label fw-bolder font-size font-small-4 mb-50" for="addMemberSelect"> Add members </label> <select class="select2 form-select" id="addMemberSelect">
+                            <option value="" label="Add project members by name or email..."></option>
+                            <option data-avatar="1-small.png" value="Jane Foster">Jane Foster</option>
+                            <option data-avatar="3-small.png" value="Donna Frank">Donna Frank</option>
+                            <option data-avatar="5-small.png" value="Gabrielle Robertson">Gabrielle Robertson</option>
+                            <option data-avatar="7-small.png" value="Lori Spears">Lori Spears</option>
+                            <option data-avatar="9-small.png" value="Sandy Vega">Sandy Vega</option>
+                            <option data-avatar="11-small.png" value="Cheryl May">Cheryl May</option>
+                        </select>
+                            <p class="fw-bolder pt-50 mt-2">12 Members</p> <!-- member's list  -->
+                            <ul class="list-group list-group-flush mb-2">
+                                <li class="list-group-item d-flex align-items-start border-0 px-0">
+                                    <div class="avatar me-75"> <img src="/app-assets/images/portrait/small/avatar-s-9.jpg" alt="avatar" width="38" height="38" /> </div>
+                                    <div class="d-flex align-items-center justify-content-between w-100">
+                                        <div class="me-1">
+                                            <h5 class="mb-25">Lester Palmer</h5> <span>pe@vogeiz.net</span>
+                                        </div>
+                                        <div class="dropdown"> <button class="btn btn-flat-secondary dropdown-toggle" type="button" id="member1" data-bs-toggle="dropdown" aria-expanded="false"> <span class="d-none d-lg-inline-block">Can edit</span> </button>
+                                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="member1">
+                                                <li> <a class="dropdown-item" href="javascript:void(0)">Owner</a> </li>
+                                                <li> <a class="dropdown-item active" href="javascript:void(0)">Can edit</a> </li>
+                                                <li> <a class="dropdown-item" href="javascript:void(0)">Can comment</a> </li>
+                                                <li> <a class="dropdown-item" href="javascript:void(0)">Can view</a> </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex align-items-start border-0 px-0">
+                                    <div class="avatar me-75"> <img src="/app-assets/images/portrait/small/avatar-s-3.jpg" alt="avatar" width="38" height="38" /> </div>
+                                    <div class="d-flex align-items-center justify-content-between w-100">
+                                        <div class="me-1">
+                                            <h5 class="mb-25">Mittie Blair</h5> <span>peromak@zukedohik.gov</span>
+                                        </div>
+                                        <div class="dropdown"> <button class="btn btn-flat-secondary dropdown-toggle" type="button" id="member2" data-bs-toggle="dropdown" aria-expanded="false"> <span class="d-none d-lg-inline-block">Owner</span> </button>
+                                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="member2">
+                                                <li> <a class="dropdown-item active" href="javascript:void(0)">Owner</a> </li>
+                                                <li> <a class="dropdown-item" href="javascript:void(0)">Can edit</a> </li>
+                                                <li> <a class="dropdown-item" href="javascript:void(0)">Can comment</a> </li>
+                                                <li> <a class="dropdown-item" href="javascript:void(0)">Can view</a> </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex align-items-start border-0 px-0">
+                                    <div class="avatar me-75"> <img src="/app-assets/images/portrait/small/avatar-s-5.jpg" alt="avatar" width="38" height="38" /> </div>
+                                    <div class="d-flex align-items-center justify-content-between w-100">
+                                        <div class="me-1">
+                                            <h5 class="mb-25">Marvin Wheeler</h5> <span>rumet@jujpejah.net</span>
+                                        </div>
+                                        <div class="dropdown"> <button class="btn btn-flat-secondary dropdown-toggle" type="button" id="member3" data-bs-toggle="dropdown" aria-expanded="false"> <span class="d-none d-lg-inline-block">Can comment</span> </button>
+                                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="member3">
+                                                <li> <a class="dropdown-item" href="javascript:void(0)">Owner</a> </li>
+                                                <li> <a class="dropdown-item" href="javascript:void(0)">Can edit</a> </li>
+                                                <li> <a class="dropdown-item active" href="javascript:void(0)">Can comment</a> </li>
+                                                <li> <a class="dropdown-item" href="javascript:void(0)">Can view</a> </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex align-items-start border-0 px-0">
+                                    <div class="avatar me-75"> <img src="/app-assets/images/portrait/small/avatar-s-7.jpg" alt="avatar" width="38" height="38" /> </div>
+                                    <div class="d-flex align-items-center justify-content-between w-100">
+                                        <div class="me-1">
+                                            <h5 class="mb-25">Nannie Ford</h5> <span>negza@nuv.io</span>
+                                        </div>
+                                        <div class="dropdown"> <button class="btn btn-flat-secondary dropdown-toggle" type="button" id="member4" data-bs-toggle="dropdown" aria-expanded="false"> <span class="d-none d-lg-inline-block">Can view</span> </button>
+                                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="member4">
+                                                <li> <a class="dropdown-item" href="javascript:void(0)">Owner</a> </li>
+                                                <li> <a class="dropdown-item" href="javascript:void(0)">Can edit</a> </li>
+                                                <li> <a class="dropdown-item" href="javascript:void(0)">Can comment</a> </li>
+                                                <li> <a class="dropdown-item active" href="javascript:void(0)">Can view</a> </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex align-items-start border-0 px-0">
+                                    <div class="avatar me-75"> <img src="/app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar" width="38" height="38" /> </div>
+                                    <div class="d-flex align-items-center justify-content-between w-100">
+                                        <div class="me-1">
+                                            <h5 class="mb-25">Julian Murphy</h5> <span>lunebame@umdomgu.net</span>
+                                        </div>
+                                        <div class="dropdown"> <button class="btn btn-flat-secondary dropdown-toggle" type="button" id="member5" data-bs-toggle="dropdown" aria-expanded="false"> <span class="d-none d-lg-inline-block">Can edit</span> </button>
+                                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="member5">
+                                                <li> <a class="dropdown-item" href="javascript:void(0)">Owner</a> </li>
+                                                <li> <a class="dropdown-item active" href="javascript:void(0)">Can edit</a> </li>
+                                                <li> <a class="dropdown-item" href="javascript:void(0)">Can comment</a> </li>
+                                                <li> <a class="dropdown-item" href="javascript:void(0)">Can view</a> </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex align-items-start border-0 px-0">
+                                    <div class="avatar me-75"> <img src="/app-assets/images/portrait/small/avatar-s-10.jpg" alt="avatar" width="38" height="38" /> </div>
+                                    <div class="d-flex align-items-center justify-content-between w-100">
+                                        <div class="me-1">
+                                            <h5 class="mb-25">Sophie Gilbert</h5> <span>ha@sugit.gov</span>
+                                        </div>
+                                        <div class="dropdown"> <button class="btn btn-flat-secondary dropdown-toggle" type="button" id="member6" data-bs-toggle="dropdown" aria-expanded="false"> <span class="d-none d-lg-inline-block">Can view</span> </button>
+                                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="member6">
+                                                <li> <a class="dropdown-item" href="javascript:void(0)">Owner</a> </li>
+                                                <li> <a class="dropdown-item" href="javascript:void(0)">Can edit</a> </li>
+                                                <li> <a class="dropdown-item" href="javascript:void(0)">Can comment</a> </li>
+                                                <li> <a class="dropdown-item active" href="javascript:void(0)">Can view</a> </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex align-items-start border-0 px-0">
+                                    <div class="avatar me-75"> <img src="/app-assets/images/portrait/small/avatar-s-8.jpg" alt="avatar" width="38" height="38" /> </div>
+                                    <div class="d-flex align-items-center justify-content-between w-100">
+                                        <div class="me-1">
+                                            <h5 class="mb-25">Chris Watkins</h5> <span>zokap@mak.org</span>
+                                        </div>
+                                        <div class="dropdown"> <button class="btn btn-flat-secondary dropdown-toggle" type="button" id="member7" data-bs-toggle="dropdown" aria-expanded="false"> <span class="d-none d-lg-inline-block">Can comment</span> </button>
+                                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="member7">
+                                                <li> <a class="dropdown-item" href="javascript:void(0)">Owner</a> </li>
+                                                <li> <a class="dropdown-item" href="javascript:void(0)">Can edit</a> </li>
+                                                <li> <a class="dropdown-item active" href="javascript:void(0)">Can comment</a> </li>
+                                                <li> <a class="dropdown-item" href="javascript:void(0)">Can view</a> </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex align-items-start border-0 px-0">
+                                    <div class="avatar me-75"> <img src="/app-assets/images/portrait/small/avatar-s-6.jpg" alt="avatar" width="38" height="38" /> </div>
+                                    <div class="d-flex align-items-center justify-content-between w-100">
+                                        <div class="me-1">
+                                            <h5 class="mb-25">Adelaide Nichols</h5> <span>ujinomu@jigo.com</span>
+                                        </div>
+                                        <div class="dropdown"> <button class="btn btn-flat-secondary dropdown-toggle" type="button" id="member8" data-bs-toggle="dropdown" aria-expanded="false"> <span class="d-none d-lg-inline-block">Can edit</span> </button>
+                                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="member8">
+                                                <li> <a class="dropdown-item" href="javascript:void(0)">Owner</a> </li>
+                                                <li> <a class="dropdown-item active" href="javascript:void(0)">Can edit</a> </li>
+                                                <li> <a class="dropdown-item" href="javascript:void(0)">Can comment</a> </li>
+                                                <li> <a class="dropdown-item" href="javascript:void(0)">Can view</a> </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <!--/ member's list  -->
+                            <!-- project link -->
+                            <div class="d-flex align-content-center justify-content-between flex-wrap">
+                                <div class="d-flex align-items-center me-2"> <i data-feather="users" class="font-medium-2 me-50"></i>
+                                    <p class="fw-bolder mb-0">Public to Vuexy - Pixinvent</p>
+                                </div> <a href="javascript:void(0)" class="fw-bolder"> <i data-feather="link" class="font-medium-2 me-50"></i> <span>Copy project link</span> </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- / share project modal -->
+            <div class="content-right">
+                <div class="content-wrapper container-xxl p-0">
+                    <div class="content-header row"></div>
+                    <div class="content-body">
+                        <!-- overlay container -->
+                        <div class="body-content-overlay"></div> <!-- file manager app content starts -->
+                        <div class="file-manager-main-content">
+                            <!-- search area start -->
+                            <div class="file-manager-content-header d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <div class="sidebar-toggle d-block d-xl-none float-start align-middle ms-1"> <i data-feather="menu" class="font-medium-5"></i> </div>
+                                    <div id="goBackBtn" style="display: none; margin-left: 0.5em;"> <button type="button" class="btn btn-flat-success waves-effect" onclick="window.FileExplorerInst.GoBack(this)"> <i data-feather='arrow-left' class="font-medium-5"></i> Back </button> </div>
+                                    <div class="input-group input-group-merge shadow-none m-0 flex-grow-1"> <span class="input-group-text border-0"> <i data-feather="search"></i> </span> <input type="text" class="form-control files-filter border-0 bg-transparent" placeholder="Search" /> </div>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <div class="file-actions"> <i data-feather="arrow-down-circle" class="font-medium-2 cursor-pointer d-sm-inline-block d-none me-50"></i> <i data-feather="trash" class="font-medium-2 cursor-pointer d-sm-inline-block d-none me-50"></i> <i data-feather="alert-circle" class="font-medium-2 cursor-pointer d-sm-inline-block d-none" data-bs-toggle="modal" data-bs-target="#app-file-manager-info-sidebar"></i>
+                                        <div class="dropdown d-inline-block"> <i class="font-medium-2 cursor-pointer" data-feather="more-vertical" role="button" id="fileActions" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="fileActions"> <a class="dropdown-item" href="#"> <i data-feather="move" class="cursor-pointer me-50"></i> <span class="align-middle">Open with</span> </a> <a class="dropdown-item d-sm-none d-block" href="#" data-bs-toggle="modal" data-bs-target="#app-file-manager-info-sidebar"> <i data-feather="alert-circle" class="cursor-pointer me-50"></i> <span class="align-middle">More Options</span> </a>
+                                                <div class="dropdown-divider"></div> <a class="dropdown-item" href="#"> <i data-feather="plus" class="cursor-pointer me-50"></i> <span class="align-middle">Add shortcut</span> </a> <a class="dropdown-item" href="#"> <i data-feather="folder-plus" class="cursor-pointer me-50"></i> <span class="align-middle">Move to</span> </a> <a class="dropdown-item" href="#"> <i data-feather="star" class="cursor-pointer me-50"></i> <span class="align-middle">Add to starred</span> </a> <a class="dropdown-item" href="#"> <i data-feather="droplet" class="cursor-pointer me-50"></i> <span class="align-middle">Change color</span> </a>
+                                                <div class="dropdown-divider"></div> <a class="dropdown-item" href="#"> <i data-feather="download" class="cursor-pointer me-50"></i> <span class="align-middle">Download</span> </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="btn-group view-toggle ms-50" role="group"> <input type="radio" class="btn-check" name="view-btn-radio" data-view="grid" id="gridView" checked autocomplete="off" /> <label class="btn btn-outline-primary p-50 btn-sm" for="gridView"> <i data-feather="grid"></i> </label> <input type="radio" class="btn-check" name="view-btn-radio" data-view="list" id="listView" autocomplete="off" /> <label class="btn btn-outline-primary p-50 btn-sm" for="listView"> <i data-feather="list"></i> </label> </div>
+                                </div>
+                            </div> <!-- search area ends here -->
+                            <div id="file-manager" class="file-manager-content-body">
+                                <!-- Files Container Starts -->
+                                <!-- For every category association -->
+                                <div th:each="categoryAssociation : ${categoryAssociationList}" th:id="'category-' +${categoryAssociation.getCategory().getId()}" class="view-container animate__animated animate__fadeInLeft">
+                                    <h6 th:text="${categoryAssociation.getCategory().getName()}" class="files-section-title mt-2 mb-75">Files</h6> <!-- Will display a notification of empty category if no files/folders are present -->
+                                    <div th:if="${categoryAssociation.getAssetList().isEmpty() && categoryAssociation.getFolderList().isEmpty()}" class="card text-center shadow-none bg-transparent border-info col-12">
+                                        <div class="card-body">
+                                            <h4 class="card-title" style="margin-bottom: 0.5em;">Empty Category</h4> <i data-feather='file-plus' style="width: 50px; height: 50px; margin-bottom: 1em;"></i>
+                                            <p class="card-text">This category is empty, add items to fill this up!</p> <button type="button" onclick="window.FileExplorerInst.TriggerNewItem()" class="btn btn-flat-success waves-effect">New Asset</button>
+                                        </div>
+                                    </div> <!-- For every folder in the category association -->
+                                    <div th:each="folderAsset : ${categoryAssociation.getFolderList()}" class="card file-manager-item folder" th:id="'folder-' +${folderAsset.getId()}">
+                                        <div class="form-check"> <input type="checkbox" class="form-check-input" id="customCheck1" /> <label class="form-check-label" for="customCheck1"></label> </div>
+                                        <div class="card-img-top file-logo-wrapper">
+                                            <div class="dropdown float-end"> <i data-feather="more-vertical" class="toggle-dropdown mt-n25"></i> </div>
+                                            <div class="d-flex align-items-center justify-content-center w-100"> <i data-feather="folder"></i> </div>
+                                        </div>
+                                        <div class="card-body" onclick="window.FileExplorerInst.OpenFolder(this)">
+                                            <div class="content-wrapper">
+                                                <p th:text="${folderAsset.getName()}" class="card-text file-name mb-0">Projects</p>
+                                                <div th:if="${assetService.ui_isApprovedMember(sessionContainer, folderAsset) == true}">
+                                                    <div class="avatar avatar-sm bg-light-success"> <span id="asset-unlocked" class="avatar-content">
+                                                                <!-- You can add Initial letters instead of icon --> <i data-feather="unlock" class="avatar-icon"></i>
+                                                            </span> </div>
+                                                </div>
+                                                <div th:if="${assetService.ui_isApprovedMember(sessionContainer, folderAsset) == false}">
+                                                    <div class="avatar avatar-sm bg-light-danger"> <span id="asset-locked" class="avatar-content">
+                                                                <!-- You can add Initial letters instead of icon --> <i data-feather="lock" class="avatar-icon"></i>
+                                                            </span> </div>
+                                                </div>
+                                            </div> <small class="file-accessed text-muted">Last accessed: 21 hours ago</small>
+                                        </div>
+                                    </div> <!-- For every file in the category association -->
+                                    <div th:each="fileAsset : ${categoryAssociation.getAssetList()}" th:id="'asset-' +${fileAsset.getId()}" class="card file-manager-item file">
+                                        <div class="form-check"> <input type="checkbox" class="form-check-input" id="customCheck7" /> <label class="form-check-label" for="customCheck7"></label> </div>
+                                        <div class="card-img-top file-logo-wrapper">
+                                            <div class="dropdown float-end"> <i data-feather="more-vertical" class="toggle-dropdown mt-n25"></i> </div>
+                                            <div class="d-flex align-items-center justify-content-center w-100"> <img src="/app-assets/images/icons/jpg.png" alt="file-icon" height="35" /> </div>
+                                        </div>
+                                        <div class="card-body" onclick="window.FileExplorerInst.OpenAsset(this)">
+                                            <div class="content-wrapper">
+                                                <p th:text="${fileAsset.getAssetName()}" class="card-text file-name mb-0">Profile.jpg</p>
+                                                <div th:if="${assetService.ui_isApprovedMember(sessionContainer, fileAsset) == true}">
+                                                    <div class="avatar avatar-sm bg-light-success"> <span id="asset-unlocked" class="avatar-content">
+                                                                <!-- You can add Initial letters instead of icon --> <i data-feather="unlock" class="avatar-icon"></i>
+                                                            </span> </div>
+                                                </div>
+                                                <div th:if="${assetService.ui_isApprovedMember(sessionContainer, fileAsset) == false}">
+                                                    <div class="avatar avatar-sm bg-light-danger"> <span id="asset-locked" class="avatar-content">
+                                                                <!-- You can add Initial letters instead of icon --> <i data-feather="lock" class="avatar-icon"></i>
+                                                            </span> </div>
+                                                </div>
+                                            </div> <small class="file-accessed text-muted">Last accessed: 3 hours ago</small>
+                                        </div>
+                                    </div>
+                                    <div class="d-none flex-grow-1 align-items-center no-result mb-3"> <i data-feather="alert-circle" class="me-50"></i> No Results </div>
+                                </div> <!-- /Files Container Ends -->
+                            </div> <!-- Sample elements (hidden from dom) used for Javascript interaction (file-explorer.js) -->
+                            <div id="js-component-sample-category" style="display: none;" class="">
+                                <h6 class="files-section-title mt-2 mb-75">Files</h6> <!-- Will display a notification of empty category if no files/folders are present -->
+                                <div id="noCategoriesNotificationTemplate" style="display: none;" class="card text-center shadow-none bg-transparent border-info col-12">
+                                    <div class="card-body">
+                                        <h4 class="card-title" style="margin-bottom: 0.5em;">Empty Category</h4> <i data-feather='file-plus' style="width: 50px; height: 50px; margin-bottom: 1em;"></i>
+                                        <p class="card-text">This category is empty, add items to fill this up!</p> <button onclick="window.FileExplorerInst.TriggerNewItem()" type="button" class="btn btn-flat-success waves-effect">New Asset</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display: none;" id="js-component-sample-file" class="card file-manager-item file">
+                                <div class="form-check"> <input type="checkbox" class="form-check-input" id="customCheck9" /> <label class="form-check-label" for="customCheck9"></label> </div>
+                                <div class="card-img-top file-logo-wrapper">
+                                    <div class="dropdown float-end"> <i data-feather="more-vertical" class="toggle-dropdown mt-n25"></i> </div>
+                                    <div class="d-flex align-items-center justify-content-center w-100"> <img src="/app-assets/images/icons/txt.png" alt="file-icon" height="35" /> </div>
+                                </div>
+                                <div class="card-body" onclick="window.FileExplorerInst.OpenAsset(this)">
+                                    <div class="content-wrapper">
+                                        <p id="fileNameTemplate" class="card-text file-name mb-0">notes.txt</p>
+                                        <p class="card-text file-size mb-0">54kb</p>
+                                        <p class="card-text file-date">01 may 2019</p>
+                                    </div> <small class="file-accessed text-muted">Last accessed: 43 minutes ago</small>
+                                </div>
+                            </div>
+                            <div style="display: none;" class="card file-manager-item folder" id="js-component-sample-folder" onclick="window.FileExplorerInst.OpenFolder(this)">
+                                <div class="form-check"> <input type="checkbox" class="form-check-input" id="customCheck2" /> <label class="form-check-label" for="customCheck2"></label> </div>
+                                <div class="card-img-top file-logo-wrapper">
+                                    <div class="dropdown float-end"> <i data-feather="more-vertical" class="toggle-dropdown mt-n25"></i> </div>
+                                    <div class="d-flex align-items-center justify-content-center w-100"> <i data-feather="folder"></i> </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="content-wrapper">
+                                        <p id="folderNameTemplate" class="card-text file-name mb-0">Projects</p>
+                                        <p class="card-text file-size mb-0">2gb</p>
+                                        <p class="card-text file-date">01 may 2019</p>
+                                    </div> <small class="file-accessed text-muted">Last accessed: 21 hours ago</small>
+                                </div>
+                            </div>
+                        </div> <!-- file manager app content ends -->
+                        <!-- File Info Sidebar Starts-->
+                        <div class="modal modal-slide-in fade show" id="app-file-manager-info-sidebar">
+                            <div class="modal-dialog sidebar-lg">
+                                <div class="modal-content p-0">
+                                    <div class="modal-header d-flex align-items-center justify-content-between mb-1 p-2">
+                                        <h5 class="modal-title">menu.js</h5>
+                                        <div> <i data-feather="trash" class="cursor-pointer me-50" data-bs-dismiss="modal"></i> <i data-feather="x" class="cursor-pointer" data-bs-dismiss="modal"></i> </div>
+                                    </div>
+                                    <div class="modal-body flex-grow-1 pb-sm-0 pb-1">
+                                        <ul class="nav nav-tabs tabs-line" role="tablist">
+                                            <li class="nav-item"> <a class="nav-link active" data-bs-toggle="tab" href="#details-tab" role="tab" aria-controls="details-tab" aria-selected="true"> <i data-feather="file"></i> <span class="align-middle ms-25">Details</span> </a> </li>
+                                            <li class="nav-item"> <a class="nav-link" data-bs-toggle="tab" href="#activity-tab" role="tab" aria-controls="activity-tab" aria-selected="true"> <i data-feather="activity"></i> <span class="align-middle ms-25">Activity</span> </a> </li>
+                                        </ul>
+                                        <div class="tab-content" id="myTabContent">
+                                            <div class="tab-pane fade show active" id="details-tab" role="tabpanel" aria-labelledby="details-tab">
+                                                <div class="d-flex flex-column justify-content-center align-items-center py-5"> <img src="/app-assets/images/icons/js.png" alt="file-icon" height="64" />
+                                                    <p class="mb-0 mt-1">54kb</p>
+                                                </div>
+                                                <h6 class="file-manager-title my-2">Settings</h6>
+                                                <ul class="list-unstyled">
+                                                    <li class="d-flex justify-content-between align-items-center mb-1"> <span>File Sharing</span>
+                                                        <div class="form-check form-switch"> <input type="checkbox" class="form-check-input" id="sharing" /> <label class="form-check-label" for="sharing"></label> </div>
+                                                    </li>
+                                                    <li class="d-flex justify-content-between align-items-center mb-1"> <span>Synchronization</span>
+                                                        <div class="form-check form-switch"> <input type="checkbox" class="form-check-input" checked id="sync" /> <label class="form-check-label" for="sync"></label> </div>
+                                                    </li>
+                                                    <li class="d-flex justify-content-between align-items-center mb-1"> <span>Backup</span>
+                                                        <div class="form-check form-switch"> <input type="checkbox" class="form-check-input" id="backup" /> <label class="form-check-label" for="backup"></label> </div>
+                                                    </li>
+                                                </ul>
+                                                <hr class="my-2" />
+                                                <h6 class="file-manager-title my-2">Info</h6>
+                                                <ul class="list-unstyled">
+                                                    <li class="d-flex justify-content-between align-items-center">
+                                                        <p>Type</p>
+                                                        <p class="fw-bold">JS</p>
+                                                    </li>
+                                                    <li class="d-flex justify-content-between align-items-center">
+                                                        <p>Size</p>
+                                                        <p class="fw-bold">54kb</p>
+                                                    </li>
+                                                    <li class="d-flex justify-content-between align-items-center">
+                                                        <p>Location</p>
+                                                        <p class="fw-bold">Files > Documents</p>
+                                                    </li>
+                                                    <li class="d-flex justify-content-between align-items-center">
+                                                        <p>Owner</p>
+                                                        <p class="fw-bold">Sheldon Cooper</p>
+                                                    </li>
+                                                    <li class="d-flex justify-content-between align-items-center">
+                                                        <p>Modified</p>
+                                                        <p class="fw-bold">12th Aug, 2020</p>
+                                                    </li>
+                                                    <li class="d-flex justify-content-between align-items-center">
+                                                        <p>Created</p>
+                                                        <p class="fw-bold">01 Oct, 2019</p>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="tab-pane fade" id="activity-tab" role="tabpanel" aria-labelledby="activity-tab">
+                                                <h6 class="file-manager-title my-2">Today</h6>
+                                                <div class="d-flex align-items-center mb-2">
+                                                    <div class="avatar avatar-sm me-50"> <img src="/app-assets/images/avatars/5-small.png" alt="avatar" width="28" /> </div>
+                                                    <div class="more-info">
+                                                        <p class="mb-0"> <span class="fw-bold">Mae</span> shared the file with <span class="fw-bold">Howard</span> </p>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="avatar avatar-sm bg-light-primary me-50"> <span class="avatar-content">SC</span> </div>
+                                                    <div class="more-info">
+                                                        <p class="mb-0"> <span class="fw-bold">Sheldon</span> updated the file </p>
+                                                    </div>
+                                                </div>
+                                                <h6 class="file-manager-title mt-3 mb-2">Yesterday</h6>
+                                                <div class="d-flex align-items-center mb-2">
+                                                    <div class="avatar avatar-sm bg-light-success me-50"> <span class="avatar-content">LH</span> </div>
+                                                    <div class="more-info">
+                                                        <p class="mb-0"> <span class="fw-bold">Leonard</span> renamed this file to <span class="fw-bold">menu.js</span> </p>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="avatar avatar-sm me-50"> <img src="/app-assets/images/portrait/small/avatar-s-1.jpg" alt="Avatar" width="28" /> </div>
+                                                    <div class="more-info">
+                                                        <p class="mb-0"> <span class="fw-bold">You</span> shared this file with Leonard </p>
+                                                    </div>
+                                                </div>
+                                                <h6 class="file-manager-title mt-3 mb-2">3 days ago</h6>
+                                                <div class="d-flex align-items-start">
+                                                    <div class="avatar avatar-sm me-50"> <img src="/app-assets/images/portrait/small/avatar-s-1.jpg" alt="Avatar" width="28" /> </div>
+                                                    <div class="more-info">
+                                                        <p class="mb-50"> <span class="fw-bold">You</span> uploaded this file </p> <img src="/app-assets/images/icons/js.png" alt="Avatar" class="me-50" height="24" /> <span class="fw-bold">app.js</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- File Info Sidebar Ends -->
+                        <!-- File Dropdown Starts-->
+                        <div class="dropdown-menu dropdown-menu-end file-dropdown"> <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#twoFactorAuthModal" onclick="window.FileExplorerInst.CreateAssetLocker(this)"> <i data-feather="lock" class="align-middle me-50"></i> <span class="align-middle">Lock Asset</span> </a> <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#app-file-manager-info-sidebar"> <i data-feather="info" class="align-middle me-50"></i> <span class="align-middle">Info</span> </a>  </div> <!-- /File Dropdown Ends -->
+                        <!-- Create New Folder Modal Starts-->
+                        <div class="modal fade" id="new-folder-modal">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">New Folder</h5> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body"> <label class="form-label" for="folderNameFolder">Name:</label> <input type="text" id="folderNameFolder" class="form-control" value="New folder" placeholder="Untitled folder" /> <label class="form-label" for="categorySelectInputFolder" style="margin-top: 0.5em;">Category:</label> <select id="categorySelectInputFolder" class="form-control form-select" type="select" placeholder="NDA Document">
+                                        <!-- Options are populated through page script (fileExplorer.js) -->
+                                    </select> </div>
+                                    <div class="modal-footer"> <button type="button" onclick="window.FileExplorerInst.CreateFolder(this)" class="btn btn-primary me-1" data-bs-dismiss="modal">Create</button> <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button> </div>
+                                </div>
+                            </div>
+                        </div> <!-- /Create New Folder Modal Ends -->
+                        <!-- Create New Category Modal Starts-->
+                        <div class="modal fade" id="new-category-modal">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">New Category</h5> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body"> <label class="form-label" for="categoryInputText">Name:</label> <input id="categoryInputText" type="text" class="form-control" value="New category" placeholder="Untitled category" /> <label class="form-label" for="categoryInputText">Description:</label> <input id="categoryDescriptionText" type="text" class="form-control" placeholder="Description of category" /> </div>
+                                    <div class="modal-footer"> <button type="button" onclick="window.FileExplorerInst.CreateCategory(this)" class="btn btn-primary me-1" data-bs-dismiss="modal">Create</button> <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button> </div>
+                                </div>
+                            </div>
+                        </div> <!-- /Create New Folder Modal Ends -->
+                        <!-- Create new asset Modal Starts -->
+                        <!-- BEGIN: Open asset modal (version 1) -->
+                        <div class="modal fade" id="open-asset-modal" tabindex="-1" style="display: none;" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-centered modal-edit-user" data-select2-id="48">
+                                <div class="modal-content" data-select2-id="47">
+                                    <div class="modal-header bg-transparent"> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> </div>
+                                    <div class="modal-body pb-5 px-sm-5 pt-50" data-select2-id="46">
+                                        <div class="text-center mb-2">
+                                            <h1 style="margin-bottom: 0.5em;">Asset Overview</h1>
+                                            <p>All actions are added to the audit log for approved members to view.</p>
+                                        </div>
+                                        <form id="editAssetForm" class="row gy-1 pt-75" onsubmit="return false" novalidate="novalidate" data-select2-id="editAssetForm" _lpchecked="1">
+                                            <div class="col-12 col-md-12"> <label class="form-label" for="urlInput">URL:</label> <input id="urlInput" class="form-control" type="text" placeholder="https://www.fileupload.com/file.txt" /> </div>
+                                            <div class="col-12 col-md-6"> <label class="form-label" for="assetNameInput">Name:</label> <input id="assetNameInput" class="form-control" type="text" placeholder="NDA Document" /> </div>
+                                            <div class="col-12 col-md-6"> <label class="form-label" for="categorySelectInputAsset">Category:</label> <select id="categorySelectInputAsset" class="form-control form-select" type="select" placeholder="NDA Document">
+                                                <!-- Options are populated through page script (fileExplorer.js) -->
+                                            </select> </div>
+                                            <div class="col-12 col-md-6"> <label class="form-label" for="assetUsernameInput">Username:</label> <input id="assetUsernameInput" class="form-control" type="text" placeholder="Admin" /> </div>
+                                            <div class="col-12 col-md-6"> <label class="form-label" for="assetPasswordInput">Password:</label> <input id="assetPasswordInput" class="form-control" type="text" placeholder="NDA Document" /> </div>
+                                            <div class="col-12 col-md-12"> <label class="form-label" for="assetNotesInput">Notes:</label> <textarea id="assetNotesInput" rows="3" class="form-control" type="text" placeholder="NDA Document"></textarea> </div>
+                                            <div class="col-12 col-md-12"> <button type="reset" onclick="window.FileExplorerInst.CreateAsset(this)" class="btn btn-primary me-1 waves-effect waves-float waves-light">Submit</button> <button type="reset" class="btn btn-outline-secondary waves-effect" data-bs-dismiss="modal" aria-label="Close">Discard</button> </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- END: Open asset modal (version 1) -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- END: Content-->
+<div class="sidenav-overlay"></div>
+<div class="drag-target"></div> <!-- BEGIN: Footer-->
+<footer class="footer footer-static footer-light">
+    <!--    <p class="clearfix mb-0"><span class="float-md-start d-block d-md-inline-block mt-25">COPYRIGHT &copy; 2021<a class="ms-25" href="https://1.envato.market/pixinvent_portfolio" target="_blank">Pixinvent</a><span class="d-none d-sm-inline-block">, All rights Reserved</span></span><span class="float-md-end d-none d-md-block">Hand-crafted & Made with<i data-feather="heart"></i></span></p>-->
+</footer> <button class="btn btn-primary btn-icon scroll-top" type="button"> <i data-feather="arrow-up"></i> </button> <!-- END: Footer-->
+<!-- BEGIN: Vendor JS-->
+<script src="/app-assets/vendors/js/vendors.min.js"></script>
+<script src="/app-assets/vendors/js/extensions/sweetalert2.all.min.js"></script>
+<!-- BEGIN Vendor JS-->
+<!-- BEGIN: Page Vendor JS-->
+<script src="/app-assets/vendors/js/extensions/jstree.min.js"></script>
+<script src="/custom-scripts/axios.min.js"></script> <!-- END: Page Vendor JS-->
+<!-- BEGIN: Theme JS-->
+<script src="/app-assets/js/core/app-menu.js"></script>
+<script src="/app-assets/js/core/app.js"></script> <!-- END: Theme JS-->
+<!-- BEGIN: Page JS-->
+<script src="/app-assets/js/scripts/pages/app-file-manager.js"></script>
+<script src="/custom-scripts/fileExplorer.js"></script> <!-- END: Page JS-->
+<script>
+        $(window).on('load', function() {
+          if (feather) {
+            feather.replace({
+              width: 14,
+              height: 14
+            });
+          }
+        })
+    </script>
+</body> <!-- END: Body-->
+
+</html>
