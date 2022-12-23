@@ -10,6 +10,7 @@ import ca.sait.backup.model.request.CreateNewSupportTicketRequest;
 import ca.sait.backup.model.request.CreateSupportTicketReplyRequest;
 import ca.sait.backup.model.request.SupportTicketFeedbackRequest;
 import ca.sait.backup.service.SupportTicketService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -19,19 +20,19 @@ import java.util.Optional;
 
 @Service
 @Validated
+@RequiredArgsConstructor
 public class SupportTicketServiceImpl implements SupportTicketService {
 
     @Autowired
-    private TicketRepository ticketRepository;
+    private final TicketRepository ticketRepository;
 
     @Autowired
-    private TicketMessageRepository ticketChatRepository;
+    private final TicketMessageRepository ticketChatRepository;
 
     @Override
     public SupportTicket createNewSupportTicket(User user, CreateNewSupportTicketRequest req) {
 
         SupportTicket supportTicket = new SupportTicket();
-
         supportTicket.setComplainant(user);
         supportTicket.setTitle(req.getTitle());
         supportTicket.setDescription(req.getDescription());
@@ -61,13 +62,15 @@ public class SupportTicketServiceImpl implements SupportTicketService {
 
     @Override
     public List<SupportTicket> getSupportTicketsForUser(User user) {
+        //Check support ticket by user Complainant
+        return ticketRepository.findAllByComplainant(user);
 
-        List<SupportTicket> tickets = this.ticketRepository.findAllByComplainant(
-            user
-        );
-
-        return tickets;
     }
+    //Writer: Park
+    public List<SupportTicket> getSupportTicketsForUserId(Long userId) {
+        return ticketRepository.findAllByComplainantId(userId);
+    }
+
     @Override
     public void saveSupportTicketFeedback(SupportTicketFeedbackRequest feedback) {
 
@@ -137,6 +140,7 @@ public class SupportTicketServiceImpl implements SupportTicketService {
         );
         return ticket;
     }
+
 
     @Override
     public SupportTicket mediator_UpdateTicket(SupportTicket ticket) {

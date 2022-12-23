@@ -8,6 +8,7 @@ import ca.sait.backup.service.AssetService;
 
 import ca.sait.backup.service.ProjectService;
 import ca.sait.backup.service.SessionService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,32 +26,33 @@ import java.util.stream.Collectors;
 @Slf4j
 @Controller
 @RequestMapping("/user/project/{projectId}")
+@RequiredArgsConstructor
 public class ProjectController {
 
     @Autowired
-    private AssetService assetService;
+    private final AssetService assetService;
 
     @Autowired
-    private ProjectService projectService;
+    private final ProjectService projectService;
 
     @Autowired
-    private SessionService sessionService;
+    private final SessionService sessionService;
 
     @GetMapping("/")
     public String GetProjectHome(@PathVariable("projectId") Long projectId, Model model, HttpServletRequest request) {
 
         // Expose session variables
-        this.sessionService.exposeEssentialVariables(request, model);
+        sessionService.exposeEssentialVariables(request, model);
 
         // Get project using provided id
 
-        Project project = this.projectService.getProjectUsingId(projectId);
+        Project project = projectService.getProjectUsingId(projectId);
 
         // Using ORM, just grab the categories
         List<Category> categoryList = project.getCategories();
 
         // Initialize a CategoryAssociation UI Component
-        ArrayList<CategoryAssociation> categoryAssociationList = new ArrayList<CategoryAssociation>();
+        ArrayList<CategoryAssociation> categoryAssociationList = new ArrayList<>();
 
         // For every category, loop and find linked assets/folders - while populating association list.
         for (Category cat: categoryList) {

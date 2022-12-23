@@ -1,5 +1,6 @@
 package ca.sait.backup.service.impl;
 
+import ca.sait.backup.exception.XDException;
 import ca.sait.backup.mapper.UserRepository;
 import ca.sait.backup.model.business.JWTSessionContainer;
 import ca.sait.backup.model.entity.User;
@@ -8,6 +9,7 @@ import ca.sait.backup.model.request.ChangePasswordRequest;
 import ca.sait.backup.model.request.UpdateUserInformationRequest;
 import ca.sait.backup.service.UserService;
 import ca.sait.backup.utils.CommonUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -18,48 +20,41 @@ import java.util.Optional;
 
 @Service
 @Validated
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserRepository uRepository;
+    private final UserRepository uRepository;
 
     public boolean validateUser(String email, String password) {
-
         // Search for user that has the specified email
-        User user = this.uRepository.findByEmail(
-            email
-        );
-
+        User user = this.uRepository.findByEmail(email);
         if (user == null) {
-            return false;
+            throw new XDException(404,"user not exist");
         }
-
         // Hash what was provided to us
         String hashProvidedPassword = CommonUtils.SHA256(password);
-
         // Compare both hashes
         if (user.getPassword().equals(hashProvidedPassword)) {
-
             // Check if user is disabled
             if (user.isDisabled()) {
                 return false;
             }
-
             // Valid
             return true;
         }
-
         return false;
     }
-
+    //Writer : Park
     @Override
     public User dev_GetUserById(Long id) {
-
-        Optional<User> user = this.uRepository.findById(
-            id
-        );
-
-        return user.get();
+        //get user by id
+        Optional<User> user = uRepository.findById(id);
+        //check user is present or not
+        if (user.isPresent()) {
+            return user.get();
+        }
+        return null;
     }
 
     @Override
@@ -177,16 +172,11 @@ public class UserServiceImpl implements UserService {
     }
 
     public List<User> dev_GetUsersByRole(UserRole role) {
-        List<User> users = this.uRepository.findByRole(
-            role
-        );
-
-        return users;
+        return this.uRepository.findByRole(role);
     }
 
     @Override
     public User dev_GetUserByEmail(String email) {
-
         return this.uRepository.findByEmail(email);
     }
 

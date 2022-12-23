@@ -9,9 +9,10 @@ import lombok.Setter;
 import java.util.List;
 
 
-
+@Getter
+@Setter
 public class CategoryAssociation {
-    @Getter @Setter private Category category;
-    @Getter @Setter private List<Asset> assetList;
-    @Getter @Setter private List<AssetFolder> folderList;
+    private Category category;
+    private List<Asset> assetList;
+    private List<AssetFolder> folderList;
 }

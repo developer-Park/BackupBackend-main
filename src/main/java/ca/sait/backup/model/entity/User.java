@@ -1,14 +1,15 @@
 package ca.sait.backup.model.entity;
 
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-@Builder
 @Data
 @Table(name = "user")
 @Entity
@@ -26,7 +27,6 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Project> projects;
-
     private String name;
     private String password;
     private String email;

@@ -55,14 +55,10 @@ public class ProjectServiceImpl implements ProjectService {
         List<Project> projectList = this.projectRepository.findAll();
         return projectList;
     }
-
-
-
     @Override
     public Project getProjectUsingId(Long id) {
         return this.projectRepository.getById(id);
     }
-
     @Override
     public boolean createNewProject(Long userId, CreateNewProjectRequest projectRequest){
 

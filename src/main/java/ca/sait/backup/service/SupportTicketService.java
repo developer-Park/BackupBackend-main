@@ -27,4 +27,5 @@ public interface SupportTicketService {
     SupportTicket mediator_GetTicketById(Long id);
 
 
+    List<SupportTicket> getSupportTicketsForUserId(Long userId);
 }

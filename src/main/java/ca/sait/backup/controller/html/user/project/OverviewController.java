@@ -4,6 +4,7 @@ import ca.sait.backup.model.business.JWTSessionContainer;
 import ca.sait.backup.model.business.RowContainer;
 import ca.sait.backup.model.entity.Project;
 import ca.sait.backup.service.SessionService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,13 +19,15 @@ import java.util.List;
 @Slf4j
 @Controller
 @RequestMapping("/user/project")
+@RequiredArgsConstructor
 public class OverviewController {
 
     @Autowired
-    private ProjectService projectService;
+    private final ProjectService projectService;
 
     @Autowired
-    private SessionService sessionService;
+    private final SessionService sessionService;
+
 
     @GetMapping("/overview")
     public String overview(Model model, HttpServletRequest request) {

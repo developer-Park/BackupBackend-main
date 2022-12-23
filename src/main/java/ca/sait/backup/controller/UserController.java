@@ -1,6 +1,6 @@
 package ca.sait.backup.controller;
 
-import ca.sait.backup.exception.CustomExceptionHandler;
+
 
 import ca.sait.backup.model.entity.User;
 import ca.sait.backup.model.request.LoginRequest;
@@ -11,30 +11,22 @@ import ca.sait.backup.service.EmailService;
 
 import ca.sait.backup.service.SessionService;
 import ca.sait.backup.service.UserService;
-import ca.sait.backup.utils.JsonData;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
-import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
+
+//Writer : Park, Ibrahim
 @RestController
 @RequestMapping("api/v1/pri/user")
 public class UserController {
 
-    @Autowired
     private EmailService emailService;
 
-    @Autowired
     private UserService userService;
 
-    @Autowired
     private SessionService sessionService;
 
     @PostMapping("/login")

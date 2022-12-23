@@ -6,6 +6,8 @@ import java.security.MessageDigest;
  * Tool class
  * encryption password tool
  */
+
+//Writer : John
 public class CommonUtils {
 
 

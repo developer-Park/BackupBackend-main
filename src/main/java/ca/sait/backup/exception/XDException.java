@@ -1,13 +1,15 @@
 package ca.sait.backup.exception;
 
+import lombok.Data;
+
 /**
  * backup
  * custom exception class
  */
+
 public class XDException extends RuntimeException{
 
     private Integer code;
-
     private String msg;
 
     public XDException(Integer code, String msg){

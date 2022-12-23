@@ -13,6 +13,7 @@ import ca.sait.backup.utils.JsonData;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,16 +28,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/pri/user/project")
+@RequiredArgsConstructor
 public class ProjectControllerRest {
 
     @Autowired
-    private AssetService assetService;
+    private final AssetService assetService;
 
     @Autowired
-    private ProjectService projectService;
+    private final ProjectService projectService;
 
     @Autowired
-    private SessionService sessionService;
+    private final SessionService sessionService;
 
     @PostMapping("/create")
     public JsonData createNewProject(@RequestBody CreateNewProjectRequest projReq, HttpServletRequest request) throws Exception {

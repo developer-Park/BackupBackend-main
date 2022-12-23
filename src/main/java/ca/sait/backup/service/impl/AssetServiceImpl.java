@@ -82,12 +82,12 @@ public class AssetServiceImpl implements AssetService {
     }
 
     public List<AssetFolder> getAllFoldersForCategory(Category category) {
-
+//
 //        List<AssetFolder> assetFolderList = this.assetMapper.getAllFoldersForCategory(
 //            category.getCategoryId(),
 //            category.getProjectId()
 //        );
-//
+
         return null;
 
     }
@@ -216,6 +216,7 @@ public class AssetServiceImpl implements AssetService {
         AssetFolder assetFolder = new AssetFolder();
 
         String configuration = "";
+
         JsonObject jsonObject = new JsonObject();
 
         AssetSecurityProfile profile = new AssetSecurityProfile();

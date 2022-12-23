@@ -9,6 +9,7 @@ import ca.sait.backup.utils.JWTUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.jsonwebtoken.Claims;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -17,19 +18,18 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class SessionServiceImpl implements SessionService {
 
     @Autowired
-    private NotificationService notificationService;
+    private final NotificationService notificationService;
 
     public void exposeEssentialVariables(HttpServletRequest request, Model model) {
 
-        JWTSessionContainer jwtSessionContainer = this.extractSession(
-            request
-        );
+        JWTSessionContainer jwtSessionContainer = this.extractSession(request);
 
-        List<UserNotification> notifications = this.notificationService.backend_getUnreadNotificationsForUser(
+        List<UserNotification> notifications = notificationService.backend_getUnreadNotificationsForUser(
           new User(jwtSessionContainer.getUserId())
         );
 

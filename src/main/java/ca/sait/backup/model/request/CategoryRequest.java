@@ -1,11 +1,16 @@
 package ca.sait.backup.model.request;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+
+@Data
+
+
 public class CategoryRequest {
 
-    @Getter @Setter String name;
-    @Getter @Setter String description;
+    String name;
+    String description;
 
 }

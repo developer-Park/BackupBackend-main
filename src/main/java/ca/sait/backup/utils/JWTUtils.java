@@ -20,6 +20,8 @@ import java.util.Date;
  * 2. Decrypt the plaintext information with base64, modify and then encode, the decryption will fail
  * 3. The issued token cannot be invalidated unless the secret key is changed
  */
+
+//Writer : John
 public class
 JWTUtils {
 

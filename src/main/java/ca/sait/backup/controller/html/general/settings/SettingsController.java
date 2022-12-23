@@ -2,10 +2,9 @@ package ca.sait.backup.controller.html.general.settings;
 
 import ca.sait.backup.model.business.JWTSessionContainer;
 import ca.sait.backup.model.entity.User;
-import ca.sait.backup.model.request.ChangePasswordRequest;
 import ca.sait.backup.service.SessionService;
 import ca.sait.backup.service.UserService;
-import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,16 +13,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 
-@Slf4j
+
 @Controller
 @RequestMapping("/general/settings")
+@RequiredArgsConstructor
 public class SettingsController {
 
     @Autowired
-    private SessionService sessionService;
+    private final SessionService sessionService;
 
     @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @GetMapping("/home")
     public String GetSettingsHome(Model model, HttpServletRequest request) {

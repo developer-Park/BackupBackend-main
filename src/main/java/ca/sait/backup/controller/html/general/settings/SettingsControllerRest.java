@@ -7,6 +7,7 @@ import ca.sait.backup.model.request.UpdateUserInformationRequest;
 import ca.sait.backup.service.SessionService;
 import ca.sait.backup.service.UserService;
 import ca.sait.backup.utils.JsonData;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,26 +18,20 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("api/v1/pri/general/settings")
+@RequiredArgsConstructor
 public class SettingsControllerRest {
 
     @Autowired
-    private UserService userService;
+    private final UserService  userService;
 
     @Autowired
-    private SessionService sessionService;
+    private final SessionService sessionService;
 
     @PostMapping("/details")
     public JsonData updateProfileDetails(@RequestBody UpdateUserInformationRequest updateRequest, HttpServletRequest request) {
 
-        JWTSessionContainer sessionContainer = this.sessionService.extractSession(
-            request
-        );
-
-        boolean res = this.userService.dev_UpdateUser(
-            sessionContainer,
-            updateRequest
-        );
-
+        JWTSessionContainer sessionContainer = this.sessionService.extractSession(request);
+        boolean res = this.userService.dev_UpdateUser(sessionContainer,updateRequest);
         return JsonData.buildSuccess("");
     }
 
