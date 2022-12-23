@@ -19,24 +19,14 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 public class SettingsController {
 
-    @Autowired
     private final SessionService sessionService;
-
-    @Autowired
     private final UserService userService;
-
     @GetMapping("/home")
     public String GetSettingsHome(Model model, HttpServletRequest request) {
         // Expose session variables
-        this.sessionService.exposeEssentialVariables(request, model);
-
-        JWTSessionContainer sessionContainer = this.sessionService.extractSession(
-            request
-        );
-
-        User user = this.userService.dev_GetUserById(
-            sessionContainer.getUserId()
-        );
+        sessionService.exposeEssentialVariables(request, model);
+        JWTSessionContainer sessionContainer = sessionService.extractSession(request);
+        User user = userService.dev_GetUserById(sessionContainer.getUserId());
 
         String userFullName = user.getName();
         String firstName = "", lastName = "";

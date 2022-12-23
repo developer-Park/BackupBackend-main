@@ -11,6 +11,7 @@ import ca.sait.backup.service.EmailService;
 
 import ca.sait.backup.service.SessionService;
 import ca.sait.backup.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
@@ -21,77 +22,42 @@ import java.util.Map;
 //Writer : Park, Ibrahim
 @RestController
 @RequestMapping("api/v1/pri/user")
+@RequiredArgsConstructor
 public class UserController {
 
-    private EmailService emailService;
+    private final UserService userService;
 
-    private UserService userService;
+    private final SessionService sessionService;
 
-    private SessionService sessionService;
-
+    //Writer : Park, John
     @PostMapping("/login")
     private LoginResponse processLogin(@RequestBody LoginRequest loginRequest, HttpServletResponse response) {
-        LoginResponse lResponse = new LoginResponse();
 
-        System.out.println("Email: " + loginRequest.getEmail());
-        System.out.println("Password: " + loginRequest.getPassword());
-
-        boolean valid = this.userService.validateUser(
-            loginRequest.getEmail(),
-            loginRequest.getPassword()
-        );
-
-        lResponse.setAuthenticated(valid);
+        boolean valid = userService.loginUser(loginRequest);
+        LoginResponse lResponse = new LoginResponse(valid);
 
         // Assign user a JWT session
         if (valid) {
-
             // Create session container, then JWT token
-            User user = this.userService.dev_GetUserByEmail(
-                loginRequest.getEmail()
-            );
-            String jwtToken = this.sessionService.createToken(
-                user
-            );
-
+            User user = userService.dev_GetUserByEmail(loginRequest.getEmail());
+            String jwtToken = sessionService.createToken(user);
             System.out.println("Creating JWT Token: " + jwtToken);
-
             // Create cookie using JWT token
             Cookie cookie = new Cookie("session", jwtToken);
-
             cookie.setSecure(false);
             cookie.setMaxAge(7 * 24 * 60 * 60); // 7 days
             cookie.setPath("/");
-
-            response.addCookie(
-                cookie
-            );
-
+            response.addCookie(cookie);
         }
-
         return lResponse;
     }
-
+    @ResponseBody
     @PostMapping("/register")
     private RegisterResponse processRegister(@RequestBody RegisterRequest registerRequest) {
-        RegisterResponse rResponse = new RegisterResponse();
-
-        boolean created = this.userService.processRegister(
-            registerRequest.getEmail(),
-            registerRequest.getPassword(),
-            registerRequest.getName(),
-            registerRequest.getPhone(),
-            registerRequest.getCompany(),
-            registerRequest.getAddress(),
-            registerRequest.getCountry()
-        );
-
-        rResponse.setCreationStatus(created);
-
-        // TODO: Send authenticated JWT token.
-
-        return rResponse;
+        boolean created = userService.processRegister(registerRequest);
+        return new RegisterResponse(created);
     }
+
 
 
 }

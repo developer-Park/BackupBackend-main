@@ -1,6 +1,9 @@
 package ca.sait.backup.model.entity;
 
 
+import ca.sait.backup.model.request.ChangePasswordRequest;
+import ca.sait.backup.model.request.RegisterRequest;
+import ca.sait.backup.model.request.UpdateUserInformationRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,10 +40,40 @@ public class User {
 
     private boolean disabled;
 
+
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
     @CreationTimestamp
     private Date creationDate;
 
+
+    public User(RegisterRequest registerRequest, String password, UserRole userRole) {
+        this.name = registerRequest.getName();
+        this.password = password;
+        this.email = registerRequest.getEmail();
+        this.phone = registerRequest.getPhone();
+        this.address = registerRequest.getAddress();
+        this.company = registerRequest.getCompany();
+        this.country = registerRequest.getCountry();
+        this.disabled = false;
+        this.role = userRole;
+        this.creationDate = creationDate;
+    }
+
+    public void Update(UpdateUserInformationRequest updateUserInformationRequest) {
+        this.name = updateUserInformationRequest.getName();
+        this.phone = updateUserInformationRequest.getPhone();
+        this.address = updateUserInformationRequest.getAddress();
+        this.company = updateUserInformationRequest.getCompany();
+        this.country = updateUserInformationRequest.getCountry();
+    }
+
+    public void updatePassword(String newPassword) {
+        this.password = newPassword;
+    }
+
+    public void deleteUser(boolean disabled) {
+        this.disabled = disabled;
+    }
 }

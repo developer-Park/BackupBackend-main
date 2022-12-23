@@ -37,16 +37,11 @@ public class TicketControllerClient {
         SupportTicket ticket = this.ticketService.mediator_GetTicketById(
                 ticketId
         );
-
         List<SupportTicket> userTickets = this.ticketService.getSupportTicketsForUser(
                 ticket.getComplainant()
         );
-
         model.addAttribute("ticket", ticket);
         model.addAttribute("userTickets", userTickets);
-
-        //ticket.getChat().get(0).getFrom().getName().substring
-
         return "/user/specific_ticket";
     }
 

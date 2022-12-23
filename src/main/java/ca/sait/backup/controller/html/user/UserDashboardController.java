@@ -6,45 +6,27 @@ import ca.sait.backup.model.business.JWTSessionContainer;
 import ca.sait.backup.model.business.RowContainer;
 import ca.sait.backup.model.entity.*;
 import ca.sait.backup.service.*;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
 @Controller
 @RequestMapping("/user")
+@RequiredArgsConstructor
 class UserDashboardController {
 
-    @Autowired
-    private NotificationService notificationService;
-
-    @Autowired
-    private SessionService sessionService;
-
-    @Autowired
-    private ProjectService projectService;
-
-    @Autowired
-    private SupportTicketService supportTicketService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private AssetService assetService;
-
-    @Autowired
-    private ProjectMemberRepository projectMemberRepository;
+    private final SessionService sessionService;
+    private final ProjectService projectService;
+    private final SupportTicketService supportTicketService;
+    private final UserService userService;
+    private final ProjectMemberRepository projectMemberRepository;
 
     @GetMapping("/dashboard")
     public String GetDashboard(Model model, HttpServletRequest request) {
@@ -62,9 +44,7 @@ class UserDashboardController {
         );
 
         // Sort by most categories
-        projectList.sort((Project a, Project b) -> {
-            return b.getCategories().size() - a.getCategories().size();
-        });
+        projectList.sort((Project a, Project b) -> b.getCategories().size() - a.getCategories().size());
 
         if (projectList.size() >= 3) {
             projectList = projectList.subList(0, 3);

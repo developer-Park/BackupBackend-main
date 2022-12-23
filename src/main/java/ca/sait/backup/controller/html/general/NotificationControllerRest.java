@@ -6,7 +6,6 @@ import ca.sait.backup.service.NotificationService;
 import ca.sait.backup.service.SessionService;
 import ca.sait.backup.utils.JsonData;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,9 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 public class NotificationControllerRest {
 
-    @Autowired
     private final SessionService sessionService;
-    @Autowired
     private final NotificationService notificationService;
 
     @PostMapping("/clear")

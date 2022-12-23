@@ -4,16 +4,19 @@ import ca.sait.backup.model.business.JWTSessionContainer;
 import ca.sait.backup.model.entity.User;
 import ca.sait.backup.model.entity.UserRole;
 import ca.sait.backup.model.request.ChangePasswordRequest;
+import ca.sait.backup.model.request.LoginRequest;
+import ca.sait.backup.model.request.RegisterRequest;
 import ca.sait.backup.model.request.UpdateUserInformationRequest;
+import ca.sait.backup.model.response.RegisterResponse;
 
 import java.util.List;
 
 
 public interface UserService {
 
-    boolean validateUser(String email, String password);
+    boolean loginUser(LoginRequest loginRequest);
 
-    boolean processRegister(String email, String password, String name, String phone, String company, String address, String country);
+//    boolean processRegister(String email, String password, String name, String phone, String company, String address, String country);
 
     User dev_GetUserByEmail(String email);
 
@@ -27,4 +30,5 @@ public interface UserService {
 
     User dev_GetUserById(Long id);
 
+    boolean processRegister(RegisterRequest registerRequest);
 }
