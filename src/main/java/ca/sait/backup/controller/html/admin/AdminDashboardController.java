@@ -66,10 +66,13 @@ public class AdminDashboardController {
     //Writer : Park
     //Edit user
     @GetMapping("/edit/{userId}")
-    public String EditUser(@PathVariable("userId") Long userId, Model model) {
+    public String EditUser(@PathVariable("userId") Long userId, Model model, HttpServletRequest request) {
+        sessionService.exposeEssentialVariables(request, model);
         //get support ticket for edit support ticket section
         List<SupportTicket> ticketList = supportTicketService.getSupportTicketsForUserId(userId);
+        model.addAttribute("user", userService.dev_GetUserById(userId));
         model.addAttribute("userTickets", ticketList);
+
         return ("/admin/edit_user");
     }
 

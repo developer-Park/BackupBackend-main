@@ -8,10 +8,8 @@ import ca.sait.backup.service.SessionService;
 import ca.sait.backup.service.UserService;
 import ca.sait.backup.utils.JsonData;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -40,12 +38,18 @@ public class SettingsControllerRest {
         boolean res = userService.dev_ChangePassword(sessionContainer, changePassword);
         return JsonData.buildSuccess(res ? "true" : "false");
     }
-
+    //Writer : Park
     @PostMapping("/delete")
     public JsonData deleteAccount(HttpServletRequest request) {
         JWTSessionContainer sessionContainer = sessionService.extractSession(request);
-        userService.dev_ChangeAccountStatus(sessionContainer.getUserId(), true);
+        userService.deleteUser(sessionContainer.getUserId(), true);
         return JsonData.buildSuccess("");
+    }
+    //Write : Park
+    @PostMapping("/suspend/{userId}")
+    public String suspendAccount(@PathVariable Long userId) {
+        userService.suspendUser(userId);
+        return "success";
     }
 
 }

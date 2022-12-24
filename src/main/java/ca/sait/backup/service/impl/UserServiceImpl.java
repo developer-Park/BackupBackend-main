@@ -9,7 +9,6 @@ import ca.sait.backup.model.request.ChangePasswordRequest;
 import ca.sait.backup.model.request.LoginRequest;
 import ca.sait.backup.model.request.RegisterRequest;
 import ca.sait.backup.model.request.UpdateUserInformationRequest;
-import ca.sait.backup.model.response.RegisterResponse;
 import ca.sait.backup.service.UserService;
 import ca.sait.backup.utils.CommonUtils;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +28,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository uRepository;
 
+    @Override
     public boolean loginUser(LoginRequest loginRequest) {
         // Search for user that has the specified email
         User user = uRepository.findByEmail(loginRequest.getEmail());
@@ -57,6 +57,7 @@ public class UserServiceImpl implements UserService {
 
     //writer : Park
     @Transactional
+    @Override
     public boolean processRegister(RegisterRequest registerRequest) {
         // Check if email is already used
         if (uRepository.findByEmail(registerRequest.getEmail()) != null) {
@@ -66,8 +67,10 @@ public class UserServiceImpl implements UserService {
         UserRole role = UserRole.USER;
         User user = new User(registerRequest, password, role);
         uRepository.save(user);
+
         return true;
     }
+
     //Writer:Park,Ibrahim
     @Transactional
     @Override
@@ -89,26 +92,37 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
+    //Writer : Park
     @Transactional
     @Override
-    public boolean dev_ChangeAccountStatus(Long userId, boolean status) {
+    public void deleteUser(Long userId, boolean status) {
         User user = dev_GetUserById(userId);
-        user.deleteUser(status);
-        return true;
+        uRepository.delete(user);
+    }
+
+    @Transactional
+    @Override
+    public void suspendUser(Long userId) {
+        User user = dev_GetUserById(userId);
+        if (!user.isDisabled()) {
+            user.deleteUser(true);
+        } else {
+            user.deleteUser(false);
+        }
     }
 
     //Writer : Park
     @Override
     @Transactional
-    public boolean dev_UpdateUser(JWTSessionContainer container, UpdateUserInformationRequest req) {
+    public void dev_UpdateUser(JWTSessionContainer container, UpdateUserInformationRequest req) {
         User user = uRepository.findByEmail(container.getEmail());
         if (user.getEmail() == null) {
-            return false;
+            return;
         }
         user.Update(req);
-        return true;
     }
 
+    @Override
     public List<User> dev_GetUsersByRole(UserRole role) {
         return uRepository.findByRole(role);
     }

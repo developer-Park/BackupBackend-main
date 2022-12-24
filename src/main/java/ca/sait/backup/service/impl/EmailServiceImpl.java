@@ -18,9 +18,7 @@ import java.nio.charset.StandardCharsets;
 @Service
 @RequiredArgsConstructor
 public class EmailServiceImpl implements EmailService {
-    @Autowired
-    private JavaMailSender emailSender;
-    @Autowired
+    private final JavaMailSender emailSender;
     private final SpringTemplateEngine templateEngine;
 
 

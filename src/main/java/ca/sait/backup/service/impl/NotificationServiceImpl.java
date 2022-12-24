@@ -6,19 +6,19 @@ import ca.sait.backup.model.entity.UserNotification;
 import ca.sait.backup.model.entity.UserNotificationEnum;
 import ca.sait.backup.service.NotificationService;
 import ca.sait.backup.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class NotificationServiceImpl implements NotificationService {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private UserNotificationRepository notificationRepository;
+    private final UserNotificationRepository notificationRepository;
 
     @Override
     public void backend_createNotification(User user, UserNotificationEnum type, String body) {

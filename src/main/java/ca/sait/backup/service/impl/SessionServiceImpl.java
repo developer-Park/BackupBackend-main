@@ -22,7 +22,6 @@ import java.util.List;
 @Service
 public class SessionServiceImpl implements SessionService {
 
-    @Autowired
     private final NotificationService notificationService;
 
     public void exposeEssentialVariables(HttpServletRequest request, Model model) {

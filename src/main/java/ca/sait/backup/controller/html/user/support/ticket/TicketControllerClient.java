@@ -4,6 +4,7 @@ import ca.sait.backup.model.entity.SupportTicket;
 import ca.sait.backup.model.entity.SupportTicketStatusEnum;
 import ca.sait.backup.service.SessionService;
 import ca.sait.backup.service.SupportTicketService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,13 +21,12 @@ import java.util.List;
 @Slf4j
 @Controller
 @RequestMapping("/user/support/ticket")
+@RequiredArgsConstructor
 public class TicketControllerClient {
 
-    @Autowired
-    SupportTicketService ticketService;
+    private final SupportTicketService ticketService;
 
-    @Autowired
-    private SessionService sessionService;
+    private final SessionService sessionService;
 
     @GetMapping("/{ticketId}")
     public String GetSpecificTicket(@PathVariable("ticketId") Long ticketId, Model model, HttpServletRequest request) {

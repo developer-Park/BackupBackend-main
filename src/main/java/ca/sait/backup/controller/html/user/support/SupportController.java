@@ -6,6 +6,7 @@ import ca.sait.backup.model.entity.User;
 import ca.sait.backup.service.SessionService;
 import ca.sait.backup.service.SupportTicketService;
 import ca.sait.backup.service.UserService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,16 +20,12 @@ import java.util.List;
 @Slf4j
 @Controller
 @RequestMapping("/user/support")
+@RequiredArgsConstructor
 public class SupportController {
 
-    @Autowired
-    private SessionService sessionService;
-
-    @Autowired
-    private SupportTicketService ticketService;
-
-    @Autowired
-    private UserService userService;
+    private final SessionService sessionService;
+    private final SupportTicketService ticketService;
+    private final UserService userService;
 
     @GetMapping("/")
     public String GetSupportHome(Model model, HttpServletRequest request) {

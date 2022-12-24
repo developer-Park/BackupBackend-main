@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr"
       xmlns="http://www.w3.org/1999/xhtml"
@@ -15,7 +14,7 @@
     <meta name="keywords"
           content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
-    <title>Dashboard analytics - Vuexy - Bootstrap HTML admin template</title>
+    <title>BBuddy - edit</title>
     <link rel="apple-touch-icon" href="../../../../app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="../../../../app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600"
@@ -43,7 +42,8 @@
     <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css" href="../../../../app-assets/css/core/menu/menu-types/vertical-menu.css">
     <link rel="stylesheet" type="text/css" href="../../../../app-assets/css/plugins/charts/chart-apex.css">
-    <link rel="stylesheet" type="text/css" href="../../../../app-assets/css/plugins/extensions/ext-component-toastr.css">
+    <link rel="stylesheet" type="text/css"
+          href="../../../../app-assets/css/plugins/extensions/ext-component-toastr.css">
     <link rel="stylesheet" type="text/css" href="../../../../app-assets/css/pages/app-invoice-list.css">
     <!-- END: Page CSS-->
 
@@ -60,57 +60,10 @@
       data-menu="vertical-menu-modern" data-col="">
 
 <!-- BEGIN: Header-->
-<nav
-        class="header-navbar navbar navbar-expand-lg align-items-center floating-nav navbar-light navbar-shadow container-xxl">
-    <div class="navbar-container d-flex content">
-        <div class="bookmark-wrapper d-flex align-items-center">
-            <ul class="nav navbar-nav d-xl-none">
-                <li class="nav-item"><a class="nav-link menu-toggle" href="#"><i class="ficon"
-                                                                                 data-feather="menu"></i></a></li>
+<div th:replace="fragment/top-nav-bar.html
+            :: notification(sessionContainer = ${sessionContainer}, userNotifications = ${userNotifications})">
+</div>
 
-            </ul>
-            <ul class="nav navbar-nav bookmark-icons">
-                <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-style"><i class="ficon"
-                                                                                             data-feather="moon"></i></a></li>
-
-            </ul>
-        </div>
-        <ul class="nav navbar-nav align-items-center ms-auto">
-            <li class="nav-item dropdown dropdown-user"><a class="nav-link dropdown-toggle dropdown-user-link"
-                                                           id="dropdown-user" href="#" data-bs-toggle="dropdown" aria-haspopup="true"
-                                                           aria-expanded="false">
-                <div class="user-nav d-sm-flex d-none"><span class="user-name fw-bolder">Ibrahim
-                                Element</span><span class="user-status">Mediator</span></div><span class="avatar"><img
-                    class="round" src="../../../../app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar"
-                    height="40" width="40"><span class="avatar-status-online"></span></span>
-            </a>
-                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user"><a
-                        class="dropdown-item" href="page-profile.html"><i class="me-50" data-feather="user"></i>
-                    Profile</a><a class="dropdown-item" href="app-email.html"><i class="me-50"
-                                                                                 data-feather="mail"></i> Inbox</a><a class="dropdown-item" href="app-todo.html"><i
-                        class="me-50" data-feather="check-square"></i> Task</a><a class="dropdown-item"
-                                                                                  href="app-chat.html"><i class="me-50" data-feather="message-square"></i> Chats</a>
-                    <div class="dropdown-divider"></div><a class="dropdown-item"
-                                                           href="page-account-settings-account.html"><i class="me-50" data-feather="settings"></i>
-                        Settings</a><a class="dropdown-item" href="page-pricing.html"><i class="me-50"
-                                                                                         data-feather="credit-card"></i> Pricing</a><a class="dropdown-item"
-                                                                                                                                       href="page-faq.html"><i class="me-50" data-feather="help-circle"></i> FAQ</a><a
-                            class="dropdown-item" href="auth-login-cover.html"><i class="me-50"
-                                                                                  data-feather="power"></i> Logout</a>
-                </div>
-            </li>
-        </ul>
-    </div>
-</nav>
-
-
-<ul class="main-search-list-defaultlist-other-list d-none">
-    <li class="auto-suggestion justify-content-between"><a
-            class="d-flex align-items-center justify-content-between w-100 py-50">
-        <div class="d-flex justify-content-start"><span class="me-75"
-                                                        data-feather="alert-circle"></span><span>No results found.</span></div>
-    </a></li>
-</ul>
 <!-- END: Header-->
 
 
@@ -120,7 +73,7 @@
     <div class="navbar-header">
         <ul class="nav navbar-nav flex-row">
             <li class="nav-item me-auto"><a class="navbar-brand"
-                                            href="../../../../../html/ltr/vertical-menu-template/index.html"><span class="brand-logo">
+                                            href="../../../../../"><span class="brand-logo">
                             <svg viewbox="0 0 139 95" version="1.1" xmlns="http://www.w3.org/2000/svg"
                                  xmlns:xlink="http://www.w3.org/1999/xlink" height="24">
                                 <defs>
@@ -157,7 +110,7 @@
                                     </g>
                                 </g>
                             </svg></span>
-                <h2 class="brand-text">Vuexy</h2>
+                <h2 class="brand-text">BBuddy</h2>
             </a></li>
             <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pe-0" data-bs-toggle="collapse"><i
                     class="d-block d-xl-none text-primary toggle-icon font-medium-4" data-feather="x"></i><i
@@ -168,7 +121,7 @@
     <div class="shadow-bottom"></div>
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-            <li class=" nav-item"><a class="d-flex align-items-center" href="mediator-index.html"><i
+            <li class=" nav-item"><a class="d-flex align-items-center" href="../admin/admin_dashboard.html"><i
                     data-feather="home"></i><span class="menu-title text-truncate"
                                                   data-i18n="Dashboards">Home</span></a></li>
 
@@ -247,8 +200,41 @@
             <div class="content-header-right text-md-end col-md-3 col-12 d-md-block d-none">
                 <div class="mb-1 breadcrumb-right">
                     <div class="dropdown">
-                        <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle waves-effect waves-float waves-light" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></button>
-                        <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2 me-1"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg><span class="align-middle">Analytics</span></a><a class="dropdown-item" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder me-1"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg><span class="align-middle">Projects</span></a><a class="dropdown-item" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-pull-request me-1"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M13 6h3a2 2 0 0 1 2 2v7"></path><line x1="6" y1="9" x2="6" y2="21"></line></svg><span class="align-middle">Requests</span></a></div>
+                        <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle waves-effect waves-float waves-light"
+                                type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="feather feather-grid">
+                                <rect x="3" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="14" width="7" height="7"></rect>
+                                <rect x="3" y="14" width="7" height="7"></rect>
+                            </svg>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="feather feather-bar-chart-2 me-1">
+                                <line x1="18" y1="20" x2="18" y2="10"></line>
+                                <line x1="12" y1="20" x2="12" y2="4"></line>
+                                <line x1="6" y1="20" x2="6" y2="14"></line>
+                            </svg>
+                            <span class="align-middle">Analytics</span></a><a class="dropdown-item" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="feather feather-folder me-1">
+                                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                            <span class="align-middle">Projects</span></a><a class="dropdown-item" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="feather feather-git-pull-request me-1">
+                                <circle cx="18" cy="18" r="3"></circle>
+                                <circle cx="6" cy="6" r="3"></circle>
+                                <path d="M13 6h3a2 2 0 0 1 2 2v7"></path>
+                                <line x1="6" y1="9" x2="6" y2="21"></line>
+                            </svg>
+                            <span class="align-middle">Requests</span></a></div>
                     </div>
                 </div>
             </div>
@@ -271,9 +257,11 @@
                         <div class="card-body">
                             <div class="user-avatar-section">
                                 <div class="d-flex align-items-center flex-column">
-                                    <img class="img-fluid rounded mt-3 mb-2" src="../../../../app-assets/images/portrait/small/avatar-s-2.jpg" height="110" width="110" alt="User avatar">
+                                    <img class="img-fluid rounded mt-3 mb-2"
+                                         src="../../../../app-assets/images/portrait/small/avatar-s-2.jpg" height="110"
+                                         width="110" alt="User avatar">
                                     <div class="user-info text-center">
-                                        <h4>Gertrude Barton</h4>
+                                        <h4 th:text="${user.name}">Gertrude Barton</h4>
                                         <span class="badge bg-light-secondary">Author</span>
                                     </div>
                                 </div>
@@ -281,7 +269,10 @@
                             <div class="d-flex justify-content-around my-2 pt-75">
                                 <div class="d-flex align-items-start me-2">
                               <span class="badge bg-light-primary p-75 rounded">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check font-medium-2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round" class="feather feather-check font-medium-2"><polyline
+                                        points="20 6 9 17 4 12"></polyline></svg>
                               </span>
                                     <div class="ms-75">
                                         <h4 class="mb-0">1.23k</h4>
@@ -290,7 +281,15 @@
                                 </div>
                                 <div class="d-flex align-items-start">
                               <span class="badge bg-light-primary p-75 rounded">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-briefcase font-medium-2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round" class="feather feather-briefcase font-medium-2"><rect x="2"
+                                                                                                                   y="7"
+                                                                                                                   width="20"
+                                                                                                                   height="14"
+                                                                                                                   rx="2"
+                                                                                                                   ry="2"></rect><path
+                                        d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
                               </span>
                                     <div class="ms-75">
                                         <h4 class="mb-0">568</h4>
@@ -303,40 +302,50 @@
                                 <ul class="list-unstyled">
                                     <li class="mb-75">
                                         <span class="fw-bolder me-25">Username:</span>
-                                        <span>violet.dev</span>
+                                        <span th:text="${user.name}">violet.dev</span>
                                     </li>
                                     <li class="mb-75">
                                         <span class="fw-bolder me-25">Billing Email:</span>
-                                        <span>vafgot@vultukir.org</span>
+                                        <span th:text="${user.email}">vafgot@vultukir.org</span>
                                     </li>
                                     <li class="mb-75">
                                         <span class="fw-bolder me-25">Status:</span>
-                                        <span class="badge bg-light-success">Active</span>
+                                        <span class="badge bg-light-success"
+                                              th:if="${user.disabled == true}">Disabled</span>
+                                        <span class="badge bg-light-success"
+                                              th:if="${user.disabled == false}">Active</span>
                                     </li>
                                     <li class="mb-75">
                                         <span class="fw-bolder me-25">Role:</span>
-                                        <span>Author</span>
+                                        <span th:text="${user.role.toString()}">Author</span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Tax ID:</span>
-                                        <span>Tax-8965</span>
+                                        <span class="fw-bolder me-25">Address:</span>
+                                        <span th:text="${user.address}">Tax-8965</span>
                                     </li>
                                     <li class="mb-75">
                                         <span class="fw-bolder me-25">Contact:</span>
-                                        <span>+1 (609) 933-44-22</span>
+                                        <span th:text="${user.phone}">+1 (609) 933-44-22</span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Language:</span>
-                                        <span>English</span>
+                                        <span class="fw-bolder me-25">Company:</span>
+                                        <span th:text="${user.company}">English</span>
                                     </li>
                                     <li class="mb-75">
                                         <span class="fw-bolder me-25">Country:</span>
-                                        <span>Wake Island</span>
+                                        <span th:text="${user.country}">Wake Island</span>
                                     </li>
                                 </ul>
-                                <div class="d-flex justify-content-center pt-2">
-                                    <a href="javascript:;" class="btn btn-outline-danger suspend-user waves-effect">Suspended</a>
-                                </div>
+                                <form th:action="@{'/api/v1/pri/general/settings/suspend/' + ${user.id}}"  method="post" >
+                                    <div class="d-flex justify-content-center pt-2">
+                                        <button class="btn btn-outline-danger suspend-user waves-effect" th th:if="${user.isDisabled() == false}">
+                                            Suspended
+                                        </button>
+                                        <button class="btn btn-outline-danger suspend-user waves-effect" th th:if="${user.isDisabled() == true}">
+                                            Release Suspended
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -362,15 +371,19 @@
                                             </div>
 
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="new_password" placeholder="New Password"></input>
+                                                <input type="text" class="form-control" id="new_password"
+                                                       placeholder="New Password"></input>
                                             </div>
 
                                         </div>
                                     </div>
 
                                     <div class="col-sm-9 offset-sm-3">
-                                        <button type="reset" class="btn btn-primary me-1 waves-effect waves-float waves-light">Submit</button>
-                                        <button type="reset" class="btn btn-outline-secondary waves-effect">Reset</button>
+                                        <button type="reset"
+                                                class="btn btn-primary me-1 waves-effect waves-float waves-light">Submit
+                                        </button>
+                                        <button type="reset" class="btn btn-outline-secondary waves-effect">Reset
+                                        </button>
                                     </div>
 
                                 </row>
@@ -394,15 +407,19 @@
                                             </div>
 
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="new_email" placeholder="New Email"></input>
+                                                <input type="text" class="form-control" id="new_email"
+                                                       placeholder="New Email"></input>
                                             </div>
 
                                         </div>
                                     </div>
 
                                     <div class="col-sm-9 offset-sm-3">
-                                        <button type="reset" class="btn btn-primary me-1 waves-effect waves-float waves-light">Submit</button>
-                                        <button type="reset" class="btn btn-outline-secondary waves-effect">Reset</button>
+                                        <button type="reset"
+                                                class="btn btn-primary me-1 waves-effect waves-float waves-light">Submit
+                                        </button>
+                                        <button type="reset" class="btn btn-outline-secondary waves-effect">Reset
+                                        </button>
                                     </div>
 
                                 </row>
@@ -433,7 +450,9 @@
                                             <tr>
 
                                                 <th th:text="${ticket.id}">#</th>
-                                                <th style="text-overflow: ellipsis;" th:text="${ticket.title}">Clientus Missus</th>
+                                                <th style="text-overflow: ellipsis;" th:text="${ticket.title}">Clientus
+                                                    Missus
+                                                </th>
                                                 <th th:text="${ticket.creationDate}">09/11/2011</th>
 
 
@@ -450,8 +469,11 @@
                                                 </th>
 
                                                 <th>
-                                                    <button type="button" th:onclick="'window.location.href=\'/user/support/ticket/' + ${ticket.getId()} + '/\' '"
-                                                            class="btn btn-info waves-effect waves-float waves-light">Open</button>
+                                                    <button type="button"
+                                                            th:onclick="'window.location.href=\'/user/support/ticket/' + ${ticket.getId()} + '/\' '"
+                                                            class="btn btn-info waves-effect waves-float waves-light">
+                                                        Open
+                                                    </button>
                                                 </th>
 
                                             </tr>
@@ -500,6 +522,8 @@
 <script src="../../../../app-assets/vendors/js/tables/datatable/dataTables.bootstrap5.min.js"></script>
 <script src="../../../../app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js"></script>
 <script src="../../../../app-assets/vendors/js/tables/datatable/responsive.bootstrap5.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <!-- END: Page Vendor JS-->
 
 <!-- BEGIN: Theme JS-->
@@ -513,35 +537,34 @@
 <!-- END: Page JS-->
 
 <script>
-        $(window).on('load', function () {
-            if (feather) {
-                feather.replace({
-                    width: 14,
-                    height: 14
-                });
-            }
-        })
-
-        async function refreshPage() {
-            document.location = '';
-        }
-
-        async function createTicket() {
-
-            let supportTitle = document.querySelector("#support-ticket-title").value;
-            let supportDescription = document.querySelector("#support-ticket-desc").value;
-
-            if (supportTitle.length < 5 || supportDescription.length < 5) return;
-
-            let res = await axios.post(`/api/v1/pri/user/ticket/create`, {
-                title: supportTitle,
-                description: supportDescription
+    $(window).on('load', function () {
+        if (feather) {
+            feather.replace({
+                width: 14,
+                height: 14
             });
-
-            refreshPage();
         }
+    })
 
-    </script>
+    async function refreshPage() {
+        document.location = '';
+    }
+
+    async function createTicket() {
+
+        let supportTitle = document.querySelector("#support-ticket-title").value;
+        let supportDescription = document.querySelector("#support-ticket-desc").value;
+
+        if (supportTitle.length < 5 || supportDescription.length < 5) return;
+
+        let res = await axios.post(`/api/v1/pri/user/ticket/create`, {
+            title: supportTitle,
+            description: supportDescription
+        });
+
+        refreshPage();
+    }
+</script>
 </body>
 <!-- END: Body-->
 

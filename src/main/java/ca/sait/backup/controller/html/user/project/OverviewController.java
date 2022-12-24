@@ -22,12 +22,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OverviewController {
 
-    @Autowired
     private final ProjectService projectService;
-
-    @Autowired
     private final SessionService sessionService;
-
 
     @GetMapping("/overview")
     public String overview(Model model, HttpServletRequest request) {

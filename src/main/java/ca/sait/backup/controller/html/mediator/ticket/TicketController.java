@@ -23,10 +23,8 @@ import java.util.List;
 @RequestMapping("/mediator/ticket")
 public class TicketController {
 
-    @Autowired
     private SupportTicketService ticketService;
 
-    @Autowired
     private SessionService sessionService;
 
     @GetMapping("/")

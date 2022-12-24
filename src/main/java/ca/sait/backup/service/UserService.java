@@ -7,7 +7,6 @@ import ca.sait.backup.model.request.ChangePasswordRequest;
 import ca.sait.backup.model.request.LoginRequest;
 import ca.sait.backup.model.request.RegisterRequest;
 import ca.sait.backup.model.request.UpdateUserInformationRequest;
-import ca.sait.backup.model.response.RegisterResponse;
 
 import java.util.List;
 
@@ -20,15 +19,17 @@ public interface UserService {
 
     User dev_GetUserByEmail(String email);
 
-    boolean dev_UpdateUser(JWTSessionContainer container, UpdateUserInformationRequest req);
+    void dev_UpdateUser(JWTSessionContainer container, UpdateUserInformationRequest req);
 
     boolean dev_ChangePassword(JWTSessionContainer container, ChangePasswordRequest req);
 
-    boolean dev_ChangeAccountStatus(Long userId, boolean status);
+    void deleteUser(Long userId, boolean status);
 
     List<User> dev_GetUsersByRole(UserRole role);
 
     User dev_GetUserById(Long id);
 
     boolean processRegister(RegisterRequest registerRequest);
+
+    void suspendUser(Long userId);
 }

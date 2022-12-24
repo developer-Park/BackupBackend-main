@@ -1,7 +1,6 @@
 package ca.sait.backup.model.entity;
 
 
-import ca.sait.backup.model.request.ChangePasswordRequest;
 import ca.sait.backup.model.request.RegisterRequest;
 import ca.sait.backup.model.request.UpdateUserInformationRequest;
 import lombok.AllArgsConstructor;

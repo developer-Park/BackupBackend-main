@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -26,31 +27,17 @@ import java.util.stream.Collectors;
 
 @Service
 @Validated
+@RequiredArgsConstructor
 public class AssetServiceImpl implements AssetService {
 
-    @Autowired
-    private AssetRepository assetRepository;
-
-    @Autowired
-    private AssetFolderRepository assetFolderRepository;
-
-    @Autowired
-    private CategoryRepository categoryRepository;
-
-    @Autowired
-    private ProjectRepository projectRepository;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private NotificationService notificationService;
-
-    @Autowired
-    private AssetSecurityProfileRepository assetSecurityProfileRepository;
-
-    @Autowired
-    private AssetSecurityRequestRepository assetSecurityRequestRepository;
+    private final AssetRepository assetRepository;
+    private final AssetFolderRepository assetFolderRepository;
+    private final CategoryRepository categoryRepository;
+    private final ProjectRepository projectRepository;
+    private final UserService userService;
+    private final NotificationService notificationService;
+    private final AssetSecurityProfileRepository assetSecurityProfileRepository;
+    private final AssetSecurityRequestRepository assetSecurityRequestRepository;
 
     public int createCategory(Category category) {
         this.categoryRepository.save(category);
@@ -152,11 +139,11 @@ public class AssetServiceImpl implements AssetService {
 
         if (lockRequest.getAssetType().equals("folder")) {
             assetFolder = this.assetFolderRepository.findById(
-                lockRequest.getAssetId()
+                    lockRequest.getAssetId()
             ).get();
-        }else {
+        } else {
             asset = this.assetRepository.findById(
-                lockRequest.getAssetId()
+                    lockRequest.getAssetId()
             ).get();
         }
 
@@ -164,46 +151,46 @@ public class AssetServiceImpl implements AssetService {
 
         if (lockRequest.getLockType().equals("PASSWORD")) {
             securityProfile.setSecurityType(
-                AssetSecurityProfileTypeEnum.PASSWORD_PROTECTED
+                    AssetSecurityProfileTypeEnum.PASSWORD_PROTECTED
             );
-        }else if(lockRequest.getLockType().equals("TIME")) {
+        } else if (lockRequest.getLockType().equals("TIME")) {
             securityProfile.setSecurityType(
-                AssetSecurityProfileTypeEnum.TIME_RELEASE
+                    AssetSecurityProfileTypeEnum.TIME_RELEASE
             );
-        }else if(lockRequest.getLockType().equals("REQUEST")) {
+        } else if (lockRequest.getLockType().equals("REQUEST")) {
             securityProfile.setSecurityType(
-                AssetSecurityProfileTypeEnum.REQUEST_EXCLUSIVE
+                    AssetSecurityProfileTypeEnum.REQUEST_EXCLUSIVE
             );
         }
 
         securityProfile.setSecurityConfiguration(
-            lockRequest.getLockConfiguration()
+                lockRequest.getLockConfiguration()
         );
 
         securityProfile.setProject(
-            this.projectRepository.getById(projectId)
+                this.projectRepository.getById(projectId)
         );
 
         this.assetSecurityProfileRepository.save(
-            securityProfile
+                securityProfile
         );
 
         // Associate the asset with the created profile
         if (lockRequest.getAssetType().equals("folder")) {
             assetFolder.setSecurityProfile(
-                securityProfile
+                    securityProfile
             );
 
             this.assetFolderRepository.save(
-                assetFolder
+                    assetFolder
             );
-        }else {
+        } else {
             asset.setSecurityProfile(
-                securityProfile
+                    securityProfile
             );
 
             this.assetRepository.save(
-                asset
+                    asset
             );
         }
 
@@ -225,7 +212,7 @@ public class AssetServiceImpl implements AssetService {
             profile = this.assetFolderRepository.findById(
                     assetInfo.getAssetId()
             ).get().getSecurityProfile();
-        }else {
+        } else {
             profile = this.assetRepository.findById(
                     assetInfo.getAssetId()
             ).get().getSecurityProfile();
@@ -234,10 +221,10 @@ public class AssetServiceImpl implements AssetService {
         // Need to do this to prevent sensitive data being returned
         if (profile.getSecurityType().equals(AssetSecurityProfileTypeEnum.PASSWORD_PROTECTED)) {
             jsonObject.addProperty("type", "password");
-        }else if (profile.getSecurityType().equals(AssetSecurityProfileTypeEnum.TIME_RELEASE)) {
+        } else if (profile.getSecurityType().equals(AssetSecurityProfileTypeEnum.TIME_RELEASE)) {
             jsonObject.addProperty("type", "time-release");
             jsonObject.addProperty("config", profile.getSecurityConfiguration());
-        }else if (profile.getSecurityType().equals(AssetSecurityProfileTypeEnum.REQUEST_EXCLUSIVE)) {
+        } else if (profile.getSecurityType().equals(AssetSecurityProfileTypeEnum.REQUEST_EXCLUSIVE)) {
             jsonObject.addProperty("type", "request-exclusive");
             jsonObject.addProperty("config", profile.getSecurityConfiguration());
         }
@@ -259,7 +246,7 @@ public class AssetServiceImpl implements AssetService {
             profile = this.assetFolderRepository.findById(
                     tryUnlock.getAssetId()
             ).get().getSecurityProfile();
-        }else {
+        } else {
             profile = this.assetRepository.findById(
                     tryUnlock.getAssetId()
             ).get().getSecurityProfile();
@@ -278,21 +265,21 @@ public class AssetServiceImpl implements AssetService {
 
                 AssetSecurityApproval assetSecurityApproval = new AssetSecurityApproval();
                 assetSecurityApproval.setUser(
-                    this.userService.dev_GetUserById(
-                        sessionContainer.getUserId()
-                    )
+                        this.userService.dev_GetUserById(
+                                sessionContainer.getUserId()
+                        )
                 );
                 assetSecurityApproval.setSecurityProfile(
-                    profile
+                        profile
                 );
 
                 profile.getApprovalList().add(
-                    assetSecurityApproval
+                        assetSecurityApproval
                 );
 
                 // Save approval
                 this.assetSecurityProfileRepository.save(
-                    profile
+                        profile
                 );
 
                 return true;
@@ -307,7 +294,7 @@ public class AssetServiceImpl implements AssetService {
     public void dev_approveMember(Long projectId, UnlockAssetRequest unlockRequest) {
 
         AssetSecurityRequest assetSecurityRequest = this.assetSecurityRequestRepository.findById(
-            unlockRequest.getRequestId()
+                unlockRequest.getRequestId()
         ).get();
 
         if (unlockRequest.isAllowed()) {
@@ -318,24 +305,24 @@ public class AssetServiceImpl implements AssetService {
 
             // Send notification to user
             this.notificationService.backend_createNotification(
-                assetSecurityRequest.getUser(),
-                UserNotificationEnum.PROJECT_ASSET_APPROVED,
-                "Your request has been approved!"
+                    assetSecurityRequest.getUser(),
+                    UserNotificationEnum.PROJECT_ASSET_APPROVED,
+                    "Your request has been approved!"
             );
 
-        }else {
+        } else {
             assetSecurityRequest.setStatus(
                     AssetRequestStatusEnum.REJECTED
             );
             this.assetSecurityRequestRepository.save(
-                assetSecurityRequest
+                    assetSecurityRequest
             );
 
             // Send notification to user
             this.notificationService.backend_createNotification(
-                assetSecurityRequest.getUser(),
-                UserNotificationEnum.PROJECT_ASSET_DENIED,
-                "Your request has been denied"
+                    assetSecurityRequest.getUser(),
+                    UserNotificationEnum.PROJECT_ASSET_DENIED,
+                    "Your request has been denied"
             );
 
             return;
@@ -343,17 +330,17 @@ public class AssetServiceImpl implements AssetService {
 
         AssetSecurityApproval assetSecurityApproval = new AssetSecurityApproval();
         assetSecurityApproval.setUser(
-            assetSecurityRequest.getUser()
+                assetSecurityRequest.getUser()
         );
         assetSecurityApproval.setSecurityProfile(
-            assetSecurityRequest.getSecurityProfile()
+                assetSecurityRequest.getSecurityProfile()
         );
         assetSecurityRequest.getSecurityProfile().getApprovalList().add(
-            assetSecurityApproval
+                assetSecurityApproval
         );
 
         this.assetSecurityRequestRepository.save(
-            assetSecurityRequest
+                assetSecurityRequest
         );
 
     }
@@ -364,14 +351,14 @@ public class AssetServiceImpl implements AssetService {
         Project project = this.projectRepository.findById(projectId).get();
 
         List<AssetSecurityProfile> assetSecurityProfiles = this.assetSecurityProfileRepository.findByProject(
-            project
+                project
         );
 
         ArrayList<AssetSecurityRequest> requests = new ArrayList<AssetSecurityRequest>();
 
-        for (AssetSecurityProfile profile: assetSecurityProfiles) {
+        for (AssetSecurityProfile profile : assetSecurityProfiles) {
             requests.addAll(
-                profile.getRequests()
+                    profile.getRequests()
             );
         }
 
@@ -379,7 +366,7 @@ public class AssetServiceImpl implements AssetService {
     }
 
     @Override
-    public String ui_getAssetRequestTitle(JWTSessionContainer sessionContainer,AssetSecurityRequest securityRequest) {
+    public String ui_getAssetRequestTitle(JWTSessionContainer sessionContainer, AssetSecurityRequest securityRequest) {
 
         String assetName = "";
 
@@ -388,9 +375,9 @@ public class AssetServiceImpl implements AssetService {
             assetName = "folder " + securityRequest.getSecurityProfile().getAssetFolder().getName() + " in " +
                     securityRequest.getSecurityProfile().getAssetFolder().getCategory().getName();
 
-        }else if (securityRequest.getSecurityProfile().getAsset() != null) {
+        } else if (securityRequest.getSecurityProfile().getAsset() != null) {
 
-            assetName = "profile " + securityRequest.getSecurityProfile().getAsset().getAssetName()  + " in " +
+            assetName = "profile " + securityRequest.getSecurityProfile().getAsset().getAssetName() + " in " +
                     securityRequest.getSecurityProfile().getAsset().getCategory().getName();
 
         }
@@ -410,7 +397,7 @@ public class AssetServiceImpl implements AssetService {
             profile = this.assetFolderRepository.findById(
                     request.getAssetId()
             ).get().getSecurityProfile();
-        }else {
+        } else {
             profile = this.assetRepository.findById(
                     request.getAssetId()
             ).get().getSecurityProfile();
@@ -418,26 +405,26 @@ public class AssetServiceImpl implements AssetService {
 
         AssetSecurityRequest assetSecurityRequest = new AssetSecurityRequest();
         assetSecurityRequest.setSecurityProfile(
-            profile
+                profile
         );
         assetSecurityRequest.setMessage(
-            request.getMessage()
+                request.getMessage()
         );
         assetSecurityRequest.setUser(
-            this.userService.dev_GetUserById(
-                sessionContainer.getUserId()
-            )
+                this.userService.dev_GetUserById(
+                        sessionContainer.getUserId()
+                )
         );
         assetSecurityRequest.setStatus(
-            AssetRequestStatusEnum.UNSEEN
+                AssetRequestStatusEnum.UNSEEN
         );
 
         profile.getRequests().add(
-            assetSecurityRequest
+                assetSecurityRequest
         );
 
         this.assetSecurityProfileRepository.save(
-            profile
+                profile
         );
 
         // Send notification to project owner
@@ -452,7 +439,7 @@ public class AssetServiceImpl implements AssetService {
     }
 
     @Override
-    public boolean ui_isApprovedMember(JWTSessionContainer sessionContainer, Asset asset){
+    public boolean ui_isApprovedMember(JWTSessionContainer sessionContainer, Asset asset) {
 
         // Check if there is a security profile attached in the first place
         if (asset.getSecurityProfile() == null) {
@@ -466,7 +453,7 @@ public class AssetServiceImpl implements AssetService {
         }
 
         // Otherwise, check if the user is approved under the security profile.
-        return asset.getSecurityProfile().getApprovalList().stream().filter( (AssetSecurityApproval app) -> {
+        return asset.getSecurityProfile().getApprovalList().stream().filter((AssetSecurityApproval app) -> {
             if (app.getUser().getId() == sessionContainer.getUserId()) {
                 return true;
             }
@@ -490,7 +477,7 @@ public class AssetServiceImpl implements AssetService {
         }
 
         // Otherwise, check if the user is approved under the security profile.
-        return assetFolder.getSecurityProfile().getApprovalList().stream().filter( (AssetSecurityApproval app) -> {
+        return assetFolder.getSecurityProfile().getApprovalList().stream().filter((AssetSecurityApproval app) -> {
             if (app.getUser().getId() == sessionContainer.getUserId()) {
                 return true;
             }

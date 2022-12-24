@@ -10,6 +10,7 @@ import ca.sait.backup.service.SessionService;
 import ca.sait.backup.service.SupportTicketService;
 import ca.sait.backup.service.UserService;
 import ca.sait.backup.utils.JsonData;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,17 +22,14 @@ import java.util.List;
 import java.util.Locale;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("api/v1/pri/user/ticket")
 public class TicketControllerClientRest {
 
-    @Autowired
-    private UserService userService;
 
-    @Autowired
-    private SupportTicketService ticketService;
-
-    @Autowired
-    private SessionService sessionService;
+    private final UserService userService;
+    private final SupportTicketService ticketService;
+    private final SessionService sessionService;
 
     @PostMapping("/create")
     public JsonData createNewTicket(@RequestBody CreateNewSupportTicketRequest createRequest, HttpServletRequest request) {
