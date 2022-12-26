@@ -44,19 +44,11 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public void backend_markAsRead(User user) {
-        List<UserNotification> uNotifications = this.backend_getUnreadNotificationsForUser(
-            user
-        );
-
+        List<UserNotification> uNotifications = backend_getUnreadNotificationsForUser(user);
         for(UserNotification notif: uNotifications) {
-            notif.setViewed(
-                true
-            );
+            notif.setViewed(true);
         }
-
-        this.notificationRepository.saveAll(
-            uNotifications
-        );
+        notificationRepository.saveAll(uNotifications);
     }
 
 }

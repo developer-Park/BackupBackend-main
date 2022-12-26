@@ -19,14 +19,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Validated
+@Validated //Ticket validated write at least five letters of title and description
 @RequiredArgsConstructor
 public class SupportTicketServiceImpl implements SupportTicketService {
 
-    @Autowired
     private final TicketRepository ticketRepository;
 
-    @Autowired
     private final TicketMessageRepository ticketChatRepository;
 
     @Override

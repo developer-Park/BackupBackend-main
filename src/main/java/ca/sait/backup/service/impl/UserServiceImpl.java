@@ -5,10 +5,8 @@ import ca.sait.backup.mapper.UserRepository;
 import ca.sait.backup.model.business.JWTSessionContainer;
 import ca.sait.backup.model.entity.User;
 import ca.sait.backup.model.entity.UserRole;
-import ca.sait.backup.model.request.ChangePasswordRequest;
-import ca.sait.backup.model.request.LoginRequest;
-import ca.sait.backup.model.request.RegisterRequest;
-import ca.sait.backup.model.request.UpdateUserInformationRequest;
+import ca.sait.backup.model.request.*;
+import ca.sait.backup.model.response.SuspendResponse;
 import ca.sait.backup.service.UserService;
 import ca.sait.backup.utils.CommonUtils;
 import lombok.RequiredArgsConstructor;
@@ -56,15 +54,20 @@ public class UserServiceImpl implements UserService {
     }
 
     //writer : Park
-    @Transactional
     @Override
     public boolean processRegister(RegisterRequest registerRequest) {
+        System.out.println(registerRequest.getPassword());
+        System.out.println(registerRequest.getName());
+        System.out.println(registerRequest.getEmail());
         // Check if email is already used
         if (uRepository.findByEmail(registerRequest.getEmail()) != null) {
             throw new XDException(404, "user exist");
         }
         String password = CommonUtils.SHA256(registerRequest.getPassword());
         UserRole role = UserRole.USER;
+        System.out.println(password);
+        System.out.println(role);
+
         User user = new User(registerRequest, password, role);
         uRepository.save(user);
 
@@ -102,14 +105,17 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void suspendUser(Long userId) {
+    public SuspendResponse suspendUser(Long userId) {
         User user = dev_GetUserById(userId);
         if (!user.isDisabled()) {
             user.deleteUser(true);
+            return new SuspendResponse(true);
         } else {
             user.deleteUser(false);
+            return new SuspendResponse(false);
         }
     }
+
 
     //Writer : Park
     @Override

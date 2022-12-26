@@ -3,10 +3,8 @@ package ca.sait.backup.service;
 import ca.sait.backup.model.business.JWTSessionContainer;
 import ca.sait.backup.model.entity.User;
 import ca.sait.backup.model.entity.UserRole;
-import ca.sait.backup.model.request.ChangePasswordRequest;
-import ca.sait.backup.model.request.LoginRequest;
-import ca.sait.backup.model.request.RegisterRequest;
-import ca.sait.backup.model.request.UpdateUserInformationRequest;
+import ca.sait.backup.model.request.*;
+import ca.sait.backup.model.response.SuspendResponse;
 
 import java.util.List;
 
@@ -31,5 +29,7 @@ public interface UserService {
 
     boolean processRegister(RegisterRequest registerRequest);
 
-    void suspendUser(Long userId);
+    SuspendResponse suspendUser(Long userId);
+
+
 }

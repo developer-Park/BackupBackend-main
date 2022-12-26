@@ -57,7 +57,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
     @Override
     public Project getProjectUsingId(Long id) {
-        return this.projectRepository.getById(id);
+        return projectRepository.getById(id);
     }
     @Override
     public boolean createNewProject(Long userId, CreateNewProjectRequest projectRequest){

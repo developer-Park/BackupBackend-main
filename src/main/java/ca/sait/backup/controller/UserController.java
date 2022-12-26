@@ -3,20 +3,22 @@ package ca.sait.backup.controller;
 
 
 import ca.sait.backup.model.entity.User;
+import ca.sait.backup.model.request.EmailDTO;
 import ca.sait.backup.model.request.LoginRequest;
 import ca.sait.backup.model.request.RegisterRequest;
 import ca.sait.backup.model.response.LoginResponse;
 import ca.sait.backup.model.response.RegisterResponse;
-import ca.sait.backup.service.EmailService;
 
+import ca.sait.backup.service.EmailService;
 import ca.sait.backup.service.SessionService;
 import ca.sait.backup.service.UserService;
+import ca.sait.backup.service.impl.EmailServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 
 
 //Writer : Park, Ibrahim
@@ -24,9 +26,8 @@ import java.util.Map;
 @RequestMapping("api/v1/pri/user")
 @RequiredArgsConstructor
 public class UserController {
-
     private final UserService userService;
-
+    private final EmailServiceImpl emailService;
     private final SessionService sessionService;
 
     //Writer : Park, John
@@ -58,6 +59,17 @@ public class UserController {
         return new RegisterResponse(created);
     }
 
+    // 이메일 보내기
+
+    @ResponseBody
+    @PostMapping("/sendEmail")
+    public String sendEmail(@RequestBody EmailDTO emailDTO) throws IllegalAccessException {
+        System.out.println(emailDTO.getEmail());
+        EmailDTO findPasswordRequest = emailService.createMailAndChangePassword(emailDTO);
+        emailService.mailSend(findPasswordRequest);
+
+        return "/general/login";
+    }
 
 
 }

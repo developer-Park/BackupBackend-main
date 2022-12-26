@@ -19,4 +19,9 @@ public class LandingController {
         return "general/register";
     }
 
+    @GetMapping("/findPassword")
+    public String showfindPasswordForm() {
+        return "general/findPassword";
+    }
+
 }

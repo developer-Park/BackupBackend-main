@@ -336,12 +336,15 @@
                                         <span th:text="${user.country}">Wake Island</span>
                                     </li>
                                 </ul>
-                                <form th:action="@{'/api/v1/pri/general/settings/suspend/' + ${user.id}}"  method="post" >
+                                <form th:action="@{'/api/v1/pri/general/settings/suspend/' + ${user.id}}" method="post">
+                                    <input type="hidden" name="_method" value="put"/>
                                     <div class="d-flex justify-content-center pt-2">
-                                        <button class="btn btn-outline-danger suspend-user waves-effect" th th:if="${user.isDisabled() == false}">
+                                        <button class="btn btn-outline-danger suspend-user waves-effect"
+                                                th:if="${user.isDisabled() == false}" id="suspendFalse" onclick="successSuspend()">
                                             Suspended
                                         </button>
-                                        <button class="btn btn-outline-danger suspend-user waves-effect" th th:if="${user.isDisabled() == true}">
+                                        <button class="btn btn-outline-danger suspend-user waves-effect"
+                                                th:if="${user.isDisabled() == true}" id="suspendTrue" onclick="successReleaseSuspend()">
                                             Release Suspended
                                         </button>
                                     </div>
@@ -564,8 +567,23 @@
 
         refreshPage();
     }
+
+    async function successSuspend() {
+        alert("Success  Suspend!!!");
+
+        refreshPage();
+    }
+
+    async function successReleaseSuspend() {
+        alert("Success Release Suspend!!!");
+
+        refreshPage();
+    }
+
+
 </script>
+
 </body>
-<!-- END: Body-->
+
 
 </html>

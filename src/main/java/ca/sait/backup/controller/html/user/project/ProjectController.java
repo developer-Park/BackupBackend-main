@@ -29,13 +29,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProjectController {
 
-    @Autowired
     private final AssetService assetService;
 
-    @Autowired
     private final ProjectService projectService;
 
-    @Autowired
     private final SessionService sessionService;
 
     @GetMapping("/")

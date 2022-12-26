@@ -3,8 +3,9 @@ package ca.sait.backup.service;
 import org.springframework.mail.javamail.JavaMailSender;
 
 import javax.mail.MessagingException;
+import javax.validation.constraints.Email;
 
 public interface EmailService {
 
-    void sendHtmlMessage(String to, String subject,String text) throws MessagingException;
+    public void SendEmail(Email email);
 }
