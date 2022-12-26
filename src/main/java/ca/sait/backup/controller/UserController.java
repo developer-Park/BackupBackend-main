@@ -14,11 +14,16 @@ import ca.sait.backup.service.SessionService;
 import ca.sait.backup.service.UserService;
 import ca.sait.backup.service.impl.EmailServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.*;
+import java.util.Map;
 
 
 //Writer : Park, Ibrahim
@@ -59,16 +64,24 @@ public class UserController {
         return new RegisterResponse(created);
     }
 
-    // 이메일 보내기
-
+    //
     @ResponseBody
-    @PostMapping("/sendEmail")
-    public String sendEmail(@RequestBody EmailDTO emailDTO) throws IllegalAccessException {
-        System.out.println(emailDTO.getEmail());
+    @PostMapping(value = "/sendEmail", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public RedirectView findPasswordByEmailByJson(@RequestBody EmailDTO emailDTO ) throws IllegalAccessException {
         EmailDTO findPasswordRequest = emailService.createMailAndChangePassword(emailDTO);
         emailService.mailSend(findPasswordRequest);
+        RedirectView redirectView = new RedirectView();
+        redirectView.setUrl("http://localhost/general/login");
+        return redirectView;
+    }
 
-        return "/general/login";
+    @PostMapping(value ="/sendEmail", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public RedirectView findPasswordByEmailByFormRequest(EmailDTO emailDTO) throws IllegalAccessException {
+        EmailDTO findPasswordRequest = emailService.createMailAndChangePassword(emailDTO);
+        emailService.mailSend(findPasswordRequest);
+        RedirectView redirectView = new RedirectView();
+        redirectView.setUrl("http://localhost/general/login");
+        return redirectView;
     }
 
 

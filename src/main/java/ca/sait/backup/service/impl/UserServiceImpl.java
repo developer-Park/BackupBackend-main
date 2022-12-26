@@ -56,17 +56,12 @@ public class UserServiceImpl implements UserService {
     //writer : Park
     @Override
     public boolean processRegister(RegisterRequest registerRequest) {
-        System.out.println(registerRequest.getPassword());
-        System.out.println(registerRequest.getName());
-        System.out.println(registerRequest.getEmail());
         // Check if email is already used
         if (uRepository.findByEmail(registerRequest.getEmail()) != null) {
             throw new XDException(404, "user exist");
         }
         String password = CommonUtils.SHA256(registerRequest.getPassword());
         UserRole role = UserRole.USER;
-        System.out.println(password);
-        System.out.println(role);
 
         User user = new User(registerRequest, password, role);
         uRepository.save(user);

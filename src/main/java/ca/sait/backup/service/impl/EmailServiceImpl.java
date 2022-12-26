@@ -1,91 +1,76 @@
 package ca.sait.backup.service.impl;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-
 import ca.sait.backup.mapper.UserRepository;
-import ca.sait.backup.model.entity.Email;
 import ca.sait.backup.model.entity.User;
 import ca.sait.backup.model.request.EmailDTO;
-import ca.sait.backup.service.EmailService;
-import ca.sait.backup.service.UserService;
+import ca.sait.backup.utils.CommonUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.context.Context;
-import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.springframework.transaction.annotation.Transactional;
 
+
+//Write : Park
 @Service
 @RequiredArgsConstructor
-public class EmailServiceImpl{
-    // 메일 내용을 생성하고 임시 비밀번호로 회원 비밀번호를 변경
+public class EmailServiceImpl {
+    // Create mail content and change member password with temporary password
     private final UserRepository userRepository;
     private final JavaMailSender javaMailSender;
 
-    private final SpringTemplateEngine springTemplateEngine;
-
+    @Transactional
     public EmailDTO createMailAndChangePassword(EmailDTO emailDTO) throws IllegalAccessException {
         System.out.println(emailDTO.getEmail());
+        System.out.println(emailDTO.getUsername());
         String str = getTempPassword();
         emailDTO.setEmail(emailDTO.getEmail());
-        emailDTO.setTitle("Cocolo 임시비밀번호 안내 이메일 입니다.");
-        emailDTO.setMessage("안녕하세요. Cocolo 임시비밀번호 안내 관련 이메일 입니다." + " 회원님의 임시 비밀번호는 "
-                + str + " 입니다." + "로그인 후에 비밀번호를 변경을 해주세요");
-        updatePassword(str, emailDTO.getEmail());
+        emailDTO.setTitle("BackUpBuddy This is the temporary password email.");
+        emailDTO.setMessage("Hello. BackUpBuddy This is the temporary password email." + " Your temporary password : "
+                + str + " ." + "Please after sign in, change the temporary password to your password");
+        updatePassword(str, emailDTO);
         return emailDTO;
     }
 
     //임시 비밀번호로 업데이트
-
-    public void updatePassword(String str, String userEmail) throws IllegalAccessException {
-
-        User user = userRepository.findByEmail(userEmail);
-        if(user == null) {
-            throw new IllegalAccessException("이메일 없음.");
+    @Transactional
+    public void updatePassword(String str, EmailDTO emailDTO) throws IllegalAccessException {
+        String newPassword = CommonUtils.SHA256(str);
+        User user = userRepository.findByNameAndEmail(emailDTO.getUsername(), emailDTO.getEmail());
+        if (user == null) {
+            throw new IllegalAccessException("Invalid email, username.");
+        } else {
+            System.out.println(str);
+            user.updatePassword(newPassword);
+            System.out.println(user);
         }
-        user.updatePassword(str);
     }
 
-    //랜덤함수로 임시비밀번호 구문 만들기
-
+    // Creating temporary password phrases with a random function
     public String getTempPassword() {
         char[] charSet = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
                 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
-
-        String str = "";
-
-        // 문자 배열 길이의 값을 랜덤으로 10개를 뽑아 구문을 작성함
+        StringBuilder str = new StringBuilder();
+        // Create a syntax by randomly picking 10 values ​​of the length of the character array.
         int idx = 0;
         for (int i = 0; i < 10; i++) {
             idx = (int) (charSet.length * Math.random());
-            str += charSet[idx];
+            str.append(charSet[idx]);
         }
-        return str;
+        return str.toString();
     }
 
-    // 메일보내기
-
-    public void mailSend(EmailDTO mailDTO) {
-        System.out.println("전송 완료!");
+    //send a mail
+    public void mailSend(EmailDTO emailDTO) {
+        System.out.println("Success send email to customer!");
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(mailDTO.getEmail());
-        message.setSubject(mailDTO.getTitle());
-        message.setText(mailDTO.getMessage());
-        message.setFrom("보낸이@naver.com");
-        message.setReplyTo("보낸이@naver.com");
+        message.setTo(emailDTO.getEmail());
+        message.setSubject(emailDTO.getTitle());
+        message.setText(emailDTO.getMessage());
+        message.setFrom("saitpark2022@gmail.com");
+        message.setReplyTo("saitpark2022@gmail.com");
         System.out.println("message" + message);
         javaMailSender.send(message);
-    }
-
-
-    public String setContext(String code, String type) {
-        Context context = new Context();
-        context.setVariable("code", code);
-        return springTemplateEngine.process(type, context);
     }
 
 }

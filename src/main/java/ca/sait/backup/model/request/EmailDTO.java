@@ -11,5 +11,6 @@ public class EmailDTO {
         private String email;
         private String title;
         private String message;
+        private String username;
 
 }
