@@ -10,7 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
@@ -79,7 +79,7 @@ public class SessionServiceImpl implements SessionService {
         return sessionContainer;
     }
 
-    public String createToken(User user) {
+    public String createToken(Authentication authentication, User user) {
 
         // Create new session container object
         JWTSessionContainer sessionContainer = new JWTSessionContainer();
@@ -99,9 +99,7 @@ public class SessionServiceImpl implements SessionService {
         String jsonData = gson.toJson(sessionContainer);
 
         // Tokenize json
-        String JWToken = JWTUtils.geneJsonWebToken(
-            jsonData
-        );
+        String JWToken = JWTUtils.geneJsonWebToken(authentication,jsonData);
 
         return JWToken;
     }

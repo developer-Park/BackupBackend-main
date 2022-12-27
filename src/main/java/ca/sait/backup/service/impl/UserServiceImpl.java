@@ -10,6 +10,8 @@ import ca.sait.backup.model.response.SuspendResponse;
 import ca.sait.backup.service.UserService;
 import ca.sait.backup.utils.CommonUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -25,23 +27,28 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository uRepository;
+    private final PasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public boolean loginUser(LoginRequest loginRequest) {
         // Search for user that has the specified email
         User user = uRepository.findByEmail(loginRequest.getEmail());
+        System.out.println(user);
+
         if (user == null) {
             throw new XDException(404, "user not exist");
         }
         // Hash what was provided to us
-        String hashProvidedPassword = CommonUtils.SHA256(loginRequest.getPassword());
+        String inputpassword = loginRequest.getPassword();
         // Compare both hashes
-        if (user.getPassword().equals(hashProvidedPassword)) {
+        if (bCryptPasswordEncoder.matches(inputpassword,user.getPassword())) {
             // Check if user is disabled
             return !user.isDisabled();
             // Valid
+        }else {
+            System.out.println("로그인실패");
+            return false;
         }
-        return false;
     }
 
     //Writer : Park
@@ -60,7 +67,7 @@ public class UserServiceImpl implements UserService {
         if (uRepository.findByEmail(registerRequest.getEmail()) != null) {
             throw new XDException(404, "user exist");
         }
-        String password = CommonUtils.SHA256(registerRequest.getPassword());
+        String password = bCryptPasswordEncoder.encode(registerRequest.getPassword());
         UserRole role = UserRole.USER;
 
         User user = new User(registerRequest, password, role);
@@ -78,13 +85,13 @@ public class UserServiceImpl implements UserService {
             return false;
         }
         // Hash user's password and compare with database
-        String hashedProvided = CommonUtils.SHA256(req.getCurrentPassword());
+        String unhashedProvided = req.getCurrentPassword();
         String userPasswordHashed = user.get().getPassword();
-        boolean correctPassword = userPasswordHashed.equals(hashedProvided);
+        boolean correctPassword = bCryptPasswordEncoder.matches(unhashedProvided,userPasswordHashed);
         if (!correctPassword) {
             return false;
         }
-        String newPassword = CommonUtils.SHA256(req.getNewPassword());
+        String newPassword = bCryptPasswordEncoder.encode(req.getNewPassword());
         // If it's correct, update the user's password with the new one
         user.get().updatePassword(newPassword);
         return true;

@@ -7,6 +7,7 @@ import ca.sait.backup.utils.CommonUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,7 @@ public class EmailServiceImpl {
     // Create mail content and change member password with temporary password
     private final UserRepository userRepository;
     private final JavaMailSender javaMailSender;
+    private final PasswordEncoder bCryptPasswordEncoder;
 
     @Transactional
     public EmailDTO createMailAndChangePassword(EmailDTO emailDTO) throws IllegalAccessException {
@@ -35,7 +37,7 @@ public class EmailServiceImpl {
     //임시 비밀번호로 업데이트
     @Transactional
     public void updatePassword(String str, EmailDTO emailDTO) throws IllegalAccessException {
-        String newPassword = CommonUtils.SHA256(str);
+        String newPassword = bCryptPasswordEncoder.encode(str);
         User user = userRepository.findByNameAndEmail(emailDTO.getUsername(), emailDTO.getEmail());
         if (user == null) {
             throw new IllegalAccessException("Invalid email, username.");

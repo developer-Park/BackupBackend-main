@@ -16,6 +16,9 @@ import ca.sait.backup.service.impl.EmailServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
@@ -34,6 +37,7 @@ public class UserController {
     private final UserService userService;
     private final EmailServiceImpl emailService;
     private final SessionService sessionService;
+    private final AuthenticationManager authenticationManager;
 
     //Writer : Park, John
     @PostMapping("/login")
@@ -41,12 +45,15 @@ public class UserController {
 
         boolean valid = userService.loginUser(loginRequest);
         LoginResponse lResponse = new LoginResponse(valid);
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
+        //SecurityContextHolder.getContext().setAuthentication(authenticat
         // Assign user a JWT session
         if (valid) {
             // Create session container, then JWT token
             User user = userService.dev_GetUserByEmail(loginRequest.getEmail());
-            String jwtToken = sessionService.createToken(user);
+            String jwtToken = sessionService.createToken(authentication, user);
             System.out.println("Creating JWT Token: " + jwtToken);
             // Create cookie using JWT token
             Cookie cookie = new Cookie("session", jwtToken);

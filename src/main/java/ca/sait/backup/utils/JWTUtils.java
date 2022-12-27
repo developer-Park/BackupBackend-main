@@ -4,6 +4,7 @@ package ca.sait.backup.utils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.security.core.Authentication;
 
 
 import java.util.Date;
@@ -42,7 +43,7 @@ JWTUtils {
     /**
      * token prefix
      */
-    private  static final String TOKEN_PREFIX = "backup";
+   // private  static final String TOKEN_PREFIX = "backup";
 
 
     /**
@@ -56,15 +57,15 @@ JWTUtils {
      * @param user
      * @return
      */
-    public static String geneJsonWebToken(String sessionData){
+    public static String geneJsonWebToken(Authentication authentication, String sessionData){
+        String name = authentication.getName();
 
-        String token = Jwts.builder().setSubject(SUBJECT)
+
+        String token = Jwts.builder().setSubject(name)
                 .claim("sessionData", sessionData)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRE))
                 .signWith(SignatureAlgorithm.HS256,SECRET).compact();
-
-        token = TOKEN_PREFIX + token;
 
         return token;
     }
@@ -80,7 +81,7 @@ JWTUtils {
         try{
 
             final Claims claims = Jwts.parser().setSigningKey(SECRET)
-                    .parseClaimsJws(token.replace(TOKEN_PREFIX,"")).getBody();
+                    .parseClaimsJws(token).getBody();
 
             return claims;
 
