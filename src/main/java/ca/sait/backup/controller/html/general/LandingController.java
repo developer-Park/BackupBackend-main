@@ -30,14 +30,7 @@ public class LandingController {
         return "general/findPassword";
     }
 
-    @PostMapping("/logout")
-    public String logOutForm(HttpServletResponse httpServletResponse) {
-        Cookie cookie = new Cookie("session",null);
-        cookie.setMaxAge(0);
-        cookie.setPath("/");
-        httpServletResponse.addCookie(cookie);
-        return "redirect:/general/login"; //주소 요청으로 변경
-    }
+
 
 
 }

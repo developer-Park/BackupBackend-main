@@ -28,7 +28,7 @@ import java.util.Map;
 
 //Writer : Park, Ibrahim
 @RestController
-@RequestMapping("api/v1/pri/user")
+@RequestMapping("/api/v1/pri/user")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
@@ -63,7 +63,7 @@ public class UserController {
         boolean created = userService.processRegister(registerRequest);
         return new RegisterResponse(created);
     }
-
+    //Writer : Park,
     //
     @ResponseBody
     @PostMapping(value = "/sendEmail", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -74,7 +74,7 @@ public class UserController {
         redirectView.setUrl("http://localhost/general/login");
         return redirectView;
     }
-
+    //Writer : Park,
     @PostMapping(value ="/sendEmail", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public RedirectView findPasswordByEmailByFormRequest(EmailDTO emailDTO) throws IllegalAccessException {
         EmailDTO findPasswordRequest = emailService.createMailAndChangePassword(emailDTO);
@@ -83,6 +83,18 @@ public class UserController {
         redirectView.setUrl("http://localhost/general/login");
         return redirectView;
     }
+    //Writer : Park,
+    @RequestMapping(value = "/logout",method =  {RequestMethod.GET, RequestMethod.POST})
+    public RedirectView logOutForm(HttpServletResponse httpServletResponse) {
+        Cookie cookie = new Cookie("session",null);
+        cookie.setMaxAge(0);
+        cookie.setPath("/");
+        httpServletResponse.addCookie(cookie);
+        RedirectView redirectView = new RedirectView();
+        redirectView.setUrl("http://localhost/general/login");
+        return redirectView;
+    }
+
 
 
 }
