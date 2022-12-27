@@ -14,6 +14,9 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+//유저의 정보를 가져오는 UserDetailsService 인터페이스를 구현
+//기본 오버라이드 메소드는 loadUserByUsername이고 반환타입은 UserDetails입니다.
+
 public class CustomUserDetailService implements UserDetailsService {
 
     private final UserRepository userRepository;

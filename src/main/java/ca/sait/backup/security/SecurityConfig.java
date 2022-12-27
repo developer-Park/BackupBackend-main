@@ -6,28 +6,34 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
-@Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+//WebSecurityConfigurerAdapter 사용 하지 않고 구현
+//다른 곳 보다 SecurityConfig 쪽만 수정 해주면 된다.
+//기존은 Override방식으로 시큐리티를 configure하였지만
+//현재는 Bean방식으로 스프링에 DI를 해주는 방식으로 사용한다.
+public class SecurityConfig {
 
     private final CustomUserDetailService customUserDetailService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+            throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean
@@ -35,14 +41,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                 .authorizeRequests()
-//                .antMatchers("/","/general/**").permitAll()
-//                .antMatchers("/admin/**").hasRole("USER")
-                .antMatchers("/user/**").hasRole("USER")
+                .antMatchers("/","/general/**").permitAll()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/mediator/**").hasAnyRole("MEDIATOR","ADMIN")
+                .antMatchers("/user/**").hasAnyRole("ADMIN","USER")
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -64,16 +71,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         http.headers().frameOptions().disable();
 
+        return http.build();
     }
 
-    @Override
+    @Bean
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customUserDetailService);
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/resources/**", "/static/**", "/images/**", "/productimages/**", "/css/**", "/js/**");
+//    @Bean
+//    public void configure(WebSecurity web) throws Exception {
+//        web.ignoring().antMatchers("/resources/**", "/static/**", "/images/**", "/productimages/**", "/css/**", "/js/**");
+//    }
+
+    @Bean
+    public WebSecurityCustomizer configure() {
+        return (web) -> web.ignoring().mvcMatchers(
+                "/v3/api-docs/**",
+                "/swagger-ui/**","/resources/**","/static/**",
+                "/api/v1/login" // 임시
+        );
     }
 
 

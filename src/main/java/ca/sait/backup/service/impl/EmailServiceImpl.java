@@ -3,7 +3,6 @@ package ca.sait.backup.service.impl;
 import ca.sait.backup.mapper.UserRepository;
 import ca.sait.backup.model.entity.User;
 import ca.sait.backup.model.request.EmailDTO;
-import ca.sait.backup.utils.CommonUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;

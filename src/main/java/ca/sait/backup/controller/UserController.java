@@ -47,8 +47,6 @@ public class UserController {
         LoginResponse lResponse = new LoginResponse(valid);
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
-
-        //SecurityContextHolder.getContext().setAuthentication(authenticat
         // Assign user a JWT session
         if (valid) {
             // Create session container, then JWT token
