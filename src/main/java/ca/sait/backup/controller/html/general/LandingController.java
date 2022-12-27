@@ -1,10 +1,14 @@
 package ca.sait.backup.controller.html.general;
 
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -26,9 +30,12 @@ public class LandingController {
         return "general/findPassword";
     }
 
-    @GetMapping("/logout")
-    public String logOutForm(HttpSession httpSession) {
-        httpSession.invalidate();
+    @PostMapping("/logout")
+    public String logOutForm(HttpServletResponse httpServletResponse) {
+        Cookie cookie = new Cookie("session",null);
+        cookie.setMaxAge(0);
+        cookie.setPath("/");
+        httpServletResponse.addCookie(cookie);
         return "redirect:/general/login"; //주소 요청으로 변경
     }
 
