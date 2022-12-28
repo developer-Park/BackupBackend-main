@@ -35,3 +35,5 @@ build/
 application.properties
 *.properties
 src/main/resources/application.properties
+application-oauth.properties
+src/main/resources/application-oauth.properties

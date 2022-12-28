@@ -4,6 +4,7 @@ package ca.sait.backup.model.entity;
 import ca.sait.backup.model.request.RegisterRequest;
 import ca.sait.backup.model.request.UpdateUserInformationRequest;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -17,6 +18,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class User {
 
     public User(Long id) {
@@ -38,7 +40,6 @@ public class User {
     private String country;
 
     private boolean disabled;
-
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
@@ -75,4 +76,12 @@ public class User {
     public void deleteUser(boolean disabled) {
         this.disabled = disabled;
     }
+
+    public User update(String name){
+        this.name = name;
+
+
+        return this;
+    }
+
 }
