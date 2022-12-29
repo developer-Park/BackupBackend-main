@@ -14,11 +14,13 @@ import ca.sait.backup.service.SessionService;
 import ca.sait.backup.service.UserService;
 import ca.sait.backup.service.impl.EmailServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
@@ -41,6 +43,7 @@ public class UserController {
 
     //Writer : Park, John
     @PostMapping("/login")
+
     private LoginResponse processLogin(@RequestBody LoginRequest loginRequest, HttpServletResponse response) {
 
         boolean valid = userService.loginUser(loginRequest);
@@ -99,7 +102,6 @@ public class UserController {
         redirectView.setUrl("http://localhost/general/login");
         return redirectView;
     }
-
 
 
 }

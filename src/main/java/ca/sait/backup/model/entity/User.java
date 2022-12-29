@@ -47,7 +47,8 @@ public class User {
     @CreationTimestamp
     private Date creationDate;
 
-
+    private String provider;
+    private String providerId;
     public User(RegisterRequest registerRequest, String password, UserRole userRole) {
         this.name = registerRequest.getName();
         this.password = password;
