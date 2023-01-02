@@ -59,9 +59,24 @@ JWTUtils {
      */
     public static String geneJsonWebToken(Authentication authentication, String sessionData){
         String name = authentication.getName();
+        System.out.println("####################JWT UTILS GET NAME ###########" +name );
 
 
         String token = Jwts.builder().setSubject(name)
+                .claim("sessionData", sessionData)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRE))
+                .signWith(SignatureAlgorithm.HS256,SECRET).compact();
+
+        return token;
+    }
+
+    public static String geneJsonGoogleWebToken(String email, String sessionData){
+
+
+
+
+        String token = Jwts.builder().setSubject(email)
                 .claim("sessionData", sessionData)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRE))

@@ -14,13 +14,12 @@ import ca.sait.backup.service.SessionService;
 import ca.sait.backup.service.UserService;
 import ca.sait.backup.service.impl.EmailServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
@@ -43,20 +42,20 @@ public class UserController {
 
     //Writer : Park, John
     @PostMapping("/login")
-
     private LoginResponse processLogin(@RequestBody LoginRequest loginRequest, HttpServletResponse response) {
 
         boolean valid = userService.loginUser(loginRequest);
         LoginResponse lResponse = new LoginResponse(valid);
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
         // Assign user a JWT session
         if (valid) {
             // Create session container, then JWT token
             User user = userService.dev_GetUserByEmail(loginRequest.getEmail());
             String jwtToken = sessionService.createToken(authentication, user);
             System.out.println("Creating JWT Token: " + jwtToken);
-            // Create cookie using JWT token
+//             Create cookie using JWT token
             Cookie cookie = new Cookie("session", jwtToken);
             cookie.setSecure(false);
             cookie.setMaxAge(7 * 24 * 60 * 60); // 7 days
@@ -65,12 +64,7 @@ public class UserController {
         }
         return lResponse;
     }
-    @ResponseBody
-    @PostMapping("/register")
-    private RegisterResponse processRegister(@RequestBody RegisterRequest registerRequest) {
-        boolean created = userService.processRegister(registerRequest);
-        return new RegisterResponse(created);
-    }
+
     //Writer : Park,
     //
     @ResponseBody
@@ -102,6 +96,7 @@ public class UserController {
         redirectView.setUrl("http://localhost/general/login");
         return redirectView;
     }
+
 
 
 }

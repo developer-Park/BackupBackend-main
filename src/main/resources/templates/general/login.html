@@ -122,6 +122,9 @@
                             </div>
                             <a href= "/oauth2/authorization/google">google login</a>
                             <div class="auth-footer-btn d-flex justify-content-center"><a class="btn btn-facebook" href="#"><i data-feather="facebook"></i></a><a class="btn btn-twitter white" href="#"><i data-feather="twitter"></i></a><a class="btn btn-google" href="#"><i data-feather="mail"></i></a><a class="btn btn-github" href="#"><i data-feather="github"></i></a></div>
+                            <button id="login-kakao-btn" onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=58f243f343a0d33cba23db475c07f7a4&redirect_uri=http://localhost:80/api/user/kakao/callback&response_type=code'">
+                                카카오로 로그인하기
+                            </button>
                         </div>
                     </div>
                     <!-- /Login-->
@@ -155,91 +158,91 @@
 
 <script>
 
-        $(window).on('load', function() {
-            if (feather) {
-                feather.replace({
-                    width: 14,
-                    height: 14
-                });
+    $(window).on('load', function() {
+        if (feather) {
+            feather.replace({
+                width: 14,
+                height: 14
+            });
+        }
+    })
+
+    const UsernameInput = document.querySelector('#login-email');
+    const PasswordInput = document.querySelector('#login-password');
+
+    async function SendLogin(creds) {
+        let res = await axios.post("/api/v1/pri/user/login", creds);
+        return res;
+    }
+
+    async function triggerRedirect() {
+        window.location = "/user/dashboard";
+    }
+
+    async function triggerLoginSuccess() {
+
+        setTimeout(triggerRedirect, 1000);
+
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
             }
-        })
+        });
 
-        const UsernameInput = document.querySelector('#login-email');
-        const PasswordInput = document.querySelector('#login-password');
+        Toast.fire({
+            icon: 'success',
+            title: 'Signed in successfully'
+        });
 
-        async function SendLogin(creds) {
-            let res = await axios.post("/api/v1/pri/user/login", creds);
-            return res;
-        }
+    }
 
-        async function triggerRedirect() {
-            window.location = "/user/dashboard";
-        }
+    async function triggerLoginError() {
 
-        async function triggerLoginSuccess() {
+        const { value: requestMessage } = await Swal.fire({
+            icon: 'error',
+            title: 'Invalid credentials'
+        });
 
-            setTimeout(triggerRedirect, 1000);
+    }
 
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
+    async function ProcessLogin() {
+
+        let username = UsernameInput.value;
+        let password = PasswordInput.value;
+
+        console.log("Logging in right now", username, password);
+
+        let loginResponse = false;
+
+        try {
+
+            loginResponse = await SendLogin({
+                email: username,
+                password: password
             });
 
-            Toast.fire({
-                icon: 'success',
-                title: 'Signed in successfully'
-            });
-
-        }
-
-        async function triggerLoginError() {
-
-            const { value: requestMessage } = await Swal.fire({
-                icon: 'error',
-                title: 'Invalid credentials'
-            });
-
-        }
-
-        async function ProcessLogin() {
-
-            let username = UsernameInput.value;
-            let password = PasswordInput.value;
-
-            console.log("Logging in right now", username, password);
-
-            let loginResponse = false;
-
-            try {
-
-                loginResponse = await SendLogin({
-                    email: username,
-                    password: password
-                });
-
-                if (!loginResponse.data.authenticated) {
-                    throw new Exception("Invalid credentials");
-                }else {
-                    triggerLoginSuccess();
-                }
-
-            }catch(error) {
-                console.log("Exception sending login", error);
-                triggerLoginError();
+            if (!loginResponse.data.authenticated) {
+                throw new Exception("Invalid credentials");
+            }else {
+                triggerLoginSuccess();
             }
 
-            console.log(loginResponse);
-
+        }catch(error) {
+            console.log("Exception sending login", error);
+            triggerLoginError();
         }
 
-    </script>
+        console.log(loginResponse);
+
+    }
+
+</script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 </body>

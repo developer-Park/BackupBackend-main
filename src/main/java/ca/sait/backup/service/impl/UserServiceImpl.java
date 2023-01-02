@@ -31,6 +31,7 @@ public class UserServiceImpl implements UserService {
     public boolean loginUser(LoginRequest loginRequest) {
         // Search for user that has the specified email
         User user = uRepository.findByEmail(loginRequest.getEmail());
+        System.out.println(user);
 
         if (user == null) {
             throw new XDException(404, "user not exist");

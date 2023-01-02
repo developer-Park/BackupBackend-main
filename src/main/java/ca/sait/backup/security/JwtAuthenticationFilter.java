@@ -1,17 +1,13 @@
 package ca.sait.backup.security;
 
 import ca.sait.backup.utils.JWTUtils;
-import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.client.authentication.OAuth2LoginAuthenticationToken;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -54,42 +50,23 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     .findFirst()
                     .map(Cookie::getValue)
                     .orElse(null);
-            System.out.println("hihihi   "+token);
+            System.out.println("토큰"+token);
+
             //토큰의 validation check을 하는 곳.
             if (token != null && jwtProvider.validateJwtToken(token)) {
                 //token의 정보를 가져오는 곳
                 String username = jwtProvider.getUserNameFromJwtToken(token);
-                System.out.println("username:  "+ username);
+                System.out.println("사용자이름"+username);
                 //UserDetails에 정보를 넘겨줘 해당 User를 저장한다.
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-                System.out.println("유저디테일+: "+userDetails);
                 //username과 password를 조합해서 UsernamePasswordAuthenticationToken 인스턴스를 만듭니다.
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
                 //유저 권한에 들어갈 것들을 만드는 과정.
-                System.out.println("오뗀띠피케이션" + authentication.getAuthorities());
-
-
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                System.out.println("세팅후:  "  +  authentication.getAuthorities());
-                System.out.println("세팅후 디테일:  "  +  authentication.getDetails());
                 //authentication을 SecurityContextHolder.getContext().setAuthentication(...)를 set 해줍니다.
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-                System.out.println("컨텍스트  :   "+SecurityContextHolder.getContext().getAuthentication());
             }
-//            else {
-//                OAuth2AuthenticationToken token1 = (OAuth2AuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-//                System.out.println("토큰"+token1);
-//                String email = token1.getPrincipal().getAttributes().get("email").toString();
-//                System.out.println("이메일"+email);
-//                UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-//                System.out.println("디테일"+userDetails.getUsername());
-//                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-//                        userDetails, null, userDetails.getAuthorities());
-//                System.out.println("에러:"+authentication);
-//               authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-//                SecurityContextHolder.getContext().setAuthentication(authentication);
-//            }
         } catch (Exception e) {
             logger.error("Cannot set user authentication: {}", e);
         }

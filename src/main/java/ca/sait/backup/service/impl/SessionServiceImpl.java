@@ -3,7 +3,6 @@ package ca.sait.backup.service.impl;
 import ca.sait.backup.model.business.JWTSessionContainer;
 import ca.sait.backup.model.entity.User;
 import ca.sait.backup.model.entity.UserNotification;
-import ca.sait.backup.security.JwtProvider;
 import ca.sait.backup.service.NotificationService;
 import ca.sait.backup.service.SessionService;
 import ca.sait.backup.utils.JWTUtils;
@@ -24,13 +23,13 @@ import java.util.List;
 public class SessionServiceImpl implements SessionService {
 
     private final NotificationService notificationService;
-    private final JwtProvider   jwtProvider;
+
     public void exposeEssentialVariables(HttpServletRequest request, Model model) {
 
         JWTSessionContainer jwtSessionContainer = this.extractSession(request);
 
         List<UserNotification> notifications = notificationService.backend_getUnreadNotificationsForUser(
-                new User(jwtSessionContainer.getUserId())
+          new User(jwtSessionContainer.getUserId())
         );
 
         // Note: Please do not change these parameters, they are used throughout the rendering engine.
@@ -49,13 +48,12 @@ public class SessionServiceImpl implements SessionService {
 
             // Loop through cookies and find session cookie
             Cookie sessionCookie = null;
-            for (Cookie cookie : cookieJar) {
+            for (Cookie cookie: cookieJar) {
                 if (cookie.getName().equals("session")) {
                     sessionCookie = cookie;
-
                 }
             }
-            System.out.println("세션쿠키" + sessionCookie);
+
             // Defensive coding, interceptor should never let this happen.
             if (sessionCookie == null) {
                 // TODO: I don't want to throw exception in every single route where this is used. See above
@@ -64,50 +62,46 @@ public class SessionServiceImpl implements SessionService {
 
             // If all good, extract the JWT token
             jwtToken = sessionCookie.getValue();
-            System.out.println("jwt토큰" + jwtToken);
+
         }
 
-        if (jwtToken != null && jwtProvider.validateJwtToken(jwtToken)) {
-// First need to validate token
-            Claims claims = JWTUtils.checkJWT(jwtToken);
+        // First need to validate token
+        Claims claims = JWTUtils.checkJWT(jwtToken);
 
+        // Grab session data (JSON) from the processed token
+        String sessionData = (String)claims.get("sessionData");
 
-            // Grab session data (JSON) from the processed token
-            String sessionData = (String) claims.get("sessionData");
+        // Pass off session data to parser
+        JWTSessionContainer sessionContainer = JWTSessionContainer.Process(
+            sessionData
+        );
 
-            // Pass off session data to parser
-            JWTSessionContainer sessionContainer = JWTSessionContainer.Process(
-                    sessionData
-            );
-
-            return sessionContainer;
-        }
-        return null;
+        return sessionContainer;
     }
 
-        public String createToken (Authentication authentication, User user){
+    public String createToken(Authentication authentication,User user) {
 
-            // Create new session container object
-            JWTSessionContainer sessionContainer = new JWTSessionContainer();
+        // Create new session container object
+        JWTSessionContainer sessionContainer = new JWTSessionContainer();
 
-            // Populate with user info
-            sessionContainer.setUserId(user.getId());
-            sessionContainer.setEmail(user.getEmail());
-            sessionContainer.setName(user.getName());
-            sessionContainer.setUserRole(user.getRole());
-            sessionContainer.setPhoneNumber(user.getPhone());
+        // Populate with user info
+        sessionContainer.setUserId(user.getId());
+        sessionContainer.setEmail(user.getEmail());
+        sessionContainer.setName(user.getName());
+        sessionContainer.setUserRole(user.getRole());
+        sessionContainer.setPhoneNumber(user.getPhone());
 
-            // Stringify (JSON)
-            GsonBuilder gsonBuilder = new GsonBuilder()
-                    .excludeFieldsWithoutExposeAnnotation();
+        // Stringify (JSON)
+        GsonBuilder gsonBuilder = new GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation();
 
-            Gson gson = gsonBuilder.create();
-            String jsonData = gson.toJson(sessionContainer);
+        Gson gson = gsonBuilder.create();
+        String jsonData = gson.toJson(sessionContainer);
 
-            // Tokenize json
-            String JWToken = JWTUtils.geneJsonWebToken(authentication, jsonData);
+        // Tokenize json
+        String JWToken = JWTUtils.geneJsonWebToken(authentication,jsonData);
 
-            return JWToken;
-        }
-
+        return JWToken;
     }
+
+}

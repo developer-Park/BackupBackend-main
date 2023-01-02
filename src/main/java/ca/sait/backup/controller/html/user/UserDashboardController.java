@@ -40,7 +40,7 @@ class UserDashboardController {
 
         // Get list of projects from Project Service.
         List<Project> projectList = this.projectService.getAllProjects(
-                sessionContainer
+            sessionContainer
         );
 
         // Sort by most categories
@@ -90,6 +90,7 @@ class UserDashboardController {
         model.addAttribute("numProjects", numProjects);
         model.addAttribute("numTickets", numSupportTickets);
         model.addAttribute("numManagers", numProjects);
+
         return ("/user/dashboard");
 
     }
