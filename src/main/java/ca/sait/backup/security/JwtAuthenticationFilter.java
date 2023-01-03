@@ -37,8 +37,8 @@ import java.util.Arrays;
 //그래서 doFilterInternal을 구현해 만들어보니 잘 만들어졌다.
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private final JwtProvider jwtProvider;
     private final CustomUserDetailService userDetailsService;
+    private final JWTUtils jwtUtils;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -53,9 +53,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             System.out.println("토큰"+token);
 
             //토큰의 validation check을 하는 곳.
-            if (token != null && jwtProvider.validateJwtToken(token)) {
+            if (token != null && jwtUtils.validateJwtToken(token)) {
                 //token의 정보를 가져오는 곳
-                String username = jwtProvider.getUserNameFromJwtToken(token);
+                String username = jwtUtils.getUserNameFromJwtToken(token);
                 System.out.println("사용자이름"+username);
                 //UserDetails에 정보를 넘겨줘 해당 User를 저장한다.
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);

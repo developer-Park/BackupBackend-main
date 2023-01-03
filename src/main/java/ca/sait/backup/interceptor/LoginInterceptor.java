@@ -33,17 +33,6 @@ public class LoginInterceptor implements HandlerInterceptor {
         try {
 
 
-//            If it is OPTIONS, end the request
-//            if (HttpMethod.OPTIONS.toString().equals(request.getMethod())) {
-//                response.setStatus(HttpStatus.NO_CONTENT.value());
-//                response.setHeader("Access-Control-Allow-Origin", "*");
-//                response.setHeader("Access-Control-Allow-Credentials", "true");
-//                response.setHeader("Access-Control-Allow-Methods", "GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS");
-//                response.setHeader("Access-Control-Max-Age", "86400");
-//                response.setHeader("Access-Control-Allow-Headers", "*");
-//                return false;
-//            }
-
 
             String accessToken = request.getHeader("token");
             if (accessToken == null) {

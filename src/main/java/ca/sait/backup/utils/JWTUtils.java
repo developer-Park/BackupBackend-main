@@ -1,9 +1,9 @@
 package ca.sait.backup.utils;
 
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 
 
@@ -33,24 +33,12 @@ JWTUtils {
     private  static final long EXPIRE = 60000 * 60 * 24 * 7;
     //private  static final long EXPIRE = 1;
 
-
     /**
      *  encryption key
      */
     private  static final String SECRET = "ca.sait666";
-
-
+    private static final Logger logger = LoggerFactory.getLogger(JWTUtils.class);
     /**
-     * token prefix
-     */
-   // private  static final String TOKEN_PREFIX = "backup";
-
-
-    /**
-     * subject
-     */
-    private  static final String SUBJECT = "backup";
-
 
     /**
      * depend on user info to generate user token
@@ -59,9 +47,6 @@ JWTUtils {
      */
     public static String geneJsonWebToken(Authentication authentication, String sessionData){
         String name = authentication.getName();
-        System.out.println("####################JWT UTILS GET NAME ###########" +name );
-
-
         String token = Jwts.builder().setSubject(name)
                 .claim("sessionData", sessionData)
                 .setIssuedAt(new Date())
@@ -72,10 +57,6 @@ JWTUtils {
     }
 
     public static String geneJsonGoogleWebToken(String email, String sessionData){
-
-
-
-
         String token = Jwts.builder().setSubject(email)
                 .claim("sessionData", sessionData)
                 .setIssuedAt(new Date())
@@ -85,25 +66,42 @@ JWTUtils {
         return token;
     }
 
-
     /**
      * the method to check token
      * @param token
      * @return
      */
     public static Claims checkJWT(String token){
-
         try{
-
             final Claims claims = Jwts.parser().setSigningKey(SECRET)
                     .parseClaimsJws(token).getBody();
-
             return claims;
-
         }catch (Exception e){
             return null;
         }
+    }
 
+    public String getUserNameFromJwtToken(String token) {
+        return Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody().getSubject();
+    }
+
+    public boolean validateJwtToken(String authToken) {
+        try {
+            Jwts.parser().setSigningKey(SECRET).parseClaimsJws(authToken);
+            return true;
+        } catch (SignatureException e) {
+            logger.error("Invalid JWT signature: {}", e.getMessage());
+        } catch (MalformedJwtException e) {
+            logger.error("Invalid JWT token: {}", e.getMessage());
+        } catch (ExpiredJwtException e) {
+            logger.error("JWT token is expired: {}", e.getMessage());
+        } catch (UnsupportedJwtException e) {
+            logger.error("JWT token is unsupported: {}", e.getMessage());
+        } catch (IllegalArgumentException e) {
+            logger.error("JWT claims string is empty: {}", e.getMessage());
+        }
+
+        return false;
     }
 
 
