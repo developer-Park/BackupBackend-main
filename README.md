@@ -18,7 +18,8 @@
 ## About The Project
 
   <a href="https://github.com/developer-Park/BackupBackend-main">
-    <img src="[images/mobile_responsive.png]" alt="Logo" width="1000" height="500">
+    <img src="![mobile_responsive](https://user-images.githubusercontent.com/83831110/215509474-47517226-1d6d-408d-a21c-17c85477b365.png)
+" alt="Logo" width="1000" height="500">
   </a>
 
 This project was developed in collaboration with several other members during my time at SAIT College. Working for a client based in Calgary, we developed a SaaS application that facilitates exchanging digital assets while also providing support and administrative functionalities to keep the application running.
