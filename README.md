@@ -17,8 +17,8 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-  <a href="https://github.com/ibrahimelement/JAVA_SpringBoot_SAAS">
-    <img src="images/mobile_responsive.png" alt="Logo" width="1000" height="500">
+  <a href="[https://github.com/ibrahimelement/JAVA_SpringBoot_SAAS](https://github.com/developer-Park/BackupBackend-main)">
+    <img src="[images/mobile_responsive.png](https://github.com/ibrahimelement/JAVA_SpringBoot_SAAS)" alt="Logo" width="1000" height="500">
   </a>
 
 This project was developed in collaboration with several other members during my time at SAIT College. Working for a client based in Calgary, we developed a SaaS application that facilitates exchanging digital assets while also providing support and administrative functionalities to keep the application running.
