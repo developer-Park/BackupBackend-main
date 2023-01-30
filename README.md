@@ -18,11 +18,9 @@
 ## About The Project
 
   <a href="https://github.com/developer-Park/BackupBackend-main">
- ![mobile_responsive](https://user-images.githubusercontent.com/83831110/215509604-e149bcbb-ddee-4811-8170-962de13f1a37.png)
-
+ 
   
-  <img src="![mobile_responsive](https://user-images.githubusercontent.com/83831110/215509474-47517226-1d6d-408d-a21c-17c85477b365.png)
-" alt="Logo" width="1000" height="500">
+  <img src="https://user-images.githubusercontent.com/83831110/215509474-47517226-1d6d-408d-a21c-17c85477b365.png" alt="Logo" width="1000" height="500">
   </a>
 
 This project was developed in collaboration with several other members during my time at SAIT College. Working for a client based in Calgary, we developed a SaaS application that facilitates exchanging digital assets while also providing support and administrative functionalities to keep the application running.
@@ -42,14 +40,15 @@ This project was built with the following technologies:
 
 * ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=java&logoColor=white)   
 * ![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
-* 	![Bootstrap](https://img.shields.io/badge/bootstrap-%23563D7C.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
+* ![Bootstrap](https://img.shields.io/badge/bootstrap-%23563D7C.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
 * ![Thymeleaf](https://img.shields.io/badge/Thymeleaf-%23005C0F.svg?style=for-the-badge&logo=Thymeleaf&logoColor=white)
 * ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
 * ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
 * ![MicrosoftSQLServer](https://img.shields.io/badge/Microsoft%20SQL%20Sever-CC2927?style=for-the-badge&logo=microsoft%20sql%20server&logoColor=white)
 
-  <a href="https://github.com/ibrahimelement/JAVA_SpringBoot_SAAS">
-    <img src="images/system_structure.png" alt="Logo"  width="1000" height="500">
+
+  <a href="https://github.com/developer-Park/BackupBackend-main">
+    <img src="https://user-images.githubusercontent.com/83831110/215510759-b56b4ec0-e2cf-45f6-916a-ab934c5eb3b3.png" alt="Logo"  width="1000" height="500">
   </a>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
