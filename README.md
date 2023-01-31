@@ -78,7 +78,7 @@ I would like to thank everyone in my team at SAIT for their contributions, incre
 * Lucky Marc Gumboc (Database)
 * Xin Su (UI Developer)
 * Zhenrong Shi (Backend Developer)
-* Jeonghun Park (Backend Developer)
+* Jeonghun Park(Parker) (Backend Developer)
 * Alexander Yee (UI Developer)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
